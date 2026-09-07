@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111111">
+<title>Rota Cheia</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#111}
+header{background:#111;color:white;text-align:center;padding:20px}header h1{margin:0;font-size:30px}header p{margin:7px 0 0}
+.menu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:10px;background:white;position:sticky;top:0;z-index:5}
+button{border:0;border-radius:12px;padding:13px 8px;font-weight:bold;font-size:14px}.btn{background:#111;color:white}.green{background:#18a45c;color:white}
+section{padding:10px}.card{background:white;border-radius:15px;padding:15px;margin-bottom:12px;box-shadow:0 2px 8px #0001}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:9px;margin:5px 0 10px}
+.hidden{display:none}.ok{color:#16864f;font-weight:bold}.muted{color:#666;font-size:13px}
+</style>
+</head>
+<body>
+<header><h1>ROTA CHEIA</h1><p>Nenhuma entrega volta vazia.</p></header>
+<div class="menu">
+<button onclick="aba('loja')">🏪 Loja</button>
+<button onclick="aba('entregador')">🏍️ Entregador</button>
+<button onclick="aba('admin')">📊 Admin</button>
+</div>
+
+<section id="loja">
+<div class="card">
+<h2>Publicar entrega</h2>
+<input id="lojaNome" placeholder="Nome da loja">
+<input id="retirada" placeholder="Endereço de retirada">
+<input id="destino" placeholder="Endereço do cliente">
+<input id="valor" type="number" step=".01" value="12" placeholder="Valor da entrega">
+<button class="green" style="width:100%" onclick="publicar()">PUBLICAR ENTREGA</button>
+<p id="msgLoja"></p>
+</div>
+<div class="card">
+<h3>Como funciona</h3>
+<p>1. A loja publica a entrega.</p><p>2. O entregador vê a oferta.</p><p>3. Ele aceita e aumenta seus ganhos.</p>
+<p class="muted">Esta é uma versão de demonstração para testar a ideia.</p>
+</div>
+</section>
+
+<section id="entregador" class="hidden">
+<div class="card">
+<h2>Entregador</h2>
+<input id="entNome" placeholder="Nome do entregador">
+<button class="green" style="width:100%" onclick="gps()">📍 ATIVAR GPS</button>
+<p id="gps">GPS ainda não ativado.</p>
+</div>
+<div id="ofertas"></div>
+</section>
+
+<section id="admin" class="hidden">
+<div class="card"><h2>Administrador</h2><button class="btn" onclick="atualizarAdmin()">ATUALIZAR</button><div id="lista"></div></div>
+</section>
+
+<script>
+const KEY="rota_cheia_demo_v1";
+let pedidos=JSON.parse(localStorage.getItem(KEY)||"[]");
+function salvar(){localStorage.setItem(KEY,JSON.stringify(pedidos))}
+function aba(id){document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");if(id==="entregador")render();if(id==="admin")atualizarAdmin()}
+function publicar(){
+ const p={id:Date.now(),loja:document.getElementById("lojaNome").value||"Loja",retirada:document.getElementById("retirada").value||"Não informado",destino:document.getElementById("destino").value||"Não informado",valor:Number(document.getElementById("valor").value||0),status:"Disponível",entregador:""};
+ pedidos.unshift(p);salvar();
+ document.getElementById("msgLoja").innerHTML='<span class="ok">✅ Entrega publicada!</span>';
+}
+function render(){
+ const el=document.getElementById("ofertas");el.innerHTML="";
+ const abertos=pedidos.filter(p=>p.status==="Disponível");
+ if(!abertos.length){el.innerHTML='<div class="card"><p>Nenhuma entrega disponível no momento.</p></div>';return}
+ abertos.forEach(p=>{
+  const d=document.createElement("div");d.className="card";
+  d.innerHTML=`<h3>🟢 NOVA ENTREGA</h3><b>${esc(p.loja)}</b><p>📍 Retirada: ${esc(p.retirada)}</p><p>🏁 Destino: ${esc(p.destino)}</p><p>💰 Ganho: R$ ${p.valor.toFixed(2)}</p><button class="green" style="width:100%">ACEITAR E AUMENTAR O GANHO</button>`;
+  d.querySelector("button").onclick=()=>aceitar(p.id);el.appendChild(d);
+ })
+}
+function aceitar(id){
+ const nome=document.getElementById("entNome").value||"Entregador";
+ const p=pedidos.find(x=>x.id===id);if(!p)return;
+ p.status="Aceita";p.entregador=nome;salvar();render();alert("Entrega aceita! Boa rota.");
+}
+function atualizarAdmin(){
+ document.getElementById("lista").innerHTML=pedidos.length?pedidos.map(p=>`<div class="card"><b>${esc(p.loja)}</b><br>Status: ${p.status}<br>Valor: R$ ${p.valor.toFixed(2)}<br>Entregador: ${esc(p.entregador||"-")}</div>`).join(""):"Nenhuma entrega.";
+}
+function gps(){
+ if(!navigator.geolocation){document.getElementById("gps").textContent="Este navegador não oferece GPS.";return}
+ navigator.geolocation.getCurrentPosition(pos=>document.getElementById("gps").innerHTML='<span class="ok">🟢 GPS ativado!</span><br>Latitude: '+pos.coords.latitude.toFixed(5)+'<br>Longitude: '+pos.coords.longitude.toFixed(5),err=>document.getElementById("gps").textContent="Permita o acesso à localização no navegador.")
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+</script>
+</body></html>
