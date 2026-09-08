@@ -84,18 +84,18 @@
 <!-- 🖼️ CAPA DO APP -->
 
 <!-- 🖼️ CAPA CLICÁVEL - 3 ÁREAS: LOJA | ENTREGADOR | ADMIN -->
-<div class="capa-container">
-  <img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
-  <map name="mapa-capa">
-    <!-- 🏪 LOJA → Lado Esquerdo -->
-    <area shape="rect" coords="0,0,33,100%" href="#" onclick="mostrarAba('loja'); return false;">
-    
-    <!-- 🏍️ ENTREGADOR → Meio -->
-    <area shape="rect" coords="34,0,66,100%" href="#" onclick="mostrarAba('entregador'); return false;">
-    
-    <!-- 📊 ADMIN → Lado Direito -->
-    <area shape="rect" coords="67,0,100,100%" href="#" onclick="mostrarAba('admin'); return false;">
-  </map>
+<img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
+<map name="mapa-capa">
+  <!-- 🏪 LOJA → Botão Amarelo de Cima -->
+  <area shape="rect" coords="100,350,900,440" href="#" onclick="mostrarAba('loja'); return false;" alt="Loja">
+
+  <!-- 🏍️ ENTREGADOR → Botão Verde do Meio -->
+  <area shape="rect" coords="100,450,900,540" href="#" onclick="mostrarAba('entregador'); return false;" alt="Entregador">
+
+  <!-- 📊 ADMIN → Botão Azul de Baixo -->
+  <area shape="rect" coords="100,550,900,650" href="#" onclick="mostrarAba('admin'); return false;" alt="Administrador">
+</map>
+
 </div>
 
 
