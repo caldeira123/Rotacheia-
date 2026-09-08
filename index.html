@@ -83,9 +83,22 @@
 
 <!-- 🖼️ CAPA DO APP -->
 
+<!-- 🖼️ CAPA CLICÁVEL - 3 ÁREAS: LOJA | ENTREGADOR | ADMIN -->
 <div class="capa-container">
-  <img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem">
+  <img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
+  <map name="mapa-capa">
+    <!-- 🏪 LOJA → Lado Esquerdo -->
+    <area shape="rect" coords="0,0,33,100%" href="#" onclick="mostrarAba('loja'); return false;">
+    
+    <!-- 🏍️ ENTREGADOR → Meio -->
+    <area shape="rect" coords="34,0,66,100%" href="#" onclick="mostrarAba('entregador'); return false;">
+    
+    <!-- 📊 ADMIN → Lado Direito -->
+    <area shape="rect" coords="67,0,100,100%" href="#" onclick="mostrarAba('admin'); return false;">
+  </map>
 </div>
+
+
 
 <!-- 🔘 BOTÕES DE NAVEGAÇÃO -->
 <div class="botoes">
