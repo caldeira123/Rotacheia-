@@ -1,91 +1,285 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111111">
-<title>Rota Cheia</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#111}
-header{background:#111;color:white;text-align:center;padding:20px}header h1{margin:0;font-size:30px}header p{margin:7px 0 0}
-.menu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:10px;background:white;position:sticky;top:0;z-index:5}
-button{border:0;border-radius:12px;padding:13px 8px;font-weight:bold;font-size:14px}.btn{background:#111;color:white}.green{background:#18a45c;color:white}
-section{padding:10px}.card{background:white;border-radius:15px;padding:15px;margin-bottom:12px;box-shadow:0 2px 8px #0001}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:9px;margin:5px 0 10px}
-.hidden{display:none}.ok{color:#16864f;font-weight:bold}.muted{color:#666;font-size:13px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>Rota Cheia — Nenhuma entrega volta vazia 🛵</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body { background: #f0f2f5; padding: 15px; }
+        
+        /* === IMAGEM DA CAPA === */
+        .capa {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .capa small { font-size: 14px; opacity: 0.9; margin-top: 8px; }
+
+        /* === BOTÕES === */
+        .botoes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .btn { padding: 14px 10px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: 600; }
+        .btn-loja { background: #3498db; color: white; }
+        .btn-entregador { background: #e74c3c; color: white; }
+        .btn-admin { background: #27ae60; color: white; }
+        .btn.active { transform: scale(0.97); box-shadow: inset 0 0 8px rgba(0,0,0,0.2); }
+
+        /* === CAIXAS === */
+        .caixa { background: white; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: none; }
+        .caixa.ativa { display: block; }
+        h2 { font-size: 22px; margin-bottom: 20px; color: #222; }
+
+        /* === CAMPOS DO FORMULÁRIO === */
+        input {
+            width: 100%; padding: 14px; margin-bottom: 15px;
+            border: 1px solid #ddd; border-radius: 10px; font-size: 16px;
+        }
+        input:focus { outline: none; border-color: #e74c3c; }
+
+        .btn-verde {
+            width: 100%; padding: 16px; background: #27ae60; color: white;
+            border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
+            margin-top: 5px;
+        }
+        .btn-verde:hover { background: #219653; }
+
+        /* === LISTA DE ENTREGAS E SISTEMA DE ROTAS === */
+        .entrega-item {
+            border: 1px solid #eee; border-radius: 10px; padding: 15px;
+            margin-bottom: 12px; background: #fafafa;
+        }
+        .etiqueta {
+            display: inline-block; padding: 4px 10px; border-radius: 20px;
+            font-size: 13px; font-weight: bold; margin-bottom: 10px;
+        }
+        .etiqueta.dupla { background: #f39c12; color: white; }
+        .etiqueta.disponivel { background: #27ae60; color: white; }
+        .match { background: #fff3cd; border: 2px dashed #f39c12; border-radius: 10px; padding: 12px; margin: 12px 0; }
+        
+        /* === COMO FUNCIONA === */
+        .como-funciona { background: white; border-radius: 16px; padding: 25px; margin-top: 10px; }
+        .como-funciona h3 { margin-bottom: 15px; color: #222; }
+        .como-funciona ol { padding-left: 20px; }
+        .como-funciona li { margin-bottom: 10px; line-height: 1.6; color: #444; }
+        .aviso { margin-top: 15px; font-size: 14px; color: #777; font-style: italic; }
+
+        .msg { margin-top: 15px; padding: 12px; border-radius: 10px; display: none; }
+        .msg.sucesso { background: #d4edda; color: #155724; display: block; }
+    </style>
 </head>
 <body>
-https://github.com/caldeira123/Rotacheia-/blob/995fc020cafc2c9467b92799acf056e0c922be7b/Screenshot_2026-09-07-20-37-45-472_com.android.chrome-edit.jpg
-<div class="menu">
-<button onclick="aba('loja')">🏪 Loja</button>
-<button onclick="aba('entregador')">🏍️ Entregador</button>
-<button onclick="aba('admin')">📊 Admin</button>
+
+<!-- 🖼️ CAPA DO APP -->
+<div class="capa">
+    Rota Cheia 🛵<br>
+    <small>Nenhuma entrega volta vazia ❤️</small>
 </div>
 
-<section id="loja">
-<div class="card">
-<h2>Publicar entrega</h2>
-<input id="lojaNome" placeholder="Nome da loja">
-<input id="retirada" placeholder="Endereço de retirada">
-<input id="destino" placeholder="Endereço do cliente">
-<input id="valor" type="number" step=".01" value="12" placeholder="Valor da entrega">
-<button class="green" style="width:100%" onclick="publicar()">PUBLICAR ENTREGA</button>
-<p id="msgLoja"></p>
+<!-- 🔘 BOTÕES DE NAVEGAÇÃO -->
+<div class="botoes">
+    <button class="btn btn-loja active" onclick="mostrarAba('loja')">🏪 Loja</button>
+    <button class="btn btn-entregador" onclick="mostrarAba('entregador')">🏍️ Entregador</button>
+    <button class="btn btn-admin" onclick="mostrarAba('admin')">📊 Admin</button>
 </div>
-<div class="card">
-<h3>Como funciona</h3>
-<p>1. A loja publica a entrega.</p><p>2. O entregador vê a oferta.</p><p>3. Ele aceita e aumenta seus ganhos.</p>
-<p class="muted">Esta é uma versão de demonstração para testar a ideia.</p>
-</div>
-</section>
 
-<section id="entregador" class="hidden">
-<div class="card">
-<h2>Entregador</h2>
-<input id="entNome" placeholder="Nome do entregador">
-<button class="green" style="width:100%" onclick="gps()">📍 ATIVAR GPS</button>
-<p id="gps">GPS ainda não ativado.</p>
+<!-- 🏪 ABA DA LOJA — PUBLICAR ENTREGA -->
+<div class="caixa ativa" id="aba-loja">
+    <h2>Publicar Entrega 📦</h2>
+    <input type="text" id="nomeLoja" placeholder="Nome da Loja 🏪">
+    <input type="text" id="enderecoRetirada" placeholder="Endereço de Retirada 📍">
+    <input type="text" id="enderecoCliente" placeholder="Endereço do Cliente 🏠">
+    <input type="tel" id="telefoneLoja" placeholder="WhatsApp / Telefone 📱">
+    <input type="number" step="0.01" id="valorEntrega" placeholder="Valor da Entrega R$ 💰">
+    <button class="btn-verde" onclick="publicarEntrega()">✅ PUBLICAR ENTREGA</button>
+    <div id="msgLoja" class="msg"></div>
 </div>
-<div id="ofertas"></div>
-</section>
 
-<section id="admin" class="hidden">
-<div class="card"><h2>Administrador</h2><button class="btn" onclick="atualizarAdmin()">ATUALIZAR</button><div id="lista"></div></div>
-</section>
+<!-- 🏍️ ABA DO ENTREGADOR — VER E ACEITAR + SISTEMA DE ROTAS -->
+<div class="caixa" id="aba-entregador">
+    <h2>Entregas Disponíveis 🏍️</h2>
+    <p style="margin-bottom:15px; color:#555;">💡 <strong>Destaque laranja = Rota combinada! Duas entregas no mesmo caminho 💰</strong></p>
+    <div id="listaEntregas">
+        <p style="text-align:center; color:#888; padding:20px;">Aguardando entregas publicadas...</p>
+    </div>
+</div>
+
+<!-- 📊 ABA DO ADMIN -->
+<div class="caixa" id="aba-admin">
+    <h2>Painel Administrativo 📊</h2>
+    <p style="font-size:16px; margin-bottom:10px;">Total de entregas publicadas: <strong id="totalEntregas">0</strong></p>
+    <p style="font-size:16px; margin-bottom:20px;">Entregas com rota combinada: <strong id="totalRotasCombinadas">0</strong></p>
+    <div id="todasEntregas"></div>
+</div>
+
+<!-- ℹ️ COMO FUNCIONA -->
+<div class="como-funciona">
+    <h3>📖 Como funciona o Rota Cheia</h3>
+    <ol>
+        <li><strong>Loja</strong> publica a entrega com endereço de retirada, destino e valor 🏪</li>
+        <li><strong>Sistema verifica automaticamente</strong> se há OUTRA entrega no mesmo trajeto → "casa" as rotas 💍🛵</li>
+        <li><strong>Entregador</strong> vê a oferta — se for rota combinada, aparece em destaque laranja 🟠</li>
+        <li>Ele aceita → faz DUAS entregas na mesma viagem → <strong>ganha mais sem voltar vazio!</strong> 💰</li>
+    </ol>
+    <p class="aviso">🚧 Versão de demonstração — dados ficam salvos no navegador. Em breve com banco de dados e notificações automáticas!</p>
+</div>
 
 <script>
-const KEY="rota_cheia_demo_v1";
-let pedidos=JSON.parse(localStorage.getItem(KEY)||"[]");
-function salvar(){localStorage.setItem(KEY,JSON.stringify(pedidos))}
-function aba(id){document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");if(id==="entregador")render();if(id==="admin")atualizarAdmin()}
-function publicar(){
- const p={id:Date.now(),loja:document.getElementById("lojaNome").value||"Loja",retirada:document.getElementById("retirada").value||"Não informado",destino:document.getElementById("destino").value||"Não informado",valor:Number(document.getElementById("valor").value||0),status:"Disponível",entregador:""};
- pedidos.unshift(p);salvar();
- document.getElementById("msgLoja").innerHTML='<span class="ok">✅ Entrega publicada!</span>';
+// 📦 ARMAZENAR ENTREGAS
+let entregas = JSON.parse(localStorage.getItem('entregasRotaCheia') || '[]');
+
+// 🔄 MOSTRAR ABA
+function mostrarAba(nome) {
+    document.querySelectorAll('.caixa').forEach(c => c.classList.remove('ativa'));
+    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('aba-' + nome).classList.add('ativa');
+    event.target.classList.add('active');
+    if (nome === 'entregador') renderizarEntregas();
+    if (nome === 'admin') renderizarAdmin();
 }
-function render(){
- const el=document.getElementById("ofertas");el.innerHTML="";
- const abertos=pedidos.filter(p=>p.status==="Disponível");
- if(!abertos.length){el.innerHTML='<div class="card"><p>Nenhuma entrega disponível no momento.</p></div>';return}
- abertos.forEach(p=>{
-  const d=document.createElement("div");d.className="card";
-  d.innerHTML=`<h3>🟢 NOVA ENTREGA</h3><b>${esc(p.loja)}</b><p>📍 Retirada: ${esc(p.retirada)}</p><p>🏁 Destino: ${esc(p.destino)}</p><p>💰 Ganho: R$ ${p.valor.toFixed(2)}</p><button class="green" style="width:100%">ACEITAR E AUMENTAR O GANHO</button>`;
-  d.querySelector("button").onclick=()=>aceitar(p.id);el.appendChild(d);
- })
+
+// 💡 SISTEMA INTELIGENTE DE COMBINAR ROTAS
+function detectarRotaCombinada(novaEntrega) {
+    // Verifica se existe outra entrega com trajeto parecido (mesma cidade/bairro)
+    let combinada = false;
+    let parceiro = null;
+    
+    for (let e of entregas) {
+        if (e.id === novaEntrega.id) continue;
+        // Comparação simples: verificar se endereços compartilham palavras-chave
+        const enderecoComum = e.destino.split(' ').some(palavra => 
+            novaEntrega.destino.includes(palavra) && palavra.length > 4
+        );
+        if (enderecoComum) {
+            combinada = true;
+            parceiro = e;
+            break;
+        }
+    }
+    return { combinada, parceiro };
 }
-function aceitar(id){
- const nome=document.getElementById("entNome").value||"Entregador";
- const p=pedidos.find(x=>x.id===id);if(!p)return;
- p.status="Aceita";p.entregador=nome;salvar();render();alert("Entrega aceita! Boa rota.");
+
+// ✅ PUBLICAR ENTREGA
+function publicarEntrega() {
+    const entrega = {
+        id: Date.now(),
+        loja: document.getElementById('nomeLoja').value.trim(),
+        retirada: document.getElementById('enderecoRetirada').value.trim(),
+        destino: document.getElementById('enderecoCliente').value.trim(),
+        telefone: document.getElementById('telefoneLoja').value.trim(),
+        valor: parseFloat(document.getElementById('valorEntrega').value || 0),
+        status: 'disponivel',
+        data: new Date().toLocaleString()
+    };
+
+    if (!entrega.loja || !entrega.retirada || !entrega.destino || !entrega.valor) {
+        alert('⚠️ Preencha todos os campos obrigatórios!');
+        return;
+    }
+
+    // 💡 Verifica se pode combinar rota
+    const rota = detectarRotaCombinada(entrega);
+    entrega.rotaCombinada = rota.combinada;
+    entrega.parceiroRota = rota.parceiro ? rota.parceiro.id : null;
+
+    entregas.push(entrega);
+    salvar();
+    
+    // Limpar formulário
+    document.getElementById('nomeLoja').value = '';
+    document.getElementById('enderecoRetirada').value = '';
+    document.getElementById('enderecoCliente').value = '';
+    document.getElementById('telefoneLoja').value = '';
+    document.getElementById('valorEntrega').value = '';
+
+    const msg = document.getElementById('msgLoja');
+    if (entrega.rotaCombinada) {
+        msg.className = 'msg sucesso';
+        msg.innerHTML = '✅ <strong>ENTREGA PUBLICADA!</strong> 🟠 ROTA COMBINADA DETECTADA! O entregador vai ganhar mais uma entrega no mesmo caminho! 💰🛵';
+    } else {
+        msg.className = 'msg sucesso';
+        msg.innerHTML = '✅ Entrega publicada com sucesso! Aguardando entregador! 🛵';
+    }
+    
+    setTimeout(() => { msg.style.display = 'none'; }, 5000);
 }
-function atualizarAdmin(){
- document.getElementById("lista").innerHTML=pedidos.length?pedidos.map(p=>`<div class="card"><b>${esc(p.loja)}</b><br>Status: ${p.status}<br>Valor: R$ ${p.valor.toFixed(2)}<br>Entregador: ${esc(p.entregador||"-")}</div>`).join(""):"Nenhuma entrega.";
+
+// 📄 RENDERIZAR LISTA DE ENTREGAS (para entregador)
+function renderizarEntregas() {
+    const lista = document.getElementById('listaEntregas');
+    if (entregas.filter(e => e.status === 'disponivel').length === 0) {
+        lista.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Nenhuma entrega disponível no momento. Volte mais tarde! 🛵</p>';
+        return;
+    }
+
+    lista.innerHTML = entregas.filter(e => e.status === 'disponivel').map(e => {
+        let html = `
+        <div class="entrega-item">
+            <span class="etiqueta ${e.rotaCombinada ? 'dupla' : 'disponivel'}">
+                ${e.rotaCombinada ? '🟠 ROTA DUPLA - GANHO MAIOR!' : '✅ Disponível'}
+            </span>
+            <h4 style="font-size:18px; margin-bottom:8px;">${e.loja}</h4>
+            <p>📍 <strong>Retirada:</strong> ${e.retirada}</p>
+            <p>🏠 <strong>Destino:</strong> ${e.destino}</p>
+            <p>💰 <strong>Valor:</strong> R$ ${e.valor.toFixed(2)}</p>
+            ${e.telefone ? `<p>📱 <strong>Contato:</strong> ${e.telefone}</p>` : ''}
+            ${e.rotaCombinada ? `<div class="match">💍 <strong>ROTA COMBINADA!</strong> Tem outra entrega no mesmo caminho — faça as duas e lucre mais! 🛵💰</div>` : ''}
+            <button class="btn-verde" style="margin-top:12px; padding:12px;" onclick="aceitarEntrega(${e.id})">🏍️ ACEITAR ENTREGA</button>
+        </div>`;
+        return html;
+    }).join('');
 }
-function gps(){
- if(!navigator.geolocation){document.getElementById("gps").textContent="Este navegador não oferece GPS.";return}
- navigator.geolocation.getCurrentPosition(pos=>document.getElementById("gps").innerHTML='<span class="ok">🟢 GPS ativado!</span><br>Latitude: '+pos.coords.latitude.toFixed(5)+'<br>Longitude: '+pos.coords.longitude.toFixed(5),err=>document.getElementById("gps").textContent="Permita o acesso à localização no navegador.")
+
+// ✋ ACEITAR ENTREGA
+function aceitarEntrega(id) {
+    const idx = entregas.findIndex(e => e.id === id);
+    if (idx !== -1) {
+        entregas[idx].status = 'aceita';
+        salvar();
+        alert('🏍️ Entrega aceita! Bom trabalho! Faça a entrega e lucre! 💪💰🛵' + 
+              (entregas[idx].rotaCombinada ? '\n\n💍 Lembre-se: tem OUTRA entrega no mesmo trajeto — aproveite! 🛵🛵' : ''));
+        renderizarEntregas();
+    }
 }
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+
+// 📊 RENDERIZAR ADMIN
+function renderizarAdmin() {
+    document.getElementById('totalEntregas').textContent = entregas.length;
+    document.getElementById('totalRotasCombinadas').textContent = entregas.filter(e => e.rotaCombinada).length;
+    
+    const div = document.getElementById('todasEntregas');
+    if (entregas.length === 0) {
+        div.innerHTML = '<p style="color:#888;">Nenhuma entrega publicada ainda.</p>';
+        return;
+    }
+    div.innerHTML = entregas.map(e => `
+    <div style="padding:12px; background:#f9f9f9; border-radius:8px; margin-bottom:8px;">
+        <strong>${e.loja}</strong> → ${e.destino} | R$ ${e.valor.toFixed(2)} | 
+        ${e.rotaCombinada ? '🟠 Rota Combinada' : 'Normal'} | 
+        ${e.status === 'disponivel' ? '✅ Disponível' : '✅ Aceita'}
+    </div>`).join('');
+}
+
+// 💾 SALVAR NO BANCO LOCAL
+function salvar() {
+    localStorage.setItem('entregasRotaCheia', JSON.stringify(entregas));
+}
+
+// 🔄 Inicializar
+renderizarEntregas();
 </script>
-</body></html>
+</body>
+</html>
