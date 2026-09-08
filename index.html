@@ -1,296 +1,319 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#111111">
-    <title>Rota Cheia — Nenhuma entrega volta vazia 🛵</title>
-    <style>
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body { background: #f0f2f5; padding: 15px; }
-        
-        /* === IMAGEM DA CAPA === */
-.capa-container {
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.capa-imagem {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rota Cheia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+    }
 
-        /* === BOTÕES === */
-        .botoes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .btn { padding: 14px 10px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: 600; }
-        .btn-loja { background: #3498db; color: white; }
-        .btn-entregador { background: #e74c3c; color: white; }
-        .btn-admin { background: #27ae60; color: white; }
-        .btn.active { transform: scale(0.97); box-shadow: inset 0 0 8px rgba(0,0,0,0.2); }
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      background-color: #fff;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
 
-        /* === CAIXAS === */
-        .caixa { background: white; border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: none; }
-        .caixa.ativa { display: block; }
-        h2 { font-size: 22px; margin-bottom: 20px; color: #222; }
+    .capa-container {
+      width: 100%;
+      position: relative;
+    }
 
-        /* === CAMPOS DO FORMULÁRIO === */
-        input {
-            width: 100%; padding: 14px; margin-bottom: 15px;
-            border: 1px solid #ddd; border-radius: 10px; font-size: 16px;
-        }
-        input:focus { outline: none; border-color: #e74c3c; }
+    .capa-imagem {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
 
-        .btn-verde {
-            width: 100%; padding: 16px; background: #27ae60; color: white;
-            border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
-            margin-top: 5px;
-        }
-        .btn-verde:hover { background: #219653; }
+    .abas {
+      padding: 20px;
+    }
 
-        /* === LISTA DE ENTREGAS E SISTEMA DE ROTAS === */
-        .entrega-item {
-            border: 1px solid #eee; border-radius: 10px; padding: 15px;
-            margin-bottom: 12px; background: #fafafa;
-        }
-        .etiqueta {
-            display: inline-block; padding: 4px 10px; border-radius: 20px;
-            font-size: 13px; font-weight: bold; margin-bottom: 10px;
-        }
-        .etiqueta.dupla { background: #f39c12; color: white; }
-        .etiqueta.disponivel { background: #27ae60; color: white; }
-        .match { background: #fff3cd; border: 2px dashed #f39c12; border-radius: 10px; padding: 12px; margin: 12px 0; }
-        
-        /* === COMO FUNCIONA === */
-        .como-funciona { background: white; border-radius: 16px; padding: 25px; margin-top: 10px; }
-        .como-funciona h3 { margin-bottom: 15px; color: #222; }
-        .como-funciona ol { padding-left: 20px; }
-        .como-funciona li { margin-bottom: 10px; line-height: 1.6; color: #444; }
-        .aviso { margin-top: 15px; font-size: 14px; color: #777; font-style: italic; }
+    .aba {
+      display: none;
+    }
 
-        .msg { margin-top: 15px; padding: 12px; border-radius: 10px; display: none; }
-        .msg.sucesso { background: #d4edda; color: #155724; display: block; }
-    </style>
+    .aba.ativa {
+      display: block;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .entrega-card {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #007bff;
+    }
+
+    .admin-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .admin-links a {
+      padding: 12px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .admin-links a:hover {
+      background-color: #0056b3;
+    }
+
+    .voltar {
+      margin-top: 20px;
+      background-color: #6c757d;
+    }
+
+    .voltar:hover {
+      background-color: #5a6268;
+    }
+
+    .salvar {
+      background-color: #28a745;
+    }
+
+    .salvar:hover {
+      background-color: #218838;
+    }
+
+    .perfil {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f1f1f1;
+      border-radius: 8px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-<!-- 🖼️ CAPA DO APP -->
+<div class="app-container">
 
-<!-- 🖼️ CAPA CLICÁVEL - 3 ÁREAS: LOJA | ENTREGADOR | ADMIN -->
-<img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
-<map name="mapa-capa">
-  <!-- 🏪 LOJA → Botão Amarelo de Cima -->
-  <area shape="rect" coords="100,350,900,440" href="#" onclick="mostrarAba('loja'); return false;" alt="Loja">
+  <!-- CAPA COM ÁREAS CLICÁVEIS NA FOTO -->
+  <div class="capa-container">
+    <img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
 
-  <!-- 🏍️ ENTREGADOR → Botão Verde do Meio -->
-  <area shape="rect" coords="100,450,900,540" href="#" onclick="mostrarAba('entregador'); return false;" alt="Entregador">
+    <map name="mapa-capa">
+      <!-- Botão Loja Amarelo -->
+      <area shape="rect" coords="120,420,880,510" href="#" onclick="mostrarAba('loja'); return false;" alt="Loja">
 
-  <!-- 📊 ADMIN → Botão Azul de Baixo -->
-  <area shape="rect" coords="100,550,900,650" href="#" onclick="mostrarAba('admin'); return false;" alt="Administrador">
-</map>
+      <!-- Botão Entregador Verde -->
+      <area shape="rect" coords="120,520,880,610" href="#" onclick="mostrarAba('entregador'); return false;" alt="Entregador">
 
-</div>
+      <!-- Botão Administrador Azul -->
+      <area shape="rect" coords="120,620,880,720" href="#" onclick="mostrarAba('admin'); return false;" alt="Administrador">
+    </map>
+  </div>
 
+  <!-- ÁREA DAS ABAS -->
+  <div class="abas">
 
-
-<!-- 🔘 BOTÕES DE NAVEGAÇÃO -->
-<div class="botoes">
-    <button class="btn btn-loja active" onclick="mostrarAba('loja')">🏪 Loja</button>
-    <button class="btn btn-entregador" onclick="mostrarAba('entregador')">🏍️ Entregador</button>
-    <button class="btn btn-admin" onclick="mostrarAba('admin')">📊 Admin</button>
-</div>
-
-<!-- 🏪 ABA DA LOJA — PUBLICAR ENTREGA -->
-<div class="caixa ativa" id="aba-loja">
-    <h2>Publicar Entrega 📦</h2>
-    <input type="text" id="nomeLoja" placeholder="Nome da Loja 🏪">
-    <input type="text" id="enderecoRetirada" placeholder="Endereço de Retirada 📍">
-    <input type="text" id="enderecoCliente" placeholder="Endereço do Cliente 🏠">
-    <input type="tel" id="telefoneLoja" placeholder="WhatsApp / Telefone 📱">
-    <input type="number" step="0.01" id="valorEntrega" placeholder="Valor da Entrega R$ 💰">
-    <button class="btn-verde" onclick="publicarEntrega()">✅ PUBLICAR ENTREGA</button>
-    <div id="msgLoja" class="msg"></div>
-</div>
-
-<!-- 🏍️ ABA DO ENTREGADOR — VER E ACEITAR + SISTEMA DE ROTAS -->
-<div class="caixa" id="aba-entregador">
-    <h2>Entregas Disponíveis 🏍️</h2>
-    <p style="margin-bottom:15px; color:#555;">💡 <strong>Destaque laranja = Rota combinada! Duas entregas no mesmo caminho 💰</strong></p>
-    <div id="listaEntregas">
-        <p style="text-align:center; color:#888; padding:20px;">Aguardando entregas publicadas...</p>
+    <!-- ABA LOJA -->
+    <div id="aba-loja" class="aba">
+      <h2>Publicar Entrega</h2>
+      <form onsubmit="publicarEntrega(event)">
+        <input type="text" placeholder="Nome da Loja" required>
+        <input type="text" placeholder="Endereço de Coleta" required>
+        <input type="text" placeholder="Endereço de Entrega" required>
+        <input type="number" placeholder="Valor da Entrega" required>
+        <textarea placeholder="Observações"></textarea>
+        <button type="submit">Publicar</button>
+      </form>
+      <button class="voltar" onclick="voltar()">Voltar</button>
     </div>
-</div>
 
-<!-- 📊 ABA DO ADMIN -->
-<div class="caixa" id="aba-admin">
-    <h2>Painel Administrativo 📊</h2>
-    <p style="font-size:16px; margin-bottom:10px;">Total de entregas publicadas: <strong id="totalEntregas">0</strong></p>
-    <p style="font-size:16px; margin-bottom:20px;">Entregas com rota combinada: <strong id="totalRotasCombinadas">0</strong></p>
-    <div id="todasEntregas"></div>
-</div>
+    <!-- ABA ENTREGADOR -->
+    <div id="aba-entregador" class="aba">
+      <h2>Entregas Disponíveis</h2>
 
-<!-- ℹ️ COMO FUNCIONA -->
-<div class="como-funciona">
-    <h3>📖 Como funciona o Rota Cheia</h3>
-    <ol>
-        <li><strong>Loja</strong> publica a entrega com endereço de retirada, destino e valor 🏪</li>
-        <li><strong>Sistema verifica automaticamente</strong> se há OUTRA entrega no mesmo trajeto → "casa" as rotas 💍🛵</li>
-        <li><strong>Entregador</strong> vê a oferta — se for rota combinada, aparece em destaque laranja 🟠</li>
-        <li>Ele aceita → faz DUAS entregas na mesma viagem → <strong>ganha mais sem voltar vazio!</strong> 💰</li>
-    </ol>
-    <p class="aviso">🚧 Versão de demonstração — dados ficam salvos no navegador. Em breve com banco de dados e notificações automáticas!</p>
+      <div class="entrega-card">
+        <h3>Loja do Zé</h3>
+        <p>Coleta: Rua das Flores, 123</p>
+        <p>Entrega: Av. Paulista, 456</p>
+        <p>Valor: R$ 15,00</p>
+        <button>Aceitar Entrega</button>
+      </div>
+
+      <div class="entrega-card">
+        <h3>Mercado Central</h3>
+        <p>Coleta: Praça da Sé, 10</p>
+        <p>Entrega: Rua Augusta, 789</p>
+        <p>Valor: R$ 20,00</p>
+        <button>Aceitar Entrega</button>
+      </div>
+
+      <button class="voltar" onclick="voltar()">Voltar</button>
+    </div>
+
+    <!-- ABA ADMINISTRADOR -->
+    <div id="aba-admin" class="aba">
+      <h2>Painel Administrativo</h2>
+
+      <div class="admin-links">
+        <a href="#" onclick="mostrarAba('gerenciar-lojas'); return false;">Gerenciar Lojas</a>
+        <a href="#" onclick="mostrarAba('gerenciar-entregadores'); return false;">Gerenciar Entregadores</a>
+        <a href="#" onclick="mostrarAba('configuracoes'); return false;">Configurações</a>
+      </div>
+
+      <button class="voltar" onclick="voltar()">Voltar</button>
+    </div>
+
+    <!-- ABA GERENCIAR LOJAS -->
+    <div id="aba-gerenciar-lojas" class="aba">
+      <h2>Gerenciar Lojas</h2>
+
+      <form onsubmit="cadastrarLoja(event)">
+        <input type="text" placeholder="Nome da Loja" required>
+        <input type="email" placeholder="E-mail da Loja" required>
+        <input type="password" placeholder="Senha" required>
+        <button type="submit" class="salvar">Salvar Loja</button>
+      </form>
+
+      <div class="perfil">
+        <h3>Loja do Zé</h3>
+        <p>loja@email.com</p>
+        <button>Editar</button>
+        <button>Excluir</button>
+      </div>
+
+      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
+    </div>
+
+    <!-- ABA GERENCIAR ENTREGADORES -->
+    <div id="aba-gerenciar-entregadores" class="aba">
+      <h2>Gerenciar Entregadores</h2>
+
+      <form onsubmit="cadastrarEntregador(event)">
+        <input type="text" placeholder="Nome do Entregador" required>
+        <input type="text" placeholder="CPF" required>
+        <input type="tel" placeholder="Telefone" required>
+        <input type="email" placeholder="E-mail" required>
+        <input type="password" placeholder="Senha" required>
+        <button type="submit" class="salvar">Salvar Entregador</button>
+      </form>
+
+      <div class="perfil">
+        <h3>João Entregador</h3>
+        <p>cpf: 123.456.789-00</p>
+        <p>telefone: (11) 99999-9999</p>
+        <button>Editar</button>
+        <button>Excluir</button>
+      </div>
+
+      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
+    </div>
+
+    <!-- ABA CONFIGURAÇÕES -->
+    <div id="aba-configuracoes" class="aba">
+      <h2>Configurações</h2>
+
+      <form>
+        <input type="text" placeholder="Nome do App" value="Rota Cheia">
+        <input type="color" value="#007bff">
+        <textarea placeholder="Slogan">Nenhuma entrega volta vazia</textarea>
+        <button class="salvar">Salvar Configurações</button>
+      </form>
+
+      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
-// 📦 ARMAZENAR ENTREGAS
-let entregas = JSON.parse(localStorage.getItem('entregasRotaCheia') || '[]');
+  function mostrarAba(nomeAba) {
+    document.querySelectorAll('.aba').forEach(aba => {
+      aba.classList.remove('ativa');
+    });
 
-// 🔄 MOSTRAR ABA
-function mostrarAba(nome) {
-    document.querySelectorAll('.caixa').forEach(c => c.classList.remove('ativa'));
-    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('aba-' + nome).classList.add('ativa');
-    event.target.classList.add('active');
-    if (nome === 'entregador') renderizarEntregas();
-    if (nome === 'admin') renderizarAdmin();
-}
+    const abaAtiva = document.getElementById('aba-' + nomeAba);
 
-// 💡 SISTEMA INTELIGENTE DE COMBINAR ROTAS
-function detectarRotaCombinada(novaEntrega) {
-    // Verifica se existe outra entrega com trajeto parecido (mesma cidade/bairro)
-    let combinada = false;
-    let parceiro = null;
-    
-    for (let e of entregas) {
-        if (e.id === novaEntrega.id) continue;
-        // Comparação simples: verificar se endereços compartilham palavras-chave
-        const enderecoComum = e.destino.split(' ').some(palavra => 
-            novaEntrega.destino.includes(palavra) && palavra.length > 4
-        );
-        if (enderecoComum) {
-            combinada = true;
-            parceiro = e;
-            break;
-        }
+    if (abaAtiva) {
+      abaAtiva.classList.add('ativa');
+      window.scrollTo(0, 0);
     }
-    return { combinada, parceiro };
-}
+  }
 
-// ✅ PUBLICAR ENTREGA
-function publicarEntrega() {
-    const entrega = {
-        id: Date.now(),
-        loja: document.getElementById('nomeLoja').value.trim(),
-        retirada: document.getElementById('enderecoRetirada').value.trim(),
-        destino: document.getElementById('enderecoCliente').value.trim(),
-        telefone: document.getElementById('telefoneLoja').value.trim(),
-        valor: parseFloat(document.getElementById('valorEntrega').value || 0),
-        status: 'disponivel',
-        data: new Date().toLocaleString()
-    };
+  function voltar() {
+    document.querySelectorAll('.aba').forEach(aba => {
+      aba.classList.remove('ativa');
+    });
 
-    if (!entrega.loja || !entrega.retirada || !entrega.destino || !entrega.valor) {
-        alert('⚠️ Preencha todos os campos obrigatórios!');
-        return;
-    }
+    window.scrollTo(0, 0);
+  }
 
-    // 💡 Verifica se pode combinar rota
-    const rota = detectarRotaCombinada(entrega);
-    entrega.rotaCombinada = rota.combinada;
-    entrega.parceiroRota = rota.parceiro ? rota.parceiro.id : null;
+  function publicarEntrega(event) {
+    event.preventDefault();
+    alert('Entrega publicada com sucesso!');
+    event.target.reset();
+  }
 
-    entregas.push(entrega);
-    salvar();
-    
-    // Limpar formulário
-    document.getElementById('nomeLoja').value = '';
-    document.getElementById('enderecoRetirada').value = '';
-    document.getElementById('enderecoCliente').value = '';
-    document.getElementById('telefoneLoja').value = '';
-    document.getElementById('valorEntrega').value = '';
+  function cadastrarLoja(event) {
+    event.preventDefault();
+    alert('Loja cadastrada com sucesso!');
+    event.target.reset();
+  }
 
-    const msg = document.getElementById('msgLoja');
-    if (entrega.rotaCombinada) {
-        msg.className = 'msg sucesso';
-        msg.innerHTML = '✅ <strong>ENTREGA PUBLICADA!</strong> 🟠 ROTA COMBINADA DETECTADA! O entregador vai ganhar mais uma entrega no mesmo caminho! 💰🛵';
-    } else {
-        msg.className = 'msg sucesso';
-        msg.innerHTML = '✅ Entrega publicada com sucesso! Aguardando entregador! 🛵';
-    }
-    
-    setTimeout(() => { msg.style.display = 'none'; }, 5000);
-}
-
-// 📄 RENDERIZAR LISTA DE ENTREGAS (para entregador)
-function renderizarEntregas() {
-    const lista = document.getElementById('listaEntregas');
-    if (entregas.filter(e => e.status === 'disponivel').length === 0) {
-        lista.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Nenhuma entrega disponível no momento. Volte mais tarde! 🛵</p>';
-        return;
-    }
-
-    lista.innerHTML = entregas.filter(e => e.status === 'disponivel').map(e => {
-        let html = `
-        <div class="entrega-item">
-            <span class="etiqueta ${e.rotaCombinada ? 'dupla' : 'disponivel'}">
-                ${e.rotaCombinada ? '🟠 ROTA DUPLA - GANHO MAIOR!' : '✅ Disponível'}
-            </span>
-            <h4 style="font-size:18px; margin-bottom:8px;">${e.loja}</h4>
-            <p>📍 <strong>Retirada:</strong> ${e.retirada}</p>
-            <p>🏠 <strong>Destino:</strong> ${e.destino}</p>
-            <p>💰 <strong>Valor:</strong> R$ ${e.valor.toFixed(2)}</p>
-            ${e.telefone ? `<p>📱 <strong>Contato:</strong> ${e.telefone}</p>` : ''}
-            ${e.rotaCombinada ? `<div class="match">💍 <strong>ROTA COMBINADA!</strong> Tem outra entrega no mesmo caminho — faça as duas e lucre mais! 🛵💰</div>` : ''}
-            <button class="btn-verde" style="margin-top:12px; padding:12px;" onclick="aceitarEntrega(${e.id})">🏍️ ACEITAR ENTREGA</button>
-        </div>`;
-        return html;
-    }).join('');
-}
-
-// ✋ ACEITAR ENTREGA
-function aceitarEntrega(id) {
-    const idx = entregas.findIndex(e => e.id === id);
-    if (idx !== -1) {
-        entregas[idx].status = 'aceita';
-        salvar();
-        alert('🏍️ Entrega aceita! Bom trabalho! Faça a entrega e lucre! 💪💰🛵' + 
-              (entregas[idx].rotaCombinada ? '\n\n💍 Lembre-se: tem OUTRA entrega no mesmo trajeto — aproveite! 🛵🛵' : ''));
-        renderizarEntregas();
-    }
-}
-
-// 📊 RENDERIZAR ADMIN
-function renderizarAdmin() {
-    document.getElementById('totalEntregas').textContent = entregas.length;
-    document.getElementById('totalRotasCombinadas').textContent = entregas.filter(e => e.rotaCombinada).length;
-    
-    const div = document.getElementById('todasEntregas');
-    if (entregas.length === 0) {
-        div.innerHTML = '<p style="color:#888;">Nenhuma entrega publicada ainda.</p>';
-        return;
-    }
-    div.innerHTML = entregas.map(e => `
-    <div style="padding:12px; background:#f9f9f9; border-radius:8px; margin-bottom:8px;">
-        <strong>${e.loja}</strong> → ${e.destino} | R$ ${e.valor.toFixed(2)} | 
-        ${e.rotaCombinada ? '🟠 Rota Combinada' : 'Normal'} | 
-        ${e.status === 'disponivel' ? '✅ Disponível' : '✅ Aceita'}
-    </div>`).join('');
-}
-
-// 💾 SALVAR NO BANCO LOCAL
-function salvar() {
-    localStorage.setItem('entregasRotaCheia', JSON.stringify(entregas));
-}
-
-// 🔄 Inicializar
-renderizarEntregas();
+  function cadastrarEntregador(event) {
+    event.preventDefault();
+    alert('Entregador cadastrado com sucesso!');
+    event.target.reset();
+  }
 </script>
+
 </body>
 </html>
