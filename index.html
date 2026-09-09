@@ -42,355 +42,211 @@
 
     .aba {
       display: none;
+      padding: 20px;
     }
-  .aba.ativa {
-    display: block;
-  }
-
-  .botoes-capa {
-    padding: 20px;
-  }
-
-  .botao-nav {
-    width: 100%;
-    padding: 18px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .botao-loja {
-    background: linear-gradient(90deg, #f59e0b, #eab308);
-    color: #000;
-  }
-
-  .botao-entregador {
-    background: linear-gradient(90deg, #16a34a, #22c55e);
-    color: white;
-  }
-
-  .botao-admin {
-    background: linear-gradient(90deg, #2563eb, #3b82f6);
-    color: white;
-  }
-
-  .botao-voltar {
-    background: #6c757d;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-
-  input, button {
-    width: 100%;
-    padding: 14px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-
-  button[type="submit"] {
-    background: #2563eb;
-    color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
 
     .aba.ativa {
       display: block;
     }
 
-    h2 {
-      margin-bottom: 15px;
-      color: #222;
+    .botoes-capa {
+      padding: 20px;
     }
 
-    form {
+    .botao-nav {
+      width: 100%;
+      padding: 18px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .botao-loja {
+      background: linear-gradient(90deg, #f59e0b, #eab308);
+      color: #000;
+    }
+
+    .botao-entregador {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      color: white;
+    }
+
+    .botao-admin {
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      color: white;
+    }
+
+    .botao-voltar {
+      background: #6c757d;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #222;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
       border-radius: 8px;
       font-size: 16px;
     }
 
-    button {
-      padding: 12px;
-      background-color: #007bff;
-      color: #fff;
+    button[type="submit"] {
+      background: #2563eb;
+      color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .entrega-card {
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border-left: 4px solid #007bff;
-    }
-
-    .admin-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .lista-entregas {
       margin-top: 15px;
     }
 
-    .admin-links a {
-      padding: 12px;
-      background-color: #007bff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .admin-links a:hover {
-      background-color: #0056b3;
-    }
-
-    .voltar {
-      margin-top: 20px;
-      background-color: #6c757d;
-    }
-
-    .voltar:hover {
-      background-color: #5a6268;
-    }
-
-    .salvar {
-      background-color: #28a745;
-    }
-
-    .salvar:hover {
-      background-color: #218838;
-    }
-
-    .perfil {
-      margin-top: 20px;
+    .cartao-entrega {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
       padding: 15px;
-      background-color: #f1f1f1;
-      border-radius: 8px;
+      margin-bottom: 12px;
     }
 
-    .hidden {
-      display: none;
+    .rodape {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
-
-<div class="app-container">
-
-  <!-- CAPA COM ÁREAS CLICÁVEIS NA FOTO -->
-  <div class="capa-container">
-    <img src="Capa.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" usemap="#mapa-capa">
-
-    <map name="mapa-capa">
-      <!-- Botão Loja Amarelo -->
- 
-<area shape="rect" coords="80,570,920,650" onclick="mostrarAba('loja');return false;" alt="Loja">
-
-      <area shape="rect" coords="80,660,920,740" onclick="mostrarAba('entregador');return false;" alt="Entregador">
-
-      
-      <area shape="rect" coords="80,750,920,830" onclick="mostrarAba('admin');return false;" alt="Administrador">
-
-      
+  <div class="app-container">
     
+    <!-- TELA DE CAPA -->
+    <div id="capa" class="capa-container">
+      <img src="https://i.imgur.com/8ZxL9QH.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem">
+      
+      <div class="botoes-capa">
+        <button class="botao-nav botao-loja" onclick="mostrarAba('loja')">
+          <span>🏪 LOJA</span>
+          <span>➤</span>
+        </button>
+
+        <button class="botao-nav botao-entregador" onclick="mostrarAba('entregador')">
+          <span>🏍️ ENTREGADOR</span>
+          <span>➤</span>
+        </button>
+
+        <button class="botao-nav botao-admin" onclick="mostrarAba('gerenciar-entregadores')">
+          <span>👨‍💼 ADMINISTRADOR</span>
+          <span>➤</span>
+        </button>
+      </div>
+
+      <div class="rodape">
+        <strong>Rota Cheia</strong><br>
+        Versão 1.0 — "Nenhuma entrega volta vazia"
+      </div>
+    </div>
+
+    <!-- ABA LOJA — Publicar Entrega -->
+    <div id="aba-loja" class="aba">
+      <h2>🏪 Publicar Entrega</h2>
+      <form onsubmit="publicarEntrega(event)">
+        <input type="text" placeholder="📍 Endereço de Coleta" required>
+        <input type="text" placeholder="📍 Endereço de Entrega" required>
+        <input type="text" placeholder="📦 Descrição do produto" required>
+        <input type="number" step="0.01" placeholder="💰 Valor da entrega R$" required>
+        <input type="tel" placeholder="📞 Seu WhatsApp" required>
+        <button type="submit">✅ Publicar Entrega</button>
+      </form>
+      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
+    </div>
+
+    <!-- ABA ENTREGADOR -- Ver Entregas Disponíveis -->
+    <div id="aba-entregador" class="aba">
+      <h2>🏍️ Entregas Disponíveis</h2>
+      <div class="lista-entregas" id="lista-entregas">
+        <p style="text-align:center; color:#666; padding:20px;">Aguardando novas entregas...</p>
+      </div>
+      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
+    </div>
+
+    <!-- ABA ADMIN — Cadastrar Entregador -->
+    <div id="aba-gerenciar-entregadores" class="aba">
+      <h2>👨‍💼 Cadastrar Entregador</h2>
+      <form onsubmit="cadastrarEntregador(event)">
+        <input type="text" placeholder="👤 Nome Completo" required>
+        <input type="text" placeholder="📄 CPF" required>
+        <input type="tel" placeholder="📞 Telefone / WhatsApp" required>
+        <input type="text" placeholder="🏍️ Placa da Moto" required>
+        <input type="email" placeholder="📧 E-mail" required>
+        <input type="password" placeholder="🔑 Senha" required>
+        <button type="submit">💾 Cadastrar</button>
+      </form>
+      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
+    </div>
+
   </div>
 
-  <!-- ÁREA DAS ABAS -->
-  <div class="abas">
-
-    <!-- ABA LOJA -->
-    <div id="aba-loja" class="aba">
-      <h2>Publicar Entrega</h2>
-      <form onsubmit="publicarEntrega(event)">
-        <input type="text" placeholder="Nome da Loja" required>
-        <input type="text" placeholder="Endereço de Coleta" required>
-        <input type="text" placeholder="Endereço de Entrega" required>
-        <input type="number" placeholder="Valor da Entrega" required>
-        <textarea placeholder="Observações"></textarea>
-        <button type="submit">Publicar</button>
-      </form>
-      <button class="voltar" onclick="voltar()">Voltar</button>
-    </div>
-
-    <!-- ABA ENTREGADOR -->
-    <div id="aba-entregador" class="aba">
-      <h2>Entregas Disponíveis</h2>
-
-      <div class="entrega-card">
-        <h3>Loja do Zé</h3>
-        <p>Coleta: Rua das Flores, 123</p>
-        <p>Entrega: Av. Paulista, 456</p>
-        <p>Valor: R$ 15,00</p>
-        <button>Aceitar Entrega</button>
-      </div>
-
-      <div class="entrega-card">
-        <h3>Mercado Central</h3>
-        <p>Coleta: Praça da Sé, 10</p>
-        <p>Entrega: Rua Augusta, 789</p>
-        <p>Valor: R$ 20,00</p>
-        <button>Aceitar Entrega</button>
-      </div>
-
-      <button class="voltar" onclick="voltar()">Voltar</button>
-    </div>
-
-    <!-- ABA ADMINISTRADOR -->
-    <div id="aba-admin" class="aba">
-      <h2>Painel Administrativo</h2>
-
-      <div class="admin-links">
-        <a href="#" onclick="mostrarAba('gerenciar-lojas'); return false;">Gerenciar Lojas</a>
-        <a href="#" onclick="mostrarAba('gerenciar-entregadores'); return false;">Gerenciar Entregadores</a>
-        <a href="#" onclick="mostrarAba('configuracoes'); return false;">Configurações</a>
-      </div>
-
-      <button class="voltar" onclick="voltar()">Voltar</button>
-    </div>
-
-    <!-- ABA GERENCIAR LOJAS -->
-    <div id="aba-gerenciar-lojas" class="aba">
-      <h2>Gerenciar Lojas</h2>
-
-      <form onsubmit="cadastrarLoja(event)">
-        <input type="text" placeholder="Nome da Loja" required>
-        <input type="email" placeholder="E-mail da Loja" required>
-        <input type="password" placeholder="Senha" required>
-        <button type="submit" class="salvar">Salvar Loja</button>
-      </form>
-
-      <div class="perfil">
-        <h3>Loja do Zé</h3>
-        <p>loja@email.com</p>
-        <button>Editar</button>
-        <button>Excluir</button>
-      </div>
-
-      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
-    </div>
-.app-container {
-  max-width: 480px;
-  margin: 0 auto;
-  background: #fff;
-  min-height: 100vh;
-}
-
-.capa-container {
-  width: 100%;
-  position: relative;
-}
-
-.capa-imagem {
-  width: 100%;
-  display: block;
-}
-
-.aba {
-  display: none;
-  padding: 20px;
-}
-
-.aba.ativa {
-  display: block;
-}
-
-button, input, textarea {
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button.voltar {
-  background: #6c757d;
-  margin-top: 20px;
-}
-
-button:active {
-  opacity: 0.8;
-}
-</style>
-
-    <!-- ABA GERENCIAR ENTREGADORES -->
-    <div id="aba-gerenciar-entregadores" class="aba">
-      <h2>Gerenciar Entregadores</h2>
-
-      <form onsubmit="cadastrarEntregador(event)">
-        <input type="text" placeholder="Nome do Entregador" required>
-        <input type="text" placeholder="CPF" required>
-        <input type="tel" placeholder="Telefone" required>
-        <input type="email" placeholder="E-mail" required>
-        <input type="password" placeholder="Senha" required>
-        <button type="submit" class="salvar">Salvar Entregador</button>
-      </form>
-<script>
-function mostrarAba(nomeAba) {
-  document.querySelectorAll('.aba').forEach(aba => {
-    aba.classList.remove('ativa');
-  });
-  document.getElementById('aba-' + nomeAba).classList.add('ativa');
-  document.querySelector('.capa-container').style.display = 'none';
-}
-
-function voltarCapa() {
-  document.querySelector('.capa-container').style.display = 'block';
-  document.querySelectorAll('.aba').forEach(aba => {
-    aba.classList.remove('ativa');
-  });
-}
-
-function publicarEntrega(event) {
-  event.preventDefault();
-  alert('✅ Entrega publicada com sucesso! Nenhuma entrega volta vazia! 🛵');
-  event.target.reset();
-}
-
-function cadastrarEntregador(event) {
-  event.preventDefault();
-  alert('✅ Entregador cadastrado com sucesso! Bem-vindo à Rota Cheia! 🛵💚');
-  event.target.reset();
-}
-</script>
-
+  <script>
+    function mostrarAba(nomeAba) {
+      // Esconde a capa
+      document.getElementById('capa').style.display = 'none';
       
+      // Esconde todas as abas
+      const abas = document.querySelectorAll('.aba');
+      abas.forEach(aba => aba.classList.remove('ativa'));
+      
+      // Mostra a aba selecionada
+      document.getElementById('aba-' + nomeAba).classList.add('ativa');
+      
+      // Rola para o topo
+      window.scrollTo(0, 0);
+    }
+
+    function voltarCapa() {
+      // Esconde todas as abas
+      const abas = document.querySelectorAll('.aba');
+      abas.forEach(aba => aba.classList.remove('ativa'));
+      
+      // Mostra a capa novamente
+      document.getElementById('capa').style.display = 'block';
+      
+      // Rola para o topo
+      window.scrollTo(0, 0);
+    }
+
+    function publicarEntrega(event) {
+      event.preventDefault();
+      alert('✅ Entrega publicada com sucesso!\n\nUm entregador vai aceitar em breve. 🛵💨');
+      event.target.reset();
+      voltarCapa();
+    }
+
+    function cadastrarEntregador(event) {
+      event.preventDefault();
+      alert('✅ Entregador cadastrado com sucesso!\n\nBem-vindo à equipe Rota Cheia! 🛵🎉');
+      event.target.reset();
+      voltarCapa();
+    }
+  </script>
+</body>
+</html>
