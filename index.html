@@ -233,6 +233,60 @@
 
       <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
     </div>
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+}
+
+.capa-container {
+  width: 100%;
+  position: relative;
+}
+
+.capa-imagem {
+  width: 100%;
+  display: block;
+}
+
+.aba {
+  display: none;
+  padding: 20px;
+}
+
+.aba.ativa {
+  display: block;
+}
+
+button, input, textarea {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.voltar {
+  background: #6c757d;
+  margin-top: 20px;
+}
+
+button:active {
+  opacity: 0.8;
+}
+</style>
 
     <!-- ABA GERENCIAR ENTREGADORES -->
     <div id="aba-gerenciar-entregadores" class="aba">
@@ -246,77 +300,33 @@
         <input type="password" placeholder="Senha" required>
         <button type="submit" class="salvar">Salvar Entregador</button>
       </form>
-
-      <div class="perfil">
-        <h3>João Entregador</h3>
-        <p>cpf: 123.456.789-00</p>
-        <p>telefone: (11) 99999-9999</p>
-        <button>Editar</button>
-        <button>Excluir</button>
-      </div>
-
-      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
-    </div>
-
-    <!-- ABA CONFIGURAÇÕES -->
-    <div id="aba-configuracoes" class="aba">
-      <h2>Configurações</h2>
-
-      <form>
-        <input type="text" placeholder="Nome do App" value="Rota Cheia">
-        <input type="color" value="#007bff">
-        <textarea placeholder="Slogan">Nenhuma entrega volta vazia</textarea>
-        <button class="salvar">Salvar Configurações</button>
-      </form>
-
-      <button class="voltar" onclick="mostrarAba('admin')">Voltar</button>
-    </div>
-
-  </div>
-
-</div>
-
 <script>
-  function mostrarAba(nomeAba) {
-    document.querySelectorAll('.aba').forEach(aba => {
-      aba.classList.remove('ativa');
-    });
-
-    const abaAtiva = document.getElementById('aba-' + nomeAba);
-
-      if (abaAtiva) {
-    abaAtiva.classList.add('ativa');
-    window.scrollTo(0, 0);
-  }
-  document.querySelector('.capa-container').style.display = 'none';
-}
-
-function voltar() {
+function mostrarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => {
     aba.classList.remove('ativa');
   });
+  document.getElementById('aba-' + nomeAba).classList.add('ativa');
+  document.querySelector('.capa-container').style.display = 'none';
+}
+
+function voltarCapa() {
   document.querySelector('.capa-container').style.display = 'block';
-  window.scrollTo(0, 0);
+  document.querySelectorAll('.aba').forEach(aba => {
+    aba.classList.remove('ativa');
+  });
 }
 
-function publicarEntrega(evento) {
-  evento.preventDefault();
-  alert('✅ Entrega publicada com sucesso!');
-  evento.target.reset();
-  voltar();
+function publicarEntrega(event) {
+  event.preventDefault();
+  alert('✅ Entrega publicada com sucesso! Nenhuma entrega volta vazia! 🛵');
+  event.target.reset();
 }
 
-function cadastrarLoja(evento) {
-  evento.preventDefault();
-  alert('✅ Loja cadastrada com sucesso!');
-  evento.target.reset();
-  voltar();
-}
-
-function cadastrarEntregador(evento) {
-  evento.preventDefault();
-  alert('✅ Entregador cadastrado com sucesso!');
-  evento.target.reset();
-  voltar();
+function cadastrarEntregador(event) {
+  event.preventDefault();
+  alert('✅ Entregador cadastrado com sucesso! Bem-vindo à Rota Cheia! 🛵💚');
+  event.target.reset();
 }
 </script>
+
+      
