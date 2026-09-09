@@ -36,10 +36,6 @@
       height: auto;
     }
 
-    .abas {
-      padding: 20px;
-    }
-
     .aba {
       display: none;
       padding: 20px;
@@ -139,7 +135,6 @@
 <body>
   <div class="app-container">
     
-    <!-- TELA DE CAPA -->
     <div id="capa" class="capa-container">
       <img src="https://i.imgur.com/8ZxL9QH.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem">
       
@@ -166,7 +161,6 @@
       </div>
     </div>
 
-    <!-- ABA LOJA — Publicar Entrega -->
     <div id="aba-loja" class="aba">
       <h2>🏪 Publicar Entrega</h2>
       <form onsubmit="publicarEntrega(event)">
@@ -180,7 +174,6 @@
       <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
     </div>
 
-    <!-- ABA ENTREGADOR -- Ver Entregas Disponíveis -->
     <div id="aba-entregador" class="aba">
       <h2>🏍️ Entregas Disponíveis</h2>
       <div class="lista-entregas" id="lista-entregas">
@@ -189,7 +182,6 @@
       <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
     </div>
 
-    <!-- ABA ADMIN — Cadastrar Entregador -->
     <div id="aba-gerenciar-entregadores" class="aba">
       <h2>👨‍💼 Cadastrar Entregador</h2>
       <form onsubmit="cadastrarEntregador(event)">
@@ -208,42 +200,30 @@
 
   <script>
     function mostrarAba(nomeAba) {
-      // Esconde a capa
       document.getElementById('capa').style.display = 'none';
-      
-      // Esconde todas as abas
       const abas = document.querySelectorAll('.aba');
       abas.forEach(aba => aba.classList.remove('ativa'));
-      
-      // Mostra a aba selecionada
       document.getElementById('aba-' + nomeAba).classList.add('ativa');
-      
-      // Rola para o topo
       window.scrollTo(0, 0);
     }
 
     function voltarCapa() {
-      // Esconde todas as abas
       const abas = document.querySelectorAll('.aba');
       abas.forEach(aba => aba.classList.remove('ativa'));
-      
-      // Mostra a capa novamente
       document.getElementById('capa').style.display = 'block';
-      
-      // Rola para o topo
       window.scrollTo(0, 0);
     }
 
     function publicarEntrega(event) {
       event.preventDefault();
-      alert('✅ Entrega publicada com sucesso!\n\nUm entregador vai aceitar em breve. 🛵💨');
+      alert('✅ Entrega publicada com sucesso!\\n\\nUm entregador vai aceitar em breve. 🛵💨');
       event.target.reset();
       voltarCapa();
     }
 
     function cadastrarEntregador(event) {
       event.preventDefault();
-      alert('✅ Entregador cadastrado com sucesso!\n\nBem-vindo à equipe Rota Cheia! 🛵🎉');
+      alert('✅ Entregador cadastrado com sucesso!\\n\\nBem-vindo à equipe Rota Cheia! 🛵🎉');
       event.target.reset();
       voltarCapa();
     }
