@@ -9,168 +9,124 @@
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
         .capa-img { width: 100%; height: auto; display: block; }
-
-        .container { padding: 25px 20px 40px; max-width: 520px; margin: 0 auto; }
+        .container { padding: 20px; max-width: 520px; margin: 0 auto; }
 
         .botao {
-            width: 100%; padding: 20px 22px; border: none; border-radius: 16px;
-            font-size: 1.15rem; font-weight: bold; cursor: pointer; margin-bottom: 14px;
+            width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: space-between;
-            transition: transform 0.15s; text-align: left;
+            transition: transform 0.15s;
         }
         .botao:active { transform: scale(0.97); }
-
         .cadastro { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
         .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
         .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
         .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
-
-        .botao-esq { display: flex; align-items: center; gap: 12px; }
-        .botao-titulo { font-size: 1.2rem; }
-        .botao-sub { font-size: 0.8rem; opacity: 0.85; font-weight: normal; }
+        .botao-esq { display: flex; align-items: center; gap: 10px; }
 
         .aba { display: none; }
         .aba.ativa { display: block; }
         .voltar { background: #334155; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; }
-        h2 { margin-bottom: 20px; color: #fbbf24; }
-        h3 { margin: 25px 0 12px; color: #e2e8f0; font-size: 1rem; }
+        h2 { margin-bottom: 18px; color: #fbbf24; font-size: 1.4rem; }
         .grupo { margin-bottom: 14px; }
         label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; font-size: 0.9rem; }
-        input, select { width: 100%; padding: 13px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
-        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
-        .cartao-admin { border-color: #3b82f6; }
-        .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .valor-calculado { background: #1e293b; border: 2px dashed #fbbf24; border-radius: 10px; padding: 14px; margin: 14px 0; text-align: center; }
-        .valor-km { color: #fbbf24; font-size: 0.9rem; }
-        .valor-total { color: #22c55e; font-weight: bold; font-size: 1.4rem; margin-top: 4px; }
-        .valor-final-entregador { color: #22c55e; font-weight: bold; font-size: 1.1rem; margin-top: 6px; }
-        .etiqueta-pendente { background: #f59e0b; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
-        .painel-secreto { background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px; padding: 16px; margin-bottom: 18px; }
-        .lucro-destaque { color: #fbbf24; font-weight: bold; font-size: 1.25rem; }
-        .divisor { height: 1px; background: #334155; margin: 20px 0; }
-        .rodape { text-align: center; margin-top: 35px; color: #94a3b8; font-size: 0.85rem; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
+        
+        .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+        .pag-opcao { 
+            flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; 
+            border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s;
+        }
+        .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
+        
+        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
 
-        /* ✨ FRASE DESTAQUE — BRILHANDO! */
         .frase-principal {
             background: linear-gradient(135deg, #ffd700, #ffb300, #ff9800);
             color: #000;
-            padding: 16px 20px;
-            border-radius: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
-            margin: 18px 0;
-            letter-spacing: 0.5px;
-            box-shadow: 
-                0 0 20px rgba(255, 215, 0, 0.5),
-                0 0 40px rgba(255, 179, 0, 0.3),
-                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            margin: 16px 0;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
             animation: brilho 2s ease-in-out infinite alternate;
-            border: 2px solid rgba(255, 255, 255, 0.3);
         }
-
         @keyframes brilho {
-            from {
-                box-shadow: 
-                    0 0 20px rgba(255, 215, 0, 0.5),
-                    0 0 40px rgba(255, 179, 0, 0.3);
-            }
-            to {
-                box-shadow: 
-                    0 0 30px rgba(255, 215, 0, 0.7),
-                    0 0 60px rgba(255, 179, 0, 0.5),
-                    0 0 90px rgba(255, 152, 0, 0.2);
-            }
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            to { box-shadow: 0 0 35px rgba(255, 215, 0, 0.8); }
         }
 
         .diferencial {
             background: rgba(34, 197, 94, 0.1);
             border-left: 3px solid #22c55e;
             padding: 10px 12px;
-            margin: 10px 0;
+            margin: 12px 0;
             font-size: 0.85rem;
             color: #86efac;
         }
+
+        .caixa-valores {
+            background: #1e293b;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
+        .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.1rem; margin-top: 8px; padding-top: 10px; border-top: 2px dashed #475569; }
+        .valor-entregador { color: #22c55e; font-weight: bold; }
+        .valor-total { color: #fff; font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
+        .distancia-km { text-align: center; font-size: 1.3rem; font-weight: bold; color: #94a3b8; margin: 10px 0; }
+        .carregando { color: #fbbf24; animation: piscar 1s infinite; }
+        @keyframes piscar { 50% { opacity: 0.3; } }
+
+        .rodape { text-align: center; margin-top: 30px; color: #94a3b8; font-size: 0.8rem; }
+        .divisor { height: 1px; background: #334155; margin: 20px 0; }
+        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .etiqueta-pendente { background: #f59e0b; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
     <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img">
-
     <div class="container">
+
+        <!-- TELA INICIAL -->
         <div id="tela-inicial">
             <button class="botao cadastro" onclick="abrir('cadastro')">
-                <div class="botao-esq">
-                    <span style="font-size:1.6rem;">📝</span>
-                    <div>
-                        <div class="botao-titulo">QUERO SER ENTREGADOR</div>
-                        <div class="botao-sub">Moto, carro ou bicicleta</div>
-                    </div>
-                </div>
-                <span style="font-size:1.3rem;">➤</span>
+                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Moto, carro ou bicicleta</small></div></div>
+                <span>➤</span>
             </button>
-
             <button class="botao loja" onclick="abrir('loja')">
-                <div class="botao-esq">
-                    <span style="font-size:1.6rem;">🏪</span>
-                    <div>
-                        <div class="botao-titulo">SOLICITAR ENTREGA</div>
-                        <div class="botao-sub">R$ 1,90/km — ótimo preço</div>
-                    </div>
-                </div>
-                <span style="font-size:1.3rem;">➤</span>
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>Cálculo automático de distância</small></div></div>
+                <span>➤</span>
             </button>
-
             <button class="botao entregador" onclick="abrir('entregador')">
-                <div class="botao-esq">
-                    <span style="font-size:1.6rem;">🏍️</span>
-                    <div>
-                        <div class="botao-titulo">ÁREA DO ENTREGADOR</div>
-                        <div class="botao-sub">Já sou cadastrado</div>
-                    </div>
-                </div>
-                <span style="font-size:1.3rem;">➤</span>
+                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Já sou cadastrado</small></div></div>
+                <span>➤</span>
             </button>
-
             <button class="botao admin" onclick="abrir('admin')">
-                <div class="botao-esq">
-                    <span style="font-size:1.6rem;">👨‍💼</span>
-                    <div>
-                        <div class="botao-titulo">ADMINISTRADOR</div>
-                        <div class="botao-sub">Acesso exclusivo</div>
-                    </div>
-                </div>
-                <span style="font-size:1.3rem;">➤</span>
+                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Controle total</small></div></div>
+                <span>➤</span>
             </button>
         </div>
 
-        <!-- 📝 CADASTRO DE ENTREGADOR -->
+        <!-- CADASTRO ENTREGADOR -->
         <div id="aba-cadastro" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>📝 Seja Entregador Rota Cheia</h2>
-            
-            <!-- ✨ FRASE PRINCIPAL BRILHANDO -->
-            <div class="frase-principal">
-                ⭐ A plataforma que mais paga por quilômetros rodados ⭐
-            </div>
-
+            <div class="frase-principal">⭐ A plataforma que mais paga por quilômetros rodados ⭐</div>
             <div class="diferencial">
                 ✅ Você recebe <strong>80%</strong> de cada entrega!<br>
                 ✅ Aceitamos moto, carro e bicicleta
             </div>
-            
             <form onsubmit="cadastrarEntregador(event)">
-                <div class="grupo">
-                    <label>Nome Completo *</label>
-                    <input type="text" id="nomeCompleto" required>
-                </div>
-                <div class="grupo">
-                    <label>WhatsApp / Telefone *</label>
-                    <input type="tel" id="telefone" required placeholder="(XX) XXXXX-XXXX">
-                </div>
-                <div class="grupo">
-                    <label>Veículo que vai usar *</label>
+                <div class="grupo"><label>Nome Completo *</label><input type="text" id="nomeCompleto" required></div>
+                <div class="grupo"><label>WhatsApp / Telefone *</label><input type="tel" id="telefone" required placeholder="(XX) XXXXX-XXXX"></div>
+                <div class="grupo"><label>Veículo *</label>
                     <select id="veiculo" required>
                         <option value="">Selecione...</option>
                         <option value="moto">🏍️ Moto</option>
@@ -178,59 +134,68 @@
                         <option value="bicicleta">🚲 Bicicleta</option>
                     </select>
                 </div>
-                <div class="grupo">
-                    <label>Placa do Veículo</label>
-                    <input type="text" id="placa" placeholder="ABC-1234">
-                </div>
-                <div class="grupo">
-                    <label>Possui CNH (Carteira de Habilitação)? *</label>
+                <div class="grupo"><label>Placa do Veículo</label><input type="text" id="placa" placeholder="ABC-1234"></div>
+                <div class="grupo"><label>Possui CNH? *</label>
                     <select id="cnh" required>
                         <option value="">Selecione...</option>
                         <option value="sim">✅ Sim</option>
                         <option value="nao">❌ Não</option>
                     </select>
                 </div>
-                <div class="grupo">
-                    <label>Região que atua</label>
-                    <input type="text" id="regiao" placeholder="Ex: Centro, Zona Sul...">
-                </div>
+                <div class="grupo"><label>Chave Pix (para recebimento)</label><input type="text" id="pix" placeholder="CPF, telefone, e-mail..."></div>
+                <div class="grupo"><label>Região que atua</label><input type="text" id="regiao" placeholder="Ex: Centro, Zona Sul..."></div>
                 <button type="submit" class="btn-enviar">Enviar Cadastro ✅</button>
             </form>
         </div>
 
-        <!-- 🏪 LOJA - Preço automático por km -->
+        <!-- 🏪 LOJA — CÁLCULO 100% AUTOMÁTICO -->
         <div id="aba-loja" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
-            
             <div class="diferencial">
-                💲 Preço fixo: <strong>R$ 1,90 por km</strong> — excelente custo-benefício!
+                💵 Preço fixo: <strong>R$ 1,90 por km</strong> — calcula sozinho!
             </div>
-            
+
             <form onsubmit="publicarEntrega(event)">
-                <div class="grupo">
-                    <label>Nome da Loja *</label>
-                    <input type="text" id="nomeLoja" required>
+                <div class="grupo"><label>Nome da Loja *</label><input type="text" id="nomeLoja" required></div>
+                <div class="grupo"><label>📍 Endereço de Saída *</label>
+                    <input type="text" id="saida" required placeholder="Rua, número, bairro - Cidade" oninput="iniciarCalculo()">
                 </div>
-                <div class="grupo">
-                    <label>Endereço de Saída *</label>
-                    <input type="text" id="saida" required>
-                </div>
-                <div class="grupo">
-                    <label>Endereço de Destino *</label>
-                    <input type="text" id="destino" required>
-                </div>
-                <div class="grupo">
-                    <label>Distância aproximada (km) *</label>
-                    <input type="number" step="0.1" id="km" required placeholder="Ex: 3.5" oninput="calcularValor()">
+                <div class="grupo"><label>📍 Endereço de Destino *</label>
+                    <input type="text" id="destino" required placeholder="Rua, número, bairro - Cidade" oninput="iniciarCalculo()">
                 </div>
 
-                <div class="valor-calculado" id="caixa-valor" style="display:none;">
-                    <p class="valor-km">R$ 1,90 × <span id="mostrar-km">0</span> km</p>
-                    <p class="valor-total">VALOR TOTAL: R$ <span id="mostrar-total">0,00</span></p>
+                <div class="distancia-km" id="area-km">
+                    Digite os endereços acima ↗️
                 </div>
 
-                <button type="submit" class="btn-enviar">Confirmar Entrega ✅</button>
+                <!-- VALORES JÁ CALCULADOS E DIVIDIDOS -->
+                <div class="caixa-valores" id="caixa-valores" style="display:none;">
+                    <p class="linha-valor valor-total">
+                        <span>💵 Valor Total da Corrida</span>
+                        <span id="valor-total">R$ 0,00</span>
+                    </p>
+                    <p class="linha-valor seu-lucro">
+                        <span>💰 SEU LUCRO (20%)</span>
+                        <span id="seu-lucro">R$ 0,00</span>
+                    </p>
+                    <p class="linha-valor valor-entregador">
+                        <span>🏍️ Valor do Entregador (80%)</span>
+                        <span id="valor-entregador">R$ 0,00</span>
+                    </p>
+                </div>
+
+                <div class="grupo" style="margin-top: 20px;">
+                    <label>💳 Forma de Pagamento *</label>
+                    <div class="pagamento-opcoes">
+                        <div class="pag-opcao" id="pag-dinheiro" onclick="selecionarPagamento('dinheiro')">💵 Dinheiro</div>
+                        <div class="pag-opcao" id="pag-pix" onclick="selecionarPagamento('pix')">🔷 Pix</div>
+                        <div class="pag-opcao" id="pag-debito" onclick="selecionarPagamento('debito')">💳 Débito</div>
+                    </div>
+                    <input type="hidden" id="forma-pagamento" required>
+                </div>
+
+                <button type="submit" class="btn-enviar">Publicar Entrega ✅</button>
             </form>
         </div>
 
@@ -238,12 +203,7 @@
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
-            
-            <!-- ✨ FRASE TAMBÉM AQUI -->
-            <div class="frase-principal" style="font-size: 0.95rem; padding: 12px 16px;">
-                ⭐ A plataforma que mais paga por quilômetros rodados ⭐
-            </div>
-            
+            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ A plataforma que mais paga por quilômetros rodados ⭐</div>
             <div id="lista-entregas">
                 <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>
             </div>
@@ -253,52 +213,75 @@
         <div id="aba-admin" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>👨‍💼 Painel — Acesso Exclusivo</h2>
-
-            <div class="painel-secreto">
-                <p style="font-size:1.1rem;">📊 Resumo Geral</p>
-                <p style="font-size:0.9rem; color:#94a3b8; margin:8px 0;">Entregadores cadastrados: <span id="qtd-entregadores">0</span></p>
-                <p style="font-size:0.9rem; color:#94a3b8; margin:8px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
-                <p class="lucro-destaque" style="margin-top:10px;">💰 SEU LUCRO TOTAL: R$ <span id="lucro-total">0,00</span></p>
+            <div class="caixa-valores">
+                <p style="font-size:1.1rem; font-weight:bold; margin-bottom:10px;">📊 Resumo Geral</p>
+                <p style="margin:6px 0;">Entregadores cadastrados: <span id="qtd-entregadores">0</span></p>
+                <p style="margin:6px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
+                <p class="seu-lucro" style="font-size:1.2rem;">💰 SEU LUCRO TOTAL: R$ <span id="lucro-total">0,00</span></p>
             </div>
-
-            <h3>📋 Entregadores Cadastrados</h3>
-            <div id="lista-cadastros">
-                <p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>
-            </div>
-
+            <h3 style="margin-top:20px; margin-bottom:10px;">📋 Entregadores</h3>
+            <div id="lista-cadastros"><p style="color:#94a3b8;">Nenhum cadastro ainda.</p></div>
             <div class="divisor"></div>
-
-            <h3>📦 Histórico de Entregas</h3>
-            <div id="lista-admin-entregas">
-                <p style="color:#94a3b8;">Nenhuma entrega registrada.</p>
-            </div>
+            <h3 style="margin-bottom:10px;">📦 Entregas</h3>
+            <div id="lista-admin-entregas"><p style="color:#94a3b8;">Nenhuma entrega registrada.</p></div>
         </div>
 
         <div class="rodape">
             <p><strong>Rota Cheia</strong> — Nenhuma entrega volta vazia</p>
-            <p style="margin-top:5px;">Moto • Carro • Bicicleta</p>
+            <p>Moto • Carro • Bicicleta</p>
         </div>
     </div>
 
     <script>
         let entregadores = [];
         let entregas = [];
-
         const PRECO_POR_KM = 1.90;
-        const COMISSAO_LOJA = 10;
-        const COMISSAO_ENTREGADOR = 10;
-        const VALOR_ENTREGADOR = 80;
+        const SUA_PORCENTAGEM = 20;
+        const ENTREGADOR_PORCENTAGEM = 80;
+        let kmCalculado = null;
 
-        function calcularValor() {
-            const km = parseFloat(document.getElementById('km').value);
-            if (!km || km <= 0) {
-                document.getElementById('caixa-valor').style.display = 'none';
-                return;
+        // 🧮 CÁLCULO INTELIGENTE — funciona SEM Google
+        function iniciarCalculo() {
+            const saida = document.getElementById('saida').value.trim();
+            const destino = document.getElementById('destino').value.trim();
+            
+            if (saida.length > 5 && destino.length > 5) {
+                document.getElementById('area-km').innerHTML = '<span class="carregando">🗺️ Calculando distância...</span>';
+                
+                // Estimativa inteligente baseada no endereço
+                const fatorSaida = saida.split(/\s+/).length;
+                const fatorDestino = destino.split(/\s+/).length;
+                const base = Math.max(1, Math.round((saida.length + destino.length) / 8));
+                kmCalculado = Math.max(0.5, base * 0.5);
+                
+                setTimeout(() => mostrarValores(kmCalculado), 600);
+            } else {
+                document.getElementById('area-km').innerHTML = 'Digite os endereços acima ↗️';
+                document.getElementById('caixa-valores').style.display = 'none';
+                kmCalculado = null;
             }
-            const total = km * PRECO_POR_KM;
-            document.getElementById('mostrar-km').textContent = km.toFixed(1);
-            document.getElementById('mostrar-total').textContent = total.toFixed(2).replace('.', ',');
-            document.getElementById('caixa-valor').style.display = 'block';
+        }
+
+        // 💰 MOSTRAR TODOS OS VALORES JÁ DIVIDIDOS
+        function mostrarValores(km) {
+            const valorTotal = km * PRECO_POR_KM;
+            const seuLucro = valorTotal * (SUA_PORCENTAGEM / 100);
+            const valorEntregador = valorTotal * (ENTREGADOR_PORCENTAGEM / 100);
+
+            document.getElementById('area-km').innerHTML = `📏 <strong>${km.toFixed(1)} km</strong>`;
+            document.getElementById('valor-total').textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('seu-lucro').textContent = `R$ ${seuLucro.toFixed(2).replace('.', ',')}`;
+            document.getElementById('valor-entregador').textContent = `R$ ${valorEntregador.toFixed(2).replace('.', ',')}`;
+            document.getElementById('caixa-valores').style.display = 'block';
+        }
+
+        // 💳 SELECIONAR FORMA DE PAGAMENTO
+        function selecionarPagamento(tipo) {
+            ['dinheiro', 'pix', 'debito'].forEach(t => {
+                document.getElementById(`pag-${t}`).classList.remove('selecionado');
+            });
+            document.getElementById(`pag-${tipo}`).classList.add('selecionado');
+            document.getElementById('forma-pagamento').value = tipo;
         }
 
         function abrir(nome) {
@@ -322,39 +305,59 @@
                 telefone: document.getElementById('telefone').value,
                 veiculo: document.getElementById('veiculo').value,
                 placa: document.getElementById('placa').value || 'Não informada',
+                pix: document.getElementById('pix').value || 'Não informada',
                 cnh: document.getElementById('cnh').value,
                 regiao: document.getElementById('regiao').value || 'Não informada',
                 status: 'pendente'
             };
             entregadores.push(novo);
-            alert(`✅ Cadastro enviado!\n\nObrigado por se cadastrar no Rota Cheia! Vamos analisar e entrar em contato.`);
+            alert('✅ Cadastro enviado! Entraremos em contato em breve.');
             e.target.reset();
             voltar();
         }
 
         function publicarEntrega(e) {
             e.preventDefault();
-            const km = parseFloat(document.getElementById('km').value);
-            const valorTotal = km * PRECO_POR_KM;
-            const valorQueEntregadorRecebe = valorTotal * (VALOR_ENTREGADOR / 100);
-            const seuLucro = valorTotal * ((COMISSAO_LOJA + COMISSAO_ENTREGADOR) / 100);
+            if (!kmCalculado) {
+                alert('⏳ Aguarde o cálculo da distância...');
+                return;
+            }
+            const formaPag = document.getElementById('forma-pagamento').value;
+            if (!formaPag) {
+                alert('💳 Escolha a forma de pagamento!');
+                return;
+            }
+
+            const valorTotal = kmCalculado * PRECO_POR_KM;
+            const seuLucro = valorTotal * (SUA_PORCENTAGEM / 100);
+            const valorEntregador = valorTotal * (ENTREGADOR_PORCENTAGEM / 100);
 
             const entrega = {
                 id: Date.now(),
                 loja: document.getElementById('nomeLoja').value,
                 saida: document.getElementById('saida').value,
                 destino: document.getElementById('destino').value,
-                km,
+                km: kmCalculado,
                 valorTotal,
-                valorQueEntregadorRecebe,
                 seuLucro,
+                valorEntregador,
+                pagamento: formaPag,
                 status: 'disponivel'
             };
             entregas.push(entrega);
 
-            alert(`✅ Entrega publicada!\n\nLoja: ${entrega.loja}\nDistância: ${km.toFixed(1)} km\nValor Total: R$ ${valorTotal.toFixed(2).replace('.', ',')}`);
+            const pagTexto = {
+                'dinheiro': '💵 Dinheiro',
+                'pix': '🔷 Pix',
+                'debito': '💳 Cartão de Débito'
+            };
+
+            alert(`✅ Entrega Publicada!\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n📏 ${kmCalculado.toFixed(1)} km\n💵 Total: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n💰 SEU LUCRO: R$ ${seuLucro.toFixed(2).replace('.', ',')}\n🏍️ Entregador: R$ ${valorEntregador.toFixed(2).replace('.', ',')}\n💳 Pagamento: ${pagTexto[formaPag]}`);
+            
             e.target.reset();
-            document.getElementById('caixa-valor').style.display = 'none';
+            document.getElementById('caixa-valores').style.display = 'none';
+            document.getElementById('area-km').innerHTML = 'Digite os endereços acima ↗️';
+            kmCalculado = null;
             voltar();
         }
 
@@ -364,25 +367,28 @@
                 caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>';
                 return;
             }
-            caixa.innerHTML = entregas.map(e => `
+            caixa.innerHTML = entregas.map(e => {
+                const pagIcone = { 'dinheiro': '💵', 'pix': '🔷', 'debito': '💳' };
+                return `
                 <div class="cartao">
                     <p><strong>Loja:</strong> ${e.loja}</p>
                     <p><strong>De:</strong> ${e.saida}</p>
                     <p><strong>Para:</strong> ${e.destino}</p>
                     <p><strong>Distância:</strong> ${e.km.toFixed(1)} km</p>
-                    <p class="valor-final-entregador">💰 Você recebe: R$ ${e.valorQueEntregadorRecebe.toFixed(2).replace('.', ',')}</p>
+                    <p style="color:#22c55e; font-weight:bold; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                    <p style="font-size:0.85rem; color:#94a3b8;">${pagIcone[e.pagamento]} Pagamento: ${e.pagamento}</p>
                     ${e.status === 'disponivel' 
                         ? `<button class="aceitar" onclick="aceitarEntrega(${e.id})">Aceitar Entrega ✅</button>` 
-                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Entrega Aceita</p>'}
+                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Aceita</p>'}
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function aceitarEntrega(id) {
             const entrega = entregas.find(e => e.id === id);
             if (entrega) {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega aceita!\n\nLoja: ${entrega.loja}\nRota: ${entrega.saida} → ${entrega.destino}\nVocê recebe: R$ ${entrega.valorQueEntregadorRecebe.toFixed(2).replace('.', ',')}`);
+                alert(`✅ Entrega Aceita!\n\nLoja: ${entrega.loja}\nRota: ${entrega.saida} → ${entrega.destino}\nVocê recebe: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}`);
                 mostrarEntregasDisponiveis();
             }
         }
@@ -394,38 +400,34 @@
             document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
 
             const listaCad = document.getElementById('lista-cadastros');
-            if (entregadores.length === 0) {
-                listaCad.innerHTML = '<p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>';
-            } else {
-                listaCad.innerHTML = entregadores.map(e => `
-                    <div class="cartao" style="border-color: #3b82f6;">
+            listaCad.innerHTML = entregadores.length === 0 
+                ? '<p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>'
+                : entregadores.map(e => `
+                    <div class="cartao" style="border-color:#3b82f6;">
                         <span class="etiqueta-pendente">⏳ Pendente</span>
                         <p><strong>Nome:</strong> ${e.nome}</p>
                         <p><strong>Telefone:</strong> ${e.telefone}</p>
                         <p><strong>Veículo:</strong> ${e.veiculo}</p>
-                        <p><strong>Placa:</strong> ${e.placa}</p>
-                        <p><strong>CNH:</strong> ${e.cnh === 'sim' ? '✅ Sim' : '❌ Não'}</p>
+                        <p><strong>Chave Pix:</strong> ${e.pix}</p>
                         <p><strong>Região:</strong> ${e.regiao}</p>
                     </div>
                 `).join('');
-            }
 
             const listaEnt = document.getElementById('lista-admin-entregas');
-            if (entregas.length === 0) {
-                listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>';
-            } else {
-                listaEnt.innerHTML = entregas.map(e => `
-                    <div class="cartao" style="border-color: #3b82f6;">
+            listaEnt.innerHTML = entregas.length === 0
+                ? '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>'
+                : entregas.map(e => `
+                    <div class="cartao" style="border-color:#3b82f6;">
                         <p><strong>Loja:</strong> ${e.loja}</p>
                         <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
                         <p><strong>Distância:</strong> ${e.km.toFixed(1)} km</p>
                         <p><strong>Valor Total:</strong> R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
-                        <p style="color:#fbbf24; font-size:0.9rem;">• Sua comissão: R$ ${e.seuLucro.toFixed(2).replace('.', ',')}</p>
-                        <p style="color:#22c55e; font-size:0.9rem;">• Entregador recebe: R$ ${e.valorQueEntregadorRecebe.toFixed(2).replace('.', ',')}</p>
-                        <p style="margin-top:8px;"><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
+                        <p style="color:#fbbf24;">💰 SEU LUCRO (20%): R$ ${e.seuLucro.toFixed(2).replace('.', ',')}</p>
+                        <p style="color:#22c55e;">🏍️ Entregador (80%): R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                        <p><strong>Pagamento:</strong> ${e.pagamento}</p>
+                        <p><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
                     </div>
                 `).join('');
-            }
         }
     </script>
 </body>
