@@ -40,6 +40,8 @@
         .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
         
         .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
+        .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
+        .btn-concluir { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
 
         .frase-principal {
             background: linear-gradient(135deg, #ffd700, #ffb300, #ff9800);
@@ -67,15 +69,6 @@
             color: #86efac;
         }
 
-        .aviso-minimo {
-            background: rgba(251, 191, 36, 0.1);
-            border-left: 3px solid #fbbf24;
-            padding: 10px 12px;
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: #fcd34d;
-        }
-
         .caixa-valores {
             background: #1e293b;
             border: 2px solid #fbbf24;
@@ -91,12 +84,46 @@
         .carregando { color: #fbbf24; animation: piscar 1s infinite; }
         @keyframes piscar { 50% { opacity: 0.3; } }
 
+        .codigo-caixa {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 3px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+        .codigo-numeros {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fbbf24;
+            letter-spacing: 10px;
+            margin: 10px 0;
+        }
+        .codigo-dica {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
         .rodape { text-align: center; margin-top: 30px; color: #94a3b8; font-size: 0.8rem; }
         .divisor { height: 1px; background: #334155; margin: 20px 0; }
         .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
-        .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .etiqueta-pendente { background: #f59e0b; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
+        .etiqueta { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; font-weight: bold; }
+        .etiqueta-disponivel { background: #f59e0b; color: #000; }
+        .etiqueta-aceita { background: #3b82f6; color: #fff; }
+        .etiqueta-concluida { background: #22c55e; color: #fff; }
         .soma-detalhe { color: #94a3b8; font-size: 0.85rem; margin: 4px 0; }
+        .input-codigo { 
+            font-size: 2rem; 
+            text-align: center; 
+            letter-spacing: 8px;
+            font-weight: bold;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        .sucesso { color: #22c55e; text-align: center; font-weight: bold; margin-top: 10px; }
+        .erro { color: #ef4444; text-align: center; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -107,19 +134,19 @@
         <!-- TELA INICIAL -->
         <div id="tela-inicial">
             <button class="botao cadastro" onclick="abrir('cadastro')">
-                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Só 20% de taxa — você leva 80%</small></div></div>
+                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Só 20% — recebe direto!</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao loja" onclick="abrir('loja')">
-                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>R$5,00 arrancada + R$1,90/km</small></div></div>
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>R$5,00 + R$1,90/km</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao entregador" onclick="abrir('entregador')">
-                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Já sou cadastrado</small></div></div>
+                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Suas entregas</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao admin" onclick="abrir('admin')">
-                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Seus ganhos 20%</small></div></div>
+                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Seus ganhos</small></div></div>
                 <span>➤</span>
             </button>
         </div>
@@ -128,11 +155,11 @@
         <div id="aba-cadastro" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>📝 Seja Entregador Rota Cheia</h2>
-            <div class="frase-principal">⭐ A menor taxa da região — só 20%! Você leva 80%! ⭐</div>
+            <div class="frase-principal">⭐ Igual à Uber: recebe 80% direto! Confirma com código! ⭐</div>
             <div class="diferencial">
-                ✅ Arrancada: R$ 5,00 + R$ 1,90 por km<br>
-                ✅ Valor sempre somado — sem mínimo reduzido<br>
+                ✅ Arrancada R$ 5,00 + R$ 1,90/km<br>
                 ✅ Você recebe 80% do valor total<br>
+                ✅ Confirmação por código — entrega segura<br>
                 ✅ Aceitamos moto, carro e bicicleta
             </div>
             <form onsubmit="cadastrarEntregador(event)">
@@ -154,19 +181,19 @@
                         <option value="nao">❌ Não</option>
                     </select>
                 </div>
-                <div class="grupo"><label>Chave Pix (para recebimento)</label><input type="text" id="pix" placeholder="CPF, telefone, e-mail..."></div>
+                <div class="grupo"><label>Chave Pix (para receber) *</label><input type="text" id="pix" required placeholder="CPF, telefone, e-mail..."></div>
                 <div class="grupo"><label>Região que atua</label><input type="text" id="regiao" placeholder="Ex: Centro, Zona Sul..."></div>
-                <button type="submit" class="btn-enviar">Enviar Cadastro ✅</button>
+                <button type="submit" class="btn-enviar">Cadastrar ✅</button>
             </form>
         </div>
 
-        <!-- 🏪 LOJA -->
+        <!-- 🏪 LOJA — GERA O CÓDIGO -->
         <div id="aba-loja" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
             <div class="diferencial">
-                💵 Preço: <strong>R$ 5,00 (arrancada) + R$ 1,90/km</strong><br>
-                ✅ Valor sempre somado — sem taxas extras!
+                💵 Preço: <strong>R$ 5,00 + R$ 1,90/km</strong><br>
+                🔐 Sistema de confirmação por código — entrega segura!
             </div>
 
             <form onsubmit="publicarEntrega(event)">
@@ -187,7 +214,7 @@
                     <p class="soma-detalhe" id="linha-km">➕ Km rodado: R$ 0,00</p>
                     <hr style="border: none; border-top: 1px dashed #475569; margin: 6px 0;">
                     <p class="linha-valor valor-total">
-                        <span>💵 VALOR TOTAL A PAGAR</span>
+                        <span>💵 VALOR TOTAL DA CORRIDA</span>
                         <span id="valor-total">R$ 0,00</span>
                     </p>
                     <p class="linha-valor valor-entregador">
@@ -195,7 +222,7 @@
                         <span id="valor-entregador">R$ 0,00</span>
                     </p>
                     <p class="linha-valor seu-lucro">
-                        <span>💰 SUA TAXA (20%)</span>
+                        <span>💰 Sua taxa (20%)</span>
                         <span id="sua-taxa">R$ 0,00</span>
                     </p>
                 </div>
@@ -203,41 +230,52 @@
                 <div class="grupo" style="margin-top: 20px;">
                     <label>💳 Forma de Pagamento *</label>
                     <div class="pagamento-opcoes">
-                        <div class="pag-opcao" id="pag-dinheiro" onclick="selecionarPagamento('dinheiro')">💵 Dinheiro</div>
-                        <div class="pag-opcao" id="pag-pix" onclick="selecionarPagamento('pix')">🔷 Pix</div>
-                        <div class="pag-opcao" id="pag-debito" onclick="selecionarPagamento('debito')">💳 Débito</div>
+                        <div class="pag-opcao" id="pag-dinheiro" onclick="selecionarPagamento('dinheiro')">💵 Dinheiro na entrega</div>
+                        <div class="pag-opcao" id="pag-pix" onclick="selecionarPagamento('pix')">🔷 Pix antecipado</div>
+                        <div class="pag-opcao" id="pag-debito" onclick="selecionarPagamento('debito')">💳 Cartão/Débito</div>
                     </div>
                     <input type="hidden" id="forma-pagamento" required>
                 </div>
 
                 <button type="submit" class="btn-enviar">Publicar Entrega ✅</button>
             </form>
+
+            <!-- CÓDIGO GERADO PRA LOJA -->
+            <div id="codigo-gerado" style="display:none;">
+                <div class="codigo-caixa">
+                    <p style="font-size:0.9rem; color:#94a3b8;">🔐 CÓDIGO DE CONFIRMAÇÃO</p>
+                    <div class="codigo-numeros" id="exibir-codigo">----</div>
+                    <p class="codigo-dica">⚠️ ENTREGUE ESTE CÓDIGO AO CLIENTE<br>O entregador vai digitar para confirmar a entrega!</p>
+                </div>
+                <button class="btn-confirmar" onclick="fecharCodigo()">✅ Já anotei o código</button>
+            </div>
         </div>
 
-        <!-- 🏍️ ENTREGADOR -->
+        <!-- 🏍️ ENTREGADOR — DIGITA O CÓDIGO -->
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
-            <h2>🏍️ Entregas Disponíveis</h2>
-            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ Só 20% de taxa — você leva 80%! ⭐</div>
+            <h2>🏍️ Minhas Entregas</h2>
+            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ Receba 80% direto! Confirma com código! ⭐</div>
             <div id="lista-entregas">
-                <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>
+                <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.<br>Aguarde novas solicitações!</p>
             </div>
         </div>
 
         <!-- 👨‍💼 ADMINISTRADOR -->
         <div id="aba-admin" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
-            <h2>👨‍💼 Painel — Acesso Exclusivo</h2>
+            <h2>👨‍💼 Painel de Controle</h2>
             <div class="caixa-valores">
                 <p style="font-size:1.1rem; font-weight:bold; margin-bottom:10px;">📊 Resumo Geral</p>
                 <p style="margin:6px 0;">Entregadores cadastrados: <span id="qtd-entregadores">0</span></p>
                 <p style="margin:6px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
+                <p style="margin:6px 0;">Entregas concluídas: <span id="qtd-concluidas">0</span></p>
                 <p class="seu-lucro" style="font-size:1.2rem;">💰 SEU LUCRO TOTAL: R$ <span id="lucro-total">0,00</span></p>
             </div>
             <h3 style="margin-top:20px; margin-bottom:10px;">📋 Entregadores</h3>
             <div id="lista-cadastros"><p style="color:#94a3b8;">Nenhum cadastro ainda.</p></div>
             <div class="divisor"></div>
-            <h3 style="margin-bottom:10px;">📦 Entregas</h3>
+            <h3 style="margin-bottom:10px;">📦 Todas as Entregas</h3>
             <div id="lista-admin-entregas"><p style="color:#94a3b8;">Nenhuma entrega registrada.</p></div>
         </div>
 
@@ -251,14 +289,20 @@
         let entregadores = [];
         let entregas = [];
         let lucroTotal = 0;
+        let totalConcluidas = 0;
         
-        // ⚙️ CONFIGURAÇÕES FINAIS — NOVO CÁLCULO
-        const ARRANCADA = 5.00;           // R$ 5,00 fixo
-        const PRECO_POR_KM = 1.90;         // + R$ 1,90 por km
-        const TAXA_PLATAFORMA = 20;        // Sua taxa = 20%
-        const VALOR_ENTREGADOR = 80;        // Entregador leva = 80%
+        // ⚙️ CONFIGURAÇÕES
+        const ARRANCADA = 5.00;
+        const PRECO_POR_KM = 1.90;
+        const TAXA_PLATAFORMA = 20;
+        const VALOR_ENTREGADOR = 80;
         
         let kmCalculado = null;
+
+        // 🔐 GERAR CÓDIGO DE 4 DÍGITOS
+        function gerarCodigo() {
+            return Math.floor(1000 + Math.random() * 9000).toString();
+        }
 
         function iniciarCalculo() {
             const saida = document.getElementById('saida').value.trim();
@@ -277,10 +321,8 @@
         }
 
         function mostrarValores(km) {
-            // ✅ CÁLCULO NOVO: arrancada + valor por km SEMPRE somados
             const valorPorKm = km * PRECO_POR_KM;
-            const valorTotal = ARRANCADA + valorPorKm; // SEMPRE soma!
-            
+            const valorTotal = ARRANCADA + valorPorKm;
             const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
             const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
 
@@ -314,6 +356,11 @@
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
         }
 
+        function fecharCodigo() {
+            document.getElementById('codigo-gerado').style.display = 'none';
+            voltar();
+        }
+
         function cadastrarEntregador(e) {
             e.preventDefault();
             const novo = {
@@ -322,13 +369,12 @@
                 telefone: document.getElementById('telefone').value,
                 veiculo: document.getElementById('veiculo').value,
                 placa: document.getElementById('placa').value || 'Não informada',
-                pix: document.getElementById('pix').value || 'Não informada',
-                cnh: document.getElementById('cnh').value,
+                pix: document.getElementById('pix').value,
                 regiao: document.getElementById('regiao').value || 'Não informada',
                 status: 'ativo'
             };
             entregadores.push(novo);
-            alert('✅ Cadastro realizado com sucesso! Bem-vindo à Rota Cheia!');
+            alert('✅ Cadastro realizado com sucesso!\n💰 Seu Pix registrado — recebe direto!');
             e.target.reset();
             voltar();
         }
@@ -345,13 +391,11 @@
                 return;
             }
 
-            // ✅ Mesmo cálculo na publicação
             const valorPorKm = kmCalculado * PRECO_POR_KM;
             const valorTotal = ARRANCADA + valorPorKm;
             const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
             const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
-            
-            lucroTotal += suaTaxa;
+            const codigoConfirmacao = gerarCodigo();
 
             const entrega = {
                 id: Date.now(),
@@ -363,23 +407,19 @@
                 suaTaxa,
                 valorEntregador,
                 pagamento: formaPag,
+                codigo: codigoConfirmacao,
                 status: 'disponivel'
             };
             entregas.push(entrega);
 
-            const pagTexto = {
-                'dinheiro': '💵 Dinheiro',
-                'pix': '🔷 Pix',
-                'debito': '💳 Débito'
-            };
-
-            alert(`✅ ENTREGA PUBLICADA! 🚀\n\n➕ Arrancada: R$ 5,00\n➕ ${kmCalculado.toFixed(1)} km × R$ 1,90 = R$ ${valorPorKm.toFixed(2).replace('.', ',')}\n➖➖➖➖➖➖\n💵 VALOR TOTAL: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n\n🏍️ Entregador recebe: R$ ${valorEntregador.toFixed(2).replace('.', ',')} (80%)\n💰 Sua taxa: R$ ${suaTaxa.toFixed(2).replace('.', ',')} (20%)\n💳 Pagamento: ${pagTexto[formaPag]}`);
+            // Mostra o código pra loja
+            document.getElementById('exibir-codigo').textContent = codigoConfirmacao;
+            document.getElementById('codigo-gerado').style.display = 'block';
             
             e.target.reset();
             document.getElementById('caixa-valores').style.display = 'none';
             document.getElementById('area-km').innerHTML = 'Digite os endereços acima ↗️';
             kmCalculado = null;
-            voltar();
         }
 
         function mostrarEntregasDisponiveis() {
@@ -390,8 +430,36 @@
             }
             caixa.innerHTML = entregas.map(e => {
                 const pagIcone = { 'dinheiro': '💵', 'pix': '🔷', 'debito': '💳' };
+                const etiquetaClasse = {
+                    'disponivel': 'etiqueta-disponivel',
+                    'aceita': 'etiqueta-aceita',
+                    'concluida': 'etiqueta-concluida'
+                }[e.status];
+                const etiquetaTexto = {
+                    'disponivel': 'DISPONÍVEL',
+                    'aceita': 'EM ANDAMENTO',
+                    'concluida': '✅ CONCLUÍDA'
+                }[e.status];
+
+                let botoes = '';
+                if (e.status === 'disponivel') {
+                    botoes = `<button class="btn-confirmar" onclick="aceitarEntrega(${e.id})">✅ Aceitar Entrega</button>`;
+                } else if (e.status === 'aceita') {
+                    botoes = `
+                        <div style="margin-top:12px;">
+                            <p style="color:#60a5fa; font-weight:bold; margin-bottom:8px;">🔐 Digite o código do cliente:</p>
+                            <input type="text" id="codigo-input-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
+                            <button class="btn-concluir" onclick="confirmarEntrega(${e.id})">✓ Confirmar Entrega</button>
+                            <p id="msg-${e.id}" style="margin-top:8px;"></p>
+                        </div>
+                    `;
+                } else {
+                    botoes = `<p style="color:#22c55e; font-weight:bold; margin-top:10px;">✅ Valor liberado: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>`;
+                }
+
                 return `
                 <div class="cartao">
+                    <span class="etiqueta ${etiquetaClasse}">${etiquetaTexto}</span>
                     <p><strong>🏪 Loja:</strong> ${e.loja}</p>
                     <p><strong>📍 De:</strong> ${e.saida}</p>
                     <p><strong>🎯 Para:</strong> ${e.destino}</p>
@@ -399,9 +467,7 @@
                     <p style="color:#94a3b8; font-size:0.85rem;">Arrancada R$5,00 + R$${(e.km * 1.90).toFixed(2).replace('.', ',')}</p>
                     <p style="color:#22c55e; font-weight:bold; margin-top:8px; font-size:1.1rem;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
                     <p style="font-size:0.85rem; color:#94a3b8;">${pagIcone[e.pagamento]} Pagamento: ${e.pagamento}</p>
-                    ${e.status === 'disponivel' 
-                        ? `<button class="aceitar" onclick="aceitarEntrega(${e.id})">✅ Aceitar Entrega</button>` 
-                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Entrega aceita</p>'}
+                    ${botoes}
                 </div>
                 `;
             }).join('');
@@ -411,14 +477,36 @@
             const entrega = entregas.find(e => e.id === id);
             if (entrega && entrega.status === 'disponivel') {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega aceita! 🛵\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n📏 ${entrega.km.toFixed(1)} km\n💰 Valor: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}\n\nBoa entrega! 🚀`);
+                alert(`✅ Entrega Aceita! 🛵\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n\n⚠️ Peça o código de 4 dígitos ao cliente na entrega!`);
                 mostrarEntregasDisponiveis();
+            }
+        }
+
+        function confirmarEntrega(id) {
+            const entrega = entregas.find(e => e.id === id);
+            const codigoDigitado = document.getElementById(`codigo-input-${id}`).value.trim();
+            const msg = document.getElementById(`msg-${id}`);
+
+            if (!codigoDigitado) {
+                msg.innerHTML = '<span style="color:#fbbf24;">Digite o código!</span>';
+                return;
+            }
+
+            if (codigoDigitado === entrega.codigo) {
+                entrega.status = 'concluida';
+                lucroTotal += entrega.suaTaxa;
+                totalConcluidas++;
+                msg.innerHTML = '<span class="sucesso">✅ CÓDIGO CORRETO! ENTREGA CONCLUÍDA! 💰 Valor liberado!</span>';
+                setTimeout(() => mostrarEntregasDisponiveis(), 1500);
+            } else {
+                msg.innerHTML = '<span style="color:#ef4444;">❌ Código errado! Peça novamente ao cliente.</span>';
             }
         }
 
         function mostrarPainelAdmin() {
             document.getElementById('qtd-entregadores').textContent = entregadores.length;
             document.getElementById('qtd-entregas').textContent = entregas.length;
+            document.getElementById('qtd-concluidas').textContent = totalConcluidas;
             document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
             
             const listaCad = document.getElementById('lista-cadastros');
@@ -430,6 +518,7 @@
                     <p><strong>${e.nome}</strong></p>
                     <p>📞 ${e.telefone}</p>
                     <p>🚗 ${e.veiculo}</p>
+                    <p>💳 Pix: ${e.pix}</p>
                     <p>📍 ${e.regiao}</p>
                 </div>
                 `).join('');
@@ -437,21 +526,29 @@
             
             const listaEnt = document.getElementById('lista-admin-entregas');
             if (entregas.length === 0) {
-                listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega publicada ainda.</p>';
+                listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>';
             } else {
-                listaEnt.innerHTML = entregas.map(e => `
-                <div class="cartao">
-                    <p><strong>${e.loja}</strong></p>
-                    <p>📍 ${e.saida} → ${e.destino}</p>
-                    <p>📏 ${e.km.toFixed(1)} km</p>
-                    <p>➕ Arrancada: R$ 5,00</p>
-                    <p>➕ Km: R$ ${(e.km * 1.90).toFixed(2).replace('.', ',')}</p>
-                    <p>💵 Total: R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
-                    <p style="color:#fbbf24;">💰 Sua taxa: R$ ${e.suaTaxa.toFixed(2).replace('.', ',')}</p>
-                    <p style="color:#22c55e;">🏍️ Entregador: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
-                    <p style="font-size:0.85rem; color:#94a3b8;">Status: ${e.status === 'disponivel' ? 'Disponível' : 'Aceita'}</p>
-                </div>
-                `).join('');
+                listaEnt.innerHTML = entregas.map(e => {
+                    const statusTexto = {
+                        'disponivel': '🟡 Disponível',
+                        'aceita': '🔵 Em andamento',
+                        'concluida': '✅ Concluída'
+                    }[e.status];
+                    return `
+                    <div class="cartao">
+                        <p><strong>${e.loja}</strong></p>
+                        <p>📍 ${e.saida} → ${e.destino}</p>
+                        <p>📏 ${e.km.toFixed(1)} km</p>
+                        <p>➕ Arrancada: R$ 5,00</p>
+                        <p>➕ Km: R$ ${(e.km * 1.90).toFixed(2).replace('.', ',')}</p>
+                        <p>💵 Total: R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
+                        <p style="color:#fbbf24;">💰 Sua taxa: R$ ${e.suaTaxa.toFixed(2).replace('.', ',')}</p>
+                        <p style="color:#22c55e;">🏍️ Entregador: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                        <p>🔐 Código: ${e.codigo}</p>
+                        <p>Status: ${statusTexto}</p>
+                    </div>
+                    `;
+                }).join('');
             }
         }
     </script>
