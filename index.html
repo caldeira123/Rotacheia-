@@ -96,6 +96,7 @@
         .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
         .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .etiqueta-pendente { background: #f59e0b; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
+        .soma-detalhe { color: #94a3b8; font-size: 0.85rem; margin: 4px 0; }
     </style>
 </head>
 <body>
@@ -110,7 +111,7 @@
                 <span>➤</span>
             </button>
             <button class="botao loja" onclick="abrir('loja')">
-                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>Mínimo R$5,00 · R$1,90/km</small></div></div>
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>R$5,00 arrancada + R$1,90/km</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao entregador" onclick="abrir('entregador')">
@@ -129,8 +130,8 @@
             <h2>📝 Seja Entregador Rota Cheia</h2>
             <div class="frase-principal">⭐ A menor taxa da região — só 20%! Você leva 80%! ⭐</div>
             <div class="diferencial">
-                ✅ Arrancada mínima: R$ 5,00<br>
-                ✅ R$ 1,90 por km rodado<br>
+                ✅ Arrancada: R$ 5,00 + R$ 1,90 por km<br>
+                ✅ Valor sempre somado — sem mínimo reduzido<br>
                 ✅ Você recebe 80% do valor total<br>
                 ✅ Aceitamos moto, carro e bicicleta
             </div>
@@ -164,8 +165,8 @@
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
             <div class="diferencial">
-                💵 Arrancada: <strong>R$ 5,00</strong> + <strong>R$ 1,90/km</strong><br>
-                ✅ Loja paga o valor combinado — sem taxas extras!
+                💵 Preço: <strong>R$ 5,00 (arrancada) + R$ 1,90/km</strong><br>
+                ✅ Valor sempre somado — sem taxas extras!
             </div>
 
             <form onsubmit="publicarEntrega(event)">
@@ -182,13 +183,13 @@
                 </div>
 
                 <div class="caixa-valores" id="caixa-valores" style="display:none;">
+                    <p class="soma-detalhe">➕ Arrancada: R$ 5,00</p>
+                    <p class="soma-detalhe" id="linha-km">➕ Km rodado: R$ 0,00</p>
+                    <hr style="border: none; border-top: 1px dashed #475569; margin: 6px 0;">
                     <p class="linha-valor valor-total">
                         <span>💵 VALOR TOTAL A PAGAR</span>
                         <span id="valor-total">R$ 0,00</span>
                     </p>
-                    <div id="aviso-minimo" class="aviso-minimo" style="display:none;">
-                        ⚡ Arrancada mínima de R$ 5,00 aplicada
-                    </div>
                     <p class="linha-valor valor-entregador">
                         <span>🏍️ Entregador recebe (80%)</span>
                         <span id="valor-entregador">R$ 0,00</span>
@@ -251,9 +252,9 @@
         let entregas = [];
         let lucroTotal = 0;
         
-        // ⚙️ CONFIGURAÇÕES FINAIS CONFIRMADAS
-        const PRECO_POR_KM = 1.90;        // R$ 1,90 por km
-        const VALOR_MINIMO_CORRIDA = 5.00; // Arrancada mínima R$ 5,00
+        // ⚙️ CONFIGURAÇÕES FINAIS — NOVO CÁLCULO
+        const ARRANCADA = 5.00;           // R$ 5,00 fixo
+        const PRECO_POR_KM = 1.90;         // + R$ 1,90 por km
         const TAXA_PLATAFORMA = 20;        // Sua taxa = 20%
         const VALOR_ENTREGADOR = 80;        // Entregador leva = 80%
         
@@ -276,23 +277,19 @@
         }
 
         function mostrarValores(km) {
-            let valorTotal = km * PRECO_POR_KM;
-            let usouMinimo = false;
-            
-            if (valorTotal < VALOR_MINIMO_CORRIDA) {
-                valorTotal = VALOR_MINIMO_CORRIDA;
-                usouMinimo = true;
-            }
+            // ✅ CÁLCULO NOVO: arrancada + valor por km SEMPRE somados
+            const valorPorKm = km * PRECO_POR_KM;
+            const valorTotal = ARRANCADA + valorPorKm; // SEMPRE soma!
             
             const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
             const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
 
             document.getElementById('area-km').innerHTML = `📏 <strong>${km.toFixed(1)} km</strong>`;
+            document.getElementById('linha-km').textContent = `➕ Km rodado: R$ ${valorPorKm.toFixed(2).replace('.', ',')}`;
             document.getElementById('valor-total').textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('valor-entregador').textContent = `R$ ${valorEntregador.toFixed(2).replace('.', ',')}`;
             document.getElementById('sua-taxa').textContent = `R$ ${suaTaxa.toFixed(2).replace('.', ',')}`;
             
-            document.getElementById('aviso-minimo').style.display = usouMinimo ? 'block' : 'none';
             document.getElementById('caixa-valores').style.display = 'block';
         }
 
@@ -348,9 +345,9 @@
                 return;
             }
 
-            let valorTotal = kmCalculado * PRECO_POR_KM;
-            if (valorTotal < VALOR_MINIMO_CORRIDA) valorTotal = VALOR_MINIMO_CORRIDA;
-            
+            // ✅ Mesmo cálculo na publicação
+            const valorPorKm = kmCalculado * PRECO_POR_KM;
+            const valorTotal = ARRANCADA + valorPorKm;
             const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
             const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
             
@@ -376,10 +373,7 @@
                 'debito': '💳 Débito'
             };
 
-            const avisoMin = (kmCalculado * PRECO_POR_KM < VALOR_MINIMO_CORRIDA) 
-                ? '\n⚡ Arrancada mínima de R$ 5,00 aplicada' : '';
-
-            alert(`✅ ENTREGA PUBLICADA! 🚀\n\n📍 De: ${entrega.saida}\n📍 Para: ${entrega.destino}\n📏 Distância: ${kmCalculado.toFixed(1)} km${avisoMin}\n\n💵 Valor total: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n🏍️ Entregador recebe: R$ ${valorEntregador.toFixed(2).replace('.', ',')} (80%)\n💰 Sua taxa: R$ ${suaTaxa.toFixed(2).replace('.', ',')} (20%)\n💳 Pagamento: ${pagTexto[formaPag]}`);
+            alert(`✅ ENTREGA PUBLICADA! 🚀\n\n➕ Arrancada: R$ 5,00\n➕ ${kmCalculado.toFixed(1)} km × R$ 1,90 = R$ ${valorPorKm.toFixed(2).replace('.', ',')}\n➖➖➖➖➖➖\n💵 VALOR TOTAL: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n\n🏍️ Entregador recebe: R$ ${valorEntregador.toFixed(2).replace('.', ',')} (80%)\n💰 Sua taxa: R$ ${suaTaxa.toFixed(2).replace('.', ',')} (20%)\n💳 Pagamento: ${pagTexto[formaPag]}`);
             
             e.target.reset();
             document.getElementById('caixa-valores').style.display = 'none';
@@ -402,6 +396,7 @@
                     <p><strong>📍 De:</strong> ${e.saida}</p>
                     <p><strong>🎯 Para:</strong> ${e.destino}</p>
                     <p><strong>📏 Distância:</strong> ${e.km.toFixed(1)} km</p>
+                    <p style="color:#94a3b8; font-size:0.85rem;">Arrancada R$5,00 + R$${(e.km * 1.90).toFixed(2).replace('.', ',')}</p>
                     <p style="color:#22c55e; font-weight:bold; margin-top:8px; font-size:1.1rem;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
                     <p style="font-size:0.85rem; color:#94a3b8;">${pagIcone[e.pagamento]} Pagamento: ${e.pagamento}</p>
                     ${e.status === 'disponivel' 
@@ -416,7 +411,7 @@
             const entrega = entregas.find(e => e.id === id);
             if (entrega && entrega.status === 'disponivel') {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega aceita! 🛵\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n💰 Valor: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}\n\nBoa entrega! 🚀`);
+                alert(`✅ Entrega aceita! 🛵\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n📏 ${entrega.km.toFixed(1)} km\n💰 Valor: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}\n\nBoa entrega! 🚀`);
                 mostrarEntregasDisponiveis();
             }
         }
@@ -449,6 +444,8 @@
                     <p><strong>${e.loja}</strong></p>
                     <p>📍 ${e.saida} → ${e.destino}</p>
                     <p>📏 ${e.km.toFixed(1)} km</p>
+                    <p>➕ Arrancada: R$ 5,00</p>
+                    <p>➕ Km: R$ ${(e.km * 1.90).toFixed(2).replace('.', ',')}</p>
                     <p>💵 Total: R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
                     <p style="color:#fbbf24;">💰 Sua taxa: R$ ${e.suaTaxa.toFixed(2).replace('.', ',')}</p>
                     <p style="color:#22c55e;">🏍️ Entregador: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
