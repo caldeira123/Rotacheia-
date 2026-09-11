@@ -41,20 +41,57 @@
         .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
         .cartao-admin { border-color: #3b82f6; }
         .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .btn-aprovar { background: #22c55e; color: white; border: none; padding: 8px 12px; border-radius: 8px; margin: 4px; cursor: pointer; font-weight: bold; }
-        .btn-bloquear { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 8px; margin: 4px; cursor: pointer; font-weight: bold; }
         .valor-calculado { background: #1e293b; border: 2px dashed #fbbf24; border-radius: 10px; padding: 14px; margin: 14px 0; text-align: center; }
         .valor-km { color: #fbbf24; font-size: 0.9rem; }
         .valor-total { color: #22c55e; font-weight: bold; font-size: 1.4rem; margin-top: 4px; }
         .valor-final-entregador { color: #22c55e; font-weight: bold; font-size: 1.1rem; margin-top: 6px; }
-        .etiqueta-aprovado { background: #22c55e; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
         .etiqueta-pendente { background: #f59e0b; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
-        .etiqueta-bloqueado { background: #ef4444; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; }
         .painel-secreto { background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px; padding: 16px; margin-bottom: 18px; }
         .lucro-destaque { color: #fbbf24; font-weight: bold; font-size: 1.25rem; }
         .divisor { height: 1px; background: #334155; margin: 20px 0; }
         .rodape { text-align: center; margin-top: 35px; color: #94a3b8; font-size: 0.85rem; }
-        .diferencial { background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; padding: 10px; margin: 10px 0; font-size: 0.85rem; color: #86efac; }
+
+        /* ✨ FRASE DESTAQUE — BRILHANDO! */
+        .frase-principal {
+            background: linear-gradient(135deg, #ffd700, #ffb300, #ff9800);
+            color: #000;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 18px 0;
+            letter-spacing: 0.5px;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.5),
+                0 0 40px rgba(255, 179, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: brilho 2s ease-in-out infinite alternate;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes brilho {
+            from {
+                box-shadow: 
+                    0 0 20px rgba(255, 215, 0, 0.5),
+                    0 0 40px rgba(255, 179, 0, 0.3);
+            }
+            to {
+                box-shadow: 
+                    0 0 30px rgba(255, 215, 0, 0.7),
+                    0 0 60px rgba(255, 179, 0, 0.5),
+                    0 0 90px rgba(255, 152, 0, 0.2);
+            }
+        }
+
+        .diferencial {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 3px solid #22c55e;
+            padding: 10px 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: #86efac;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +116,7 @@
                     <span style="font-size:1.6rem;">🏪</span>
                     <div>
                         <div class="botao-titulo">SOLICITAR ENTREGA</div>
-                        <div class="botao-sub">R$ 1,90/km — mais barato</div>
+                        <div class="botao-sub">R$ 1,90/km — ótimo preço</div>
                     </div>
                 </div>
                 <span style="font-size:1.3rem;">➤</span>
@@ -112,10 +149,17 @@
         <div id="aba-cadastro" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>📝 Seja Entregador Rota Cheia</h2>
+            
+            <!-- ✨ FRASE PRINCIPAL BRILHANDO -->
+            <div class="frase-principal">
+                ⭐ A plataforma que mais paga por quilômetros rodados ⭐
+            </div>
+
             <div class="diferencial">
-                ✅ Você recebe <strong>80%</strong> do valor — mais do que na Uber/99!<br>
+                ✅ Você recebe <strong>80%</strong> de cada entrega!<br>
                 ✅ Aceitamos moto, carro e bicicleta
             </div>
+            
             <form onsubmit="cadastrarEntregador(event)">
                 <div class="grupo">
                     <label>Nome Completo *</label>
@@ -158,9 +202,11 @@
         <div id="aba-loja" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
+            
             <div class="diferencial">
-                💲 Preço fixo: <strong>R$ 1,90 por km</strong> — mais barato que a concorrência!
+                💲 Preço fixo: <strong>R$ 1,90 por km</strong> — excelente custo-benefício!
             </div>
+            
             <form onsubmit="publicarEntrega(event)">
                 <div class="grupo">
                     <label>Nome da Loja *</label>
@@ -192,8 +238,14 @@
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
+            
+            <!-- ✨ FRASE TAMBÉM AQUI -->
+            <div class="frase-principal" style="font-size: 0.95rem; padding: 12px 16px;">
+                ⭐ A plataforma que mais paga por quilômetros rodados ⭐
+            </div>
+            
             <div id="lista-entregas">
-                <p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>
+                <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>
             </div>
         </div>
 
@@ -202,7 +254,6 @@
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>👨‍💼 Painel — Acesso Exclusivo</h2>
 
-            <!-- RESUMO FINANCEIRO -->
             <div class="painel-secreto">
                 <p style="font-size:1.1rem;">📊 Resumo Geral</p>
                 <p style="font-size:0.9rem; color:#94a3b8; margin:8px 0;">Entregadores cadastrados: <span id="qtd-entregadores">0</span></p>
@@ -210,7 +261,6 @@
                 <p class="lucro-destaque" style="margin-top:10px;">💰 SEU LUCRO TOTAL: R$ <span id="lucro-total">0,00</span></p>
             </div>
 
-            <!-- LISTA DE ENTREGADORES -->
             <h3>📋 Entregadores Cadastrados</h3>
             <div id="lista-cadastros">
                 <p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>
@@ -218,7 +268,6 @@
 
             <div class="divisor"></div>
 
-            <!-- LISTA DE ENTREGAS -->
             <h3>📦 Histórico de Entregas</h3>
             <div id="lista-admin-entregas">
                 <p style="color:#94a3b8;">Nenhuma entrega registrada.</p>
@@ -235,13 +284,11 @@
         let entregadores = [];
         let entregas = [];
 
-        // ⚙️ SUAS REGRAS FIXAS
-        const PRECO_POR_KM = 1.90; // 10 centavos mais barato que a concorrência
-        const COMISSAO_LOJA = 10;    // 10%
-        const COMISSAO_ENTREGADOR = 10; // 10%
-        const VALOR_ENTREGADOR = 80; // 80% pro entregador
+        const PRECO_POR_KM = 1.90;
+        const COMISSAO_LOJA = 10;
+        const COMISSAO_ENTREGADOR = 10;
+        const VALOR_ENTREGADOR = 80;
 
-        // 🧮 Calcula valor automatico pra loja
         function calcularValor() {
             const km = parseFloat(document.getElementById('km').value);
             if (!km || km <= 0) {
@@ -254,12 +301,10 @@
             document.getElementById('caixa-valor').style.display = 'block';
         }
 
-        // Abre cada tela
         function abrir(nome) {
             document.getElementById('tela-inicial').style.display = 'none';
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
             document.getElementById(`aba-${nome}`).classList.add('ativa');
-            
             if (nome === 'entregador') mostrarEntregasDisponiveis();
             if (nome === 'admin') mostrarPainelAdmin();
         }
@@ -269,7 +314,6 @@
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
         }
 
-        // 📝 Cadastro de entregador
         function cadastrarEntregador(e) {
             e.preventDefault();
             const novo = {
@@ -283,28 +327,24 @@
                 status: 'pendente'
             };
             entregadores.push(novo);
-            alert(`✅ Cadastro enviado!\n\nObrigado por se cadastrar no Rota Cheia! Vamos analisar e entrar em contato.\n\nVocê faz entrega de: ${novo.veiculo}`);
+            alert(`✅ Cadastro enviado!\n\nObrigado por se cadastrar no Rota Cheia! Vamos analisar e entrar em contato.`);
             e.target.reset();
             voltar();
         }
 
-        // 🏪 Publicar entrega
         function publicarEntrega(e) {
             e.preventDefault();
             const km = parseFloat(document.getElementById('km').value);
             const valorTotal = km * PRECO_POR_KM;
-            
-            const parteLoja = valorTotal * (COMISSAO_LOJA / 100);
-            const parteEntregadorSistema = valorTotal * (COMISSAO_ENTREGADOR / 100);
             const valorQueEntregadorRecebe = valorTotal * (VALOR_ENTREGADOR / 100);
-            const seuLucro = parteLoja + parteEntregadorSistema;
+            const seuLucro = valorTotal * ((COMISSAO_LOJA + COMISSAO_ENTREGADOR) / 100);
 
             const entrega = {
                 id: Date.now(),
                 loja: document.getElementById('nomeLoja').value,
                 saida: document.getElementById('saida').value,
                 destino: document.getElementById('destino').value,
-                km: km,
+                km,
                 valorTotal,
                 valorQueEntregadorRecebe,
                 seuLucro,
@@ -318,11 +358,10 @@
             voltar();
         }
 
-        // 🏍️ Lista que o entregador vê
         function mostrarEntregasDisponiveis() {
             const caixa = document.getElementById('lista-entregas');
             if (entregas.length === 0) {
-                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>';
+                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>';
                 return;
             }
             caixa.innerHTML = entregas.map(e => `
@@ -348,20 +387,18 @@
             }
         }
 
-        // 👨‍💼 Painel só seu
         function mostrarPainelAdmin() {
             const lucroTotal = entregas.reduce((soma, e) => soma + e.seuLucro, 0);
             document.getElementById('qtd-entregadores').textContent = entregadores.length;
             document.getElementById('qtd-entregas').textContent = entregas.length;
             document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
 
-            // Lista de entregadores
             const listaCad = document.getElementById('lista-cadastros');
             if (entregadores.length === 0) {
                 listaCad.innerHTML = '<p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>';
             } else {
                 listaCad.innerHTML = entregadores.map(e => `
-                    <div class="cartao cartao-admin">
+                    <div class="cartao" style="border-color: #3b82f6;">
                         <span class="etiqueta-pendente">⏳ Pendente</span>
                         <p><strong>Nome:</strong> ${e.nome}</p>
                         <p><strong>Telefone:</strong> ${e.telefone}</p>
@@ -373,13 +410,12 @@
                 `).join('');
             }
 
-            // Lista de entregas
             const listaEnt = document.getElementById('lista-admin-entregas');
             if (entregas.length === 0) {
                 listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>';
             } else {
                 listaEnt.innerHTML = entregas.map(e => `
-                    <div class="cartao cartao-admin">
+                    <div class="cartao" style="border-color: #3b82f6;">
                         <p><strong>Loja:</strong> ${e.loja}</p>
                         <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
                         <p><strong>Distância:</strong> ${e.km.toFixed(1)} km</p>
