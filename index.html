@@ -1,4 +1,4 @@
-       <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,10 @@
         .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
         .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 18px; margin-bottom: 12px; }
         .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .valor-final { color: #22c55e; font-weight: bold; font-size: 1.2rem; margin-top: 8px; }
+        .etiqueta-casada { background: #a855f7; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-bottom: 8px; }
+        .painel-secreto { background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+        .lucro-destaque { color: #fbbf24; font-weight: bold; font-size: 1.3rem; }
         .rodape { text-align: center; margin-top: 40px; color: #94a3b8; font-size: 0.9rem; }
     </style>
 </head>
@@ -74,13 +78,14 @@
                     <span style="font-size:1.8rem;">👨‍💼</span>
                     <div>
                         <div class="botao-titulo">ADMINISTRADOR</div>
-                        <div class="botao-sub">Gerencie todo o sistema</div>
+                        <div class="botao-sub">Acesso exclusivo</div>
                     </div>
                 </div>
                 <span style="font-size:1.5rem;">➤</span>
             </button>
         </div>
 
+        <!-- LOJA -->
         <div id="aba-loja" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Publicar Entrega</h2>
@@ -88,38 +93,45 @@
                 <div class="grupo"><label>Nome da Loja</label><input type="text" id="nomeLoja" required></div>
                 <div class="grupo"><label>Endereço de Saída</label><input type="text" id="saida" required></div>
                 <div class="grupo"><label>Endereço de Entrega</label><input type="text" id="destino" required></div>
-                <div class="grupo"><label>Valor R$</label><input type="number" step="0.01" id="valor" required></div>
+                <div class="grupo"><label>Valor Total da Entrega R$</label><input type="number" step="0.01" id="valorTotal" required placeholder="Ex: 10.00"></div>
                 <button type="submit" class="btn-enviar">Publicar ✅</button>
             </form>
         </div>
 
+        <!-- ENTREGADOR → Vê só o que ele recebe -->
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
             <div id="lista"><p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível.</p></div>
         </div>
 
+        <!-- ADMIN → SÓ VOCÊ VÊ TUDO -->
         <div id="aba-admin" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
-            <h2>👨‍💼 Painel Admin</h2>
+            <h2>👨‍💼 Painel — Acesso Exclusivo</h2>
             <div id="painelAdmin"><p style="color:#94a3b8;">Nenhuma entrega registrada.</p></div>
         </div>
 
         <div class="rodape">
-            <p><strong>Rota Cheia</strong> — Versão 1.0</p>
+            <p><strong>Rota Cheia</strong> — Versão 2.1</p>
             <p>"Nenhuma entrega volta vazia"</p>
         </div>
     </div>
 
     <script>
         let entregas = [];
+        
+        // ⚙️ DIVISÃO — NÃO PRECISA MEXER!
+        const COMISSAO_LOJA = 10;      // 10%
+        const COMISSAO_ENTREGADOR = 10; // 10%
+        const VALOR_ENTREGADOR = 80;    // 80% vai pro entregador
 
         function abrir(nome) {
             document.getElementById('tela-inicial').style.display = 'none';
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
             document.getElementById(`aba-${nome}`).classList.add('ativa');
-            if (nome === 'entregador') mostrarLista();
-            if (nome === 'admin') mostrarAdmin();
+            if (nome === 'entregador') mostrarListaEntregador();
+            if (nome === 'admin') mostrarPainelAdmin();
         }
 
         function voltar() {
@@ -129,19 +141,39 @@
 
         function cadastrar(e) {
             e.preventDefault();
+            const valorTotal = parseFloat(document.getElementById('valorTotal').value);
+            
+            // CÁLCULO AUTOMÁTICO
+            const parteLoja = valorTotal * (COMISSAO_LOJA / 100);
+            const parteEntregadorSistema = valorTotal * (COMISSAO_ENTREGADOR / 100);
+            const valorQueEntregadorRecebe = valorTotal * (VALOR_ENTREGADOR / 100);
+            const seuLucro = parteLoja + parteEntregadorSistema;
+            const casada = verificarEntregaCasada();
+
             entregas.push({
                 id: Date.now(),
                 loja: document.getElementById('nomeLoja').value,
                 saida: document.getElementById('saida').value,
                 destino: document.getElementById('destino').value,
-                valor: parseFloat(document.getElementById('valor').value),
+                valorTotal,
+                parteLoja,
+                parteEntregadorSistema,
+                valorQueEntregadorRecebe,
+                seuLucro,
+                casada,
                 status: 'disponivel'
             });
-            alert('✅ Entrega publicada!');
+            
+            alert(`✅ Entrega publicada!\nValor: R$ ${valorTotal.toFixed(2)}`);
             e.target.reset();
         }
 
-        function mostrarLista() {
+        function verificarEntregaCasada() {
+            return entregas.some(e => e.status === 'disponivel');
+        }
+
+        // 🏍️ O QUE O ENTREGADOR VÊ — SEM SEU LUCRO
+        function mostrarListaEntregador() {
             const caixa = document.getElementById('lista');
             if (entregas.length === 0) {
                 caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível.</p>';
@@ -149,10 +181,11 @@
             }
             caixa.innerHTML = entregas.map(e => `
                 <div class="cartao">
+                    ${e.casada ? '<span class="etiqueta-casada">💫 ENTREGA CASADA</span>' : ''}
                     <p><strong>Loja:</strong> ${e.loja}</p>
                     <p><strong>De:</strong> ${e.saida}</p>
                     <p><strong>Para:</strong> ${e.destino}</p>
-                    <p style="font-size:1.3rem; font-weight:bold; color:#22c55e; margin-top:8px;">R$ ${e.valor.toFixed(2)}</p>
+                    <p class="valor-final">💰 Você recebe: R$ ${e.valorQueEntregadorRecebe.toFixed(2)}</p>
                     ${e.status === 'disponivel' 
                         ? `<button class="aceitar" onclick="pegar(${e.id})">Aceitar Entrega</button>` 
                         : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Aceita</p>'}
@@ -164,23 +197,38 @@
             const entrega = entregas.find(e => e.id === id);
             if (entrega) {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega aceita!\n${entrega.loja} → ${entrega.destino}\nR$ ${entrega.valor.toFixed(2)}`);
-                mostrarLista();
+                alert(`✅ Entrega aceita!\n\n${entrega.loja}\n${entrega.saida} → ${entrega.destino}\nVocê recebe: R$ ${entrega.valorQueEntregadorRecebe.toFixed(2)}`);
+                mostrarListaEntregador();
             }
         }
 
-        function mostrarAdmin() {
+        // 👨‍💻 SÓ VOCÊ VÊ ISSO — PAINEL SECRETO
+        function mostrarPainelAdmin() {
             const caixa = document.getElementById('painelAdmin');
             if (entregas.length === 0) {
                 caixa.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>';
                 return;
             }
-            caixa.innerHTML = entregas.map(e => `
+            
+            const totalGanhado = entregas.reduce((soma, e) => soma + e.seuLucro, 0);
+            
+            caixa.innerHTML = `
+                <div class="painel-secreto">
+                    <p style="font-size:1.1rem;">📊 Resumo de Hoje</p>
+                    <p style="font-size:0.9rem; color:#94a3b8; margin-bottom:10px;">Total de entregas: ${entregas.length}</p>
+                    <p class="lucro-destaque">💰 SEU LUCRO TOTAL: R$ ${totalGanhado.toFixed(2)}</p>
+                </div>
+            ` + entregas.map(e => `
                 <div class="cartao" style="border-color:#3b82f6;">
+                    ${e.casada ? '<span class="etiqueta-casada">💫 CASADA</span>' : ''}
                     <p><strong>Loja:</strong> ${e.loja}</p>
                     <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
-                    <p><strong>Valor:</strong> R$ ${e.valor.toFixed(2)}</p>
-                    <p><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
+                    <p><strong>Valor Total:</strong> R$ ${e.valorTotal.toFixed(2)}</p>
+                    <p style="color:#fbbf24; font-size:0.9rem;">• Comissão Loja: R$ ${e.parteLoja.toFixed(2)}</p>
+                    <p style="color:#fbbf24; font-size:0.9rem;">• Comissão Entregador: R$ ${e.parteEntregadorSistema.toFixed(2)}</p>
+                    <p style="color:#22c55e;">• Entregador recebe: R$ ${e.valorQueEntregadorRecebe.toFixed(2)}</p>
+                    <p style="color:#fbbf24; font-weight:bold; margin-top:6px;">→ SEU LUCRO: R$ ${e.seuLucro.toFixed(2)}</p>
+                    <p style="margin-top:8px;"><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
                 </div>
             `).join('');
         }
@@ -188,4 +236,4 @@
 
 </body>
 </html>
-               
+     
