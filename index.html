@@ -1,198 +1,56 @@
-                <!DOCTYPE html>
+          <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota Cheia - Nenhuma entrega volta vazia</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        body {
-            background-color: #0f172a;
-            color: #fff;
-            min-height: 100vh;
-        }
+        .capa-img { width: 100%; height: auto; display: block; }
 
-        .capa-container {
-            width: 100%;
-        }
-
-        .capa-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .container {
-            padding: 25px 20px 40px;
-            max-width: 520px;
-            margin: 0 auto;
-        }
+        .container { padding: 25px 20px 40px; max-width: 520px; margin: 0 auto; }
 
         .botao {
-            width: 100%;
-            padding: 22px 25px;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: transform 0.15s, opacity 0.15s;
-            text-align: left;
+            width: 100%; padding: 22px 25px; border: none; border-radius: 16px;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: transform 0.15s; text-align: left;
         }
+        .botao:active { transform: scale(0.97); }
 
-        .botao:active {
-            transform: scale(0.97);
-            opacity: 0.9;
-        }
+        .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
+        .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
+        .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
 
-        .botao-esq {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .botao-esq { display: flex; align-items: center; gap: 15px; }
+        .botao-titulo { font-size: 1.25rem; }
+        .botao-sub { font-size: 0.85rem; opacity: 0.85; font-weight: normal; }
 
-        .botao-texto {
-            line-height: 1.4;
-        }
-
-        .botao-titulo {
-            font-size: 1.25rem;
-        }
-
-        .botao-sub {
-            font-size: 0.85rem;
-            opacity: 0.85;
-            font-weight: normal;
-        }
-
-        .loja {
-            background: linear-gradient(90deg, #d97706, #f59e0b);
-            color: #000;
-        }
-
-        .entregador {
-            background: linear-gradient(90deg, #15803d, #22c55e);
-            color: #fff;
-        }
-
-        .admin {
-            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-            color: #fff;
-        }
-
-        .aba {
-            display: none;
-        }
-
-        .aba.ativa {
-            display: block;
-        }
-
-        .voltar {
-            background: #334155;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-bottom: 25px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #fbbf24;
-        }
-
-        .grupo {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            color: #e2e8f0;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #475569;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: #1e293b;
-            color: #fff;
-        }
-
-        .btn-enviar {
-            background: linear-gradient(90deg, #16a34a, #22c55e);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .cartao {
-            background: #1e293b;
-            border: 2px solid #22c55e;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 12px;
-        }
-
-        .cartao p {
-            margin: 6px 0;
-        }
-
-        .aceitar {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            width: 100%;
-            margin-top: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .rodape {
-            text-align: center;
-            margin-top: 40px;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
+        .aba { display: none; }
+        .aba.ativa { display: block; }
+        .voltar { background: #334155; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 25px; }
+        h2 { margin-bottom: 20px; color: #fbbf24; }
+        .grupo { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; }
+        input { width: 100%; padding: 14px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
+        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
+        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 18px; margin-bottom: 12px; }
+        .aceitar { background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin-top: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .rodape { text-align: center; margin-top: 40px; color: #94a3b8; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <div class="capa-container">
-        <img src="https://raw.githubusercontent.com/caldeira23/caldeira23.github.io/main/capa-rota-cheia.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-img">
-    </div>
+    <img src="capa-rota-cheia.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-img">
 
     <div class="container">
         <div id="tela-inicial">
             <button class="botao loja" onclick="abrir('loja')">
                 <div class="botao-esq">
                     <span style="font-size:1.8rem;">🏪</span>
-                    <div class="botao-texto">
+                    <div>
                         <div class="botao-titulo">LOJA</div>
                         <div class="botao-sub">Cadastre seus pedidos</div>
                     </div>
@@ -203,7 +61,7 @@
             <button class="botao entregador" onclick="abrir('entregador')">
                 <div class="botao-esq">
                     <span style="font-size:1.8rem;">🏍️</span>
-                    <div class="botao-texto">
+                    <div>
                         <div class="botao-titulo">ENTREGADOR</div>
                         <div class="botao-sub">Faça entregas, ganhe mais</div>
                     </div>
@@ -214,7 +72,7 @@
             <button class="botao admin" onclick="abrir('admin')">
                 <div class="botao-esq">
                     <span style="font-size:1.8rem;">👨‍💼</span>
-                    <div class="botao-texto">
+                    <div>
                         <div class="botao-titulo">ADMINISTRADOR</div>
                         <div class="botao-sub">Gerencie todo o sistema</div>
                     </div>
@@ -227,40 +85,24 @@
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Publicar Entrega</h2>
             <form onsubmit="cadastrar(event)">
-                <div class="grupo">
-                    <label>Nome da Loja</label>
-                    <input type="text" id="nomeLoja" required placeholder="Ex: Loja do Zé">
-                </div>
-                <div class="grupo">
-                    <label>Endereço de Saída</label>
-                    <input type="text" id="saida" required placeholder="Ex: Av. Principal, 100">
-                </div>
-                <div class="grupo">
-                    <label>Endereço de Entrega</label>
-                    <input type="text" id="destino" required placeholder="Ex: Rua das Flores, 50">
-                </div>
-                <div class="grupo">
-                    <label>Valor da Entrega R$</label>
-                    <input type="number" step="0.01" id="valor" required placeholder="0.00">
-                </div>
-                <button type="submit" class="btn-enviar">Publicar Entrega ✅</button>
+                <div class="grupo"><label>Nome da Loja</label><input type="text" id="nomeLoja" required></div>
+                <div class="grupo"><label>Endereço de Saída</label><input type="text" id="saida" required></div>
+                <div class="grupo"><label>Endereço de Entrega</label><input type="text" id="destino" required></div>
+                <div class="grupo"><label>Valor R$</label><input type="number" step="0.01" id="valor" required></div>
+                <button type="submit" class="btn-enviar">Publicar ✅</button>
             </form>
         </div>
 
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
-            <div id="lista">
-                <p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>
-            </div>
+            <div id="lista"><p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível.</p></div>
         </div>
 
         <div id="aba-admin" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
-            <h2>👨‍💼 Painel Administrativo</h2>
-            <div id="painelAdmin">
-                <p style="color:#94a3b8;">Nenhuma entrega registrada.</p>
-            </div>
+            <h2>👨‍💼 Painel Admin</h2>
+            <div id="painelAdmin"><p style="color:#94a3b8;">Nenhuma entrega registrada.</p></div>
         </div>
 
         <div class="rodape">
@@ -276,7 +118,6 @@
             document.getElementById('tela-inicial').style.display = 'none';
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
             document.getElementById(`aba-${nome}`).classList.add('ativa');
-            
             if (nome === 'entregador') mostrarLista();
             if (nome === 'admin') mostrarAdmin();
         }
@@ -288,23 +129,22 @@
 
         function cadastrar(e) {
             e.preventDefault();
-            const nova = {
+            entregas.push({
                 id: Date.now(),
                 loja: document.getElementById('nomeLoja').value,
                 saida: document.getElementById('saida').value,
                 destino: document.getElementById('destino').value,
                 valor: parseFloat(document.getElementById('valor').value),
                 status: 'disponivel'
-            };
-            entregas.push(nova);
-            alert('✅ Entrega publicada com sucesso!');
+            });
+            alert('✅ Entrega publicada!');
             e.target.reset();
         }
 
         function mostrarLista() {
             const caixa = document.getElementById('lista');
             if (entregas.length === 0) {
-                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>';
+                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível.</p>';
                 return;
             }
             caixa.innerHTML = entregas.map(e => `
@@ -315,7 +155,7 @@
                     <p style="font-size:1.3rem; font-weight:bold; color:#22c55e; margin-top:8px;">R$ ${e.valor.toFixed(2)}</p>
                     ${e.status === 'disponivel' 
                         ? `<button class="aceitar" onclick="pegar(${e.id})">Aceitar Entrega</button>` 
-                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Entrega Aceita</p>'}
+                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Aceita</p>'}
                 </div>
             `).join('');
         }
@@ -324,7 +164,7 @@
             const entrega = entregas.find(e => e.id === id);
             if (entrega) {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega aceita!\n\nLoja: ${entrega.loja}\nPara: ${entrega.destino}\nValor: R$ ${entrega.valor.toFixed(2)}`);
+                alert(`✅ Entrega aceita!\n${entrega.loja} → ${entrega.destino}\nR$ ${entrega.valor.toFixed(2)}`);
                 mostrarLista();
             }
         }
@@ -337,7 +177,6 @@
             }
             caixa.innerHTML = entregas.map(e => `
                 <div class="cartao" style="border-color:#3b82f6;">
-                    <p><strong>ID:</strong> ${e.id}</p>
                     <p><strong>Loja:</strong> ${e.loja}</p>
                     <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
                     <p><strong>Valor:</strong> R$ ${e.valor.toFixed(2)}</p>
