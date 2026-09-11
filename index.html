@@ -1,236 +1,359 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rota Cheia</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rota Cheia - Nenhuma entrega volta vazia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
 
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-    }
+        body {
+            background-color: #0f172a;
+            color: #fff;
+            min-height: 100vh;
+        }
 
-    .app-container {
-      max-width: 480px;
-      margin: 0 auto;
-      background-color: #fff;
-      min-height: 100vh;
-      padding-bottom: 20px;
-    }
+        /* IMAGEM DE CAPA */
+        .capa-container {
+            width: 100%;
+        }
 
-    .capa-container {
-      width: 100%;
-      position: relative;
-    }
+        .capa-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    .capa-imagem {
-      width: 100%;
-      display: block;
-      height: auto;
-    }
+        .container {
+            padding: 25px 20px 40px;
+            max-width: 520px;
+            margin: 0 auto;
+        }
 
-    .aba {
-      display: none;
-      padding: 20px;
-    }
+        /* BOTÕES PRINCIPAIS */
+        .botao {
+            width: 100%;
+            padding: 22px 25px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.15s, opacity 0.15s;
+            text-align: left;
+        }
 
-    .aba.ativa {
-      display: block;
-    }
+        .botao:active {
+            transform: scale(0.97);
+            opacity: 0.9;
+        }
 
-    .botoes-capa {
-      padding: 20px;
-    }
+        .botao-esq {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-    .botao-nav {
-      width: 100%;
-      padding: 18px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .botao-texto {
+            line-height: 1.4;
+        }
 
-    .botao-loja {
-      background: linear-gradient(90deg, #f59e0b, #eab308);
-      color: #000;
-    }
+        .botao-titulo {
+            font-size: 1.25rem;
+        }
 
-    .botao-entregador {
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-      color: white;
-    }
+        .botao-sub {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            font-weight: normal;
+        }
 
-    .botao-admin {
-      background: linear-gradient(90deg, #2563eb, #3b82f6);
-      color: white;
-    }
+        .loja {
+            background: linear-gradient(90deg, #d97706, #f59e0b);
+            color: #000;
+        }
 
-    .botao-voltar {
-      background: #6c757d;
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
+        .entregador {
+            background: linear-gradient(90deg, #15803d, #22c55e);
+            color: #fff;
+        }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #222;
-    }
+        .admin {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+            color: #fff;
+        }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+        /* TELAS DAS ABAS */
+        .aba {
+            display: none;
+        }
 
-    button[type="submit"] {
-      background: #2563eb;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        .aba.ativa {
+            display: block;
+        }
 
-    .lista-entregas {
-      margin-top: 15px;
-    }
+        .voltar {
+            background: #334155;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
 
-    .cartao-entrega {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 12px;
-    }
+        h2 {
+            margin-bottom: 20px;
+            color: #fbbf24;
+        }
 
-    .rodape {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #888;
-    }
-  </style>
+        .grupo {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #e2e8f0;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #475569;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #1e293b;
+            color: #fff;
+        }
+
+        .btn-enviar {
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .cartao {
+            background: #1e293b;
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .cartao p {
+            margin: 6px 0;
+        }
+
+        .aceitar {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .rodape {
+            text-align: center;
+            margin-top: 40px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="app-container">
-    
-    <div id="capa" class="capa-container">
-      <img src="compartilhar_imagem_1788920713078.jpeg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-imagem" style="width:100%; height:220px; object-fit:cover;">
 
-  <span style="font-size:32px; font-weight:bold;">🛵 Rota Cheia</span>
-  <span style="font-size:16px; margin-top:8px;">Nenhuma entrega volta vazia ✅</span>
-</div>
-
-      <div class="botoes-capa">
-        <button class="botao-nav botao-loja" onclick="mostrarAba('loja')">
-          <span>🏪 LOJA</span>
-          <span>➤</span>
-        </button>
-
-        <button class="botao-nav botao-entregador" onclick="mostrarAba('entregador')">
-          <span>🏍️ ENTREGADOR</span>
-          <span>➤</span>
-        </button>
-
-        <button class="botao-nav botao-admin" onclick="mostrarAba('gerenciar-entregadores')">
-          <span>👨‍💼 ADMINISTRADOR</span>
-          <span>➤</span>
-        </button>
-      </div>
-
-      <div class="rodape">
-        <strong>Rota Cheia</strong><br>
-        Versão 1.0 — "Nenhuma entrega volta vazia"
-      </div>
+    <!-- IMAGEM DE CAPA -->
+    <div class="capa-container">
+        <img src="https://i.imgur.com/KzXqfL9.jpg" alt="Rota Cheia - Nenhuma entrega volta vazia" class="capa-img">
     </div>
 
-    <div id="aba-loja" class="aba">
-      <h2>🏪 Publicar Entrega</h2>
-      <form onsubmit="publicarEntrega(event)">
-        <input type="text" placeholder="📍 Endereço de Coleta" required>
-        <input type="text" placeholder="📍 Endereço de Entrega" required>
-        <input type="text" placeholder="📦 Descrição do produto" required>
-        <input type="number" step="0.01" placeholder="💰 Valor da entrega R$" required>
-        <input type="tel" placeholder="📞 Seu WhatsApp" required>
-        <button type="submit">✅ Publicar Entrega</button>
-      </form>
-      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
+    <div class="container">
+        <!-- TELA INICIAL -->
+        <div id="tela-inicial">
+            <button class="botao loja" onclick="abrir('loja')">
+                <div class="botao-esq">
+                    <span style="font-size:1.8rem;">🏪</span>
+                    <div class="botao-texto">
+                        <div class="botao-titulo">LOJA</div>
+                        <div class="botao-sub">Cadastre seus pedidos</div>
+                    </div>
+                </div>
+                <span style="font-size:1.5rem;">➤</span>
+            </button>
+
+            <button class="botao entregador" onclick="abrir('entregador')">
+                <div class="botao-esq">
+                    <span style="font-size:1.8rem;">🏍️</span>
+                    <div class="botao-texto">
+                        <div class="botao-titulo">ENTREGADOR</div>
+                        <div class="botao-sub">Faça entregas, ganhe mais</div>
+                    </div>
+                </div>
+                <span style="font-size:1.5rem;">➤</span>
+            </button>
+
+            <button class="botao admin" onclick="abrir('admin')">
+                <div class="botao-esq">
+                    <span style="font-size:1.8rem;">👨‍💼</span>
+                    <div class="botao-texto">
+                        <div class="botao-titulo">ADMINISTRADOR</div>
+                        <div class="botao-sub">Gerencie todo o sistema</div>
+                    </div>
+                </div>
+                <span style="font-size:1.5rem;">➤</span>
+            </button>
+        </div>
+
+        <!-- TELA LOJA -->
+        <div id="aba-loja" class="aba">
+            <button class="voltar" onclick="voltar()">← Voltar</button>
+            <h2>🏪 Publicar Entrega</h2>
+            <form onsubmit="cadastrar(event)">
+                <div class="grupo">
+                    <label>Nome da Loja</label>
+                    <input type="text" id="nomeLoja" required placeholder="Ex: Loja do Zé">
+                </div>
+                <div class="grupo">
+                    <label>Endereço de Saída</label>
+                    <input type="text" id="saida" required placeholder="Ex: Av. Principal, 100">
+                </div>
+                <div class="grupo">
+                    <label>Endereço de Entrega</label>
+                    <input type="text" id="destino" required placeholder="Ex: Rua das Flores, 50">
+                </div>
+                <div class="grupo">
+                    <label>Valor da Entrega R$</label>
+                    <input type="number" step="0.01" id="valor" required placeholder="0.00">
+                </div>
+                <button type="submit" class="btn-enviar">Publicar Entrega ✅</button>
+            </form>
+        </div>
+
+        <!-- TELA ENTREGADOR -->
+        <div id="aba-entregador" class="aba">
+            <button class="voltar" onclick="voltar()">← Voltar</button>
+            <h2>🏍️ Entregas Disponíveis</h2>
+            <div id="lista">
+                <p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>
+            </div>
+        </div>
+
+        <!-- TELA ADMIN -->
+        <div id="aba-admin" class="aba">
+            <button class="voltar" onclick="voltar()">← Voltar</button>
+            <h2>👨‍💼 Painel Administrativo</h2>
+            <div id="painelAdmin">
+                <p style="color:#94a3b8;">Nenhuma entrega registrada.</p>
+            </div>
+        </div>
+
+        <div class="rodape">
+            <p><strong>Rota Cheia</strong> — Versão 1.0</p>
+            <p>"Nenhuma entrega volta vazia"</p>
+        </div>
     </div>
 
-    <div id="aba-entregador" class="aba">
-      <h2>🏍️ Entregas Disponíveis</h2>
-      <div class="lista-entregas" id="lista-entregas">
-        <p style="text-align:center; color:#666; padding:20px;">Aguardando novas entregas...</p>
-      </div>
-      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
-    </div>
+    <script>
+        let entregas = [];
 
-    <div id="aba-gerenciar-entregadores" class="aba">
-      <h2>👨‍💼 Cadastrar Entregador</h2>
-      <form onsubmit="cadastrarEntregador(event)">
-        <input type="text" placeholder="👤 Nome Completo" required>
-        <input type="text" placeholder="📄 CPF" required>
-        <input type="tel" placeholder="📞 Telefone / WhatsApp" required>
-        <input type="text" placeholder="🏍️ Placa da Moto" required>
-        <input type="email" placeholder="📧 E-mail" required>
-        <input type="password" placeholder="🔑 Senha" required>
-        <button type="submit">💾 Cadastrar</button>
-      </form>
-      <button class="botao-voltar" onclick="voltarCapa()">⬅️ Voltar</button>
-    </div>
+        function abrir(nome) {
+            document.getElementById('tela-inicial').style.display = 'none';
+            document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+            document.getElementById(`aba-${nome}`).classList.add('ativa');
+            
+            if (nome === 'entregador') mostrarLista();
+            if (nome === 'admin') mostrarAdmin();
+        }
 
-  </div>
+        function voltar() {
+            document.getElementById('tela-inicial').style.display = 'block';
+            document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+        }
 
-  <script>
-    function mostrarAba(nomeAba) {
-      document.getElementById('capa').style.display = 'none';
-      const abas = document.querySelectorAll('.aba');
-      abas.forEach(aba => aba.classList.remove('ativa'));
-      document.getElementById('aba-' + nomeAba).classList.add('ativa');
-      window.scrollTo(0, 0);
-    }
+        function cadastrar(e) {
+            e.preventDefault();
+            const nova = {
+                id: Date.now(),
+                loja: document.getElementById('nomeLoja').value,
+                saida: document.getElementById('saida').value,
+                destino: document.getElementById('destino').value,
+                valor: parseFloat(document.getElementById('valor').value),
+                status: 'disponivel'
+            };
+            entregas.push(nova);
+            alert('✅ Entrega publicada com sucesso!');
+            e.target.reset();
+        }
 
-    function voltarCapa() {
-      const abas = document.querySelectorAll('.aba');
-      abas.forEach(aba => aba.classList.remove('ativa'));
-      document.getElementById('capa').style.display = 'block';
-      window.scrollTo(0, 0);
-    }
+        function mostrarLista() {
+            const caixa = document.getElementById('lista');
+            if (entregas.length === 0) {
+                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:40px;">Nenhuma entrega disponível no momento.</p>';
+                return;
+            }
+            caixa.innerHTML = entregas.map(e => `
+                <div class="cartao">
+                    <p><strong>Loja:</strong> ${e.loja}</p>
+                    <p><strong>De:</strong> ${e.saida}</p>
+                    <p><strong>Para:</strong> ${e.destino}</p>
+                    <p style="font-size:1.3rem; font-weight:bold; color:#22c55e; margin-top:8px;">R$ ${e.valor.toFixed(2)}</p>
+                    ${e.status === 'disponivel' 
+                        ? `<button class="aceitar" onclick="pegar(${e.id})">Aceitar Entrega</button>` 
+                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Entrega Aceita</p>'}
+                </div>
+            `).join('');
+        }
 
-    function publicarEntrega(event) {
-      event.preventDefault();
-      alert('✅ Entrega publicada com sucesso!\\n\\nUm entregador vai aceitar em breve. 🛵💨');
-      event.target.reset();
-      voltarCapa();
-    }
+        function pegar(id) {
+            const entrega = entregas.find(e => e.id === id);
+            if (entrega) {
+                entrega.status = 'aceita';
+                alert(`✅ Entrega aceita!\n\nLoja: ${entrega.loja}\nPara: ${entrega.destino}\nValor: R$ ${entrega.valor.toFixed(2)}`);
+                mostrarLista();
+            }
+        }
 
-    function cadastrarEntregador(event) {
-      event.preventDefault();
-      alert('✅ Entregador cadastrado com sucesso!\\n\\nBem-vindo à equipe Rota Cheia! 🛵🎉');
-      event.target.reset();
-      voltarCapa();
-    }
-  </script>
+        function mostrarAdmin() {
+            const caixa = document.getElementById('painelAdmin');
+            if (entregas.length === 0) {
+                caixa.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>';
+                return;
+            }
+            caixa.innerHTML = entregas.map(e => `
+                <div class="cartao" style="border-color:#3b82f6;">
+                    <p><strong>ID:</strong> ${e.id}</p>
+                    <p><strong>Loja:</strong> ${e.loja}</p>
+                    <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
+                    <p><strong>Valor:</strong> R$ ${e.valor.toFixed(2)}</p>
+                    <p><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
+                </div>
+            `).join('');
+        }
+    </script>
+
 </body>
 </html>
