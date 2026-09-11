@@ -67,6 +67,15 @@
             color: #86efac;
         }
 
+        .aviso-minimo {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 10px 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: #fcd34d;
+        }
+
         .caixa-valores {
             background: #1e293b;
             border: 2px solid #fbbf24;
@@ -75,8 +84,8 @@
             margin: 16px 0;
         }
         .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
-        .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.1rem; margin-top: 8px; padding-top: 10px; border-top: 2px dashed #475569; }
-        .valor-entregador { color: #22c55e; font-weight: bold; }
+        .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.05rem; margin-top: 8px; padding-top: 8px; border-top: 2px dashed #475569; }
+        .valor-entregador { color: #22c55e; font-weight: bold; font-size: 1.05rem; }
         .valor-total { color: #fff; font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
         .distancia-km { text-align: center; font-size: 1.3rem; font-weight: bold; color: #94a3b8; margin: 10px 0; }
         .carregando { color: #fbbf24; animation: piscar 1s infinite; }
@@ -97,11 +106,11 @@
         <!-- TELA INICIAL -->
         <div id="tela-inicial">
             <button class="botao cadastro" onclick="abrir('cadastro')">
-                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Moto, carro ou bicicleta</small></div></div>
+                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Só 20% de taxa — você leva 80%</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao loja" onclick="abrir('loja')">
-                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>Cálculo automático de distância</small></div></div>
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>Mínimo R$5,00 · R$1,90/km</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao entregador" onclick="abrir('entregador')">
@@ -109,7 +118,7 @@
                 <span>➤</span>
             </button>
             <button class="botao admin" onclick="abrir('admin')">
-                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Controle total</small></div></div>
+                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Seus ganhos 20%</small></div></div>
                 <span>➤</span>
             </button>
         </div>
@@ -118,9 +127,11 @@
         <div id="aba-cadastro" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>📝 Seja Entregador Rota Cheia</h2>
-            <div class="frase-principal">⭐ A plataforma que mais paga por quilômetros rodados ⭐</div>
+            <div class="frase-principal">⭐ A menor taxa da região — só 20%! Você leva 80%! ⭐</div>
             <div class="diferencial">
-                ✅ Você recebe <strong>80%</strong> de cada entrega!<br>
+                ✅ Arrancada mínima: R$ 5,00<br>
+                ✅ R$ 1,90 por km rodado<br>
+                ✅ Você recebe 80% do valor total<br>
                 ✅ Aceitamos moto, carro e bicicleta
             </div>
             <form onsubmit="cadastrarEntregador(event)">
@@ -148,12 +159,13 @@
             </form>
         </div>
 
-        <!-- 🏪 LOJA — CÁLCULO 100% AUTOMÁTICO -->
+        <!-- 🏪 LOJA -->
         <div id="aba-loja" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
             <div class="diferencial">
-                💵 Preço fixo: <strong>R$ 1,90 por km</strong> — calcula sozinho!
+                💵 Arrancada: <strong>R$ 5,00</strong> + <strong>R$ 1,90/km</strong><br>
+                ✅ Loja paga o valor combinado — sem taxas extras!
             </div>
 
             <form onsubmit="publicarEntrega(event)">
@@ -169,19 +181,21 @@
                     Digite os endereços acima ↗️
                 </div>
 
-                <!-- VALORES JÁ CALCULADOS E DIVIDIDOS -->
                 <div class="caixa-valores" id="caixa-valores" style="display:none;">
                     <p class="linha-valor valor-total">
-                        <span>💵 Valor Total da Corrida</span>
+                        <span>💵 VALOR TOTAL A PAGAR</span>
                         <span id="valor-total">R$ 0,00</span>
                     </p>
-                    <p class="linha-valor seu-lucro">
-                        <span>💰 SEU LUCRO (20%)</span>
-                        <span id="seu-lucro">R$ 0,00</span>
-                    </p>
+                    <div id="aviso-minimo" class="aviso-minimo" style="display:none;">
+                        ⚡ Arrancada mínima de R$ 5,00 aplicada
+                    </div>
                     <p class="linha-valor valor-entregador">
-                        <span>🏍️ Valor do Entregador (80%)</span>
+                        <span>🏍️ Entregador recebe (80%)</span>
                         <span id="valor-entregador">R$ 0,00</span>
+                    </p>
+                    <p class="linha-valor seu-lucro">
+                        <span>💰 SUA TAXA (20%)</span>
+                        <span id="sua-taxa">R$ 0,00</span>
                     </p>
                 </div>
 
@@ -203,7 +217,7 @@
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
-            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ A plataforma que mais paga por quilômetros rodados ⭐</div>
+            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ Só 20% de taxa — você leva 80%! ⭐</div>
             <div id="lista-entregas">
                 <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>
             </div>
@@ -235,25 +249,24 @@
     <script>
         let entregadores = [];
         let entregas = [];
-        const PRECO_POR_KM = 1.90;
-        const SUA_PORCENTAGEM = 20;
-        const ENTREGADOR_PORCENTAGEM = 80;
+        let lucroTotal = 0;
+        
+        // ⚙️ CONFIGURAÇÕES FINAIS CONFIRMADAS
+        const PRECO_POR_KM = 1.90;        // R$ 1,90 por km
+        const VALOR_MINIMO_CORRIDA = 5.00; // Arrancada mínima R$ 5,00
+        const TAXA_PLATAFORMA = 20;        // Sua taxa = 20%
+        const VALOR_ENTREGADOR = 80;        // Entregador leva = 80%
+        
         let kmCalculado = null;
 
-        // 🧮 CÁLCULO INTELIGENTE — funciona SEM Google
         function iniciarCalculo() {
             const saida = document.getElementById('saida').value.trim();
             const destino = document.getElementById('destino').value.trim();
             
             if (saida.length > 5 && destino.length > 5) {
                 document.getElementById('area-km').innerHTML = '<span class="carregando">🗺️ Calculando distância...</span>';
-                
-                // Estimativa inteligente baseada no endereço
-                const fatorSaida = saida.split(/\s+/).length;
-                const fatorDestino = destino.split(/\s+/).length;
                 const base = Math.max(1, Math.round((saida.length + destino.length) / 8));
                 kmCalculado = Math.max(0.5, base * 0.5);
-                
                 setTimeout(() => mostrarValores(kmCalculado), 600);
             } else {
                 document.getElementById('area-km').innerHTML = 'Digite os endereços acima ↗️';
@@ -262,20 +275,27 @@
             }
         }
 
-        // 💰 MOSTRAR TODOS OS VALORES JÁ DIVIDIDOS
         function mostrarValores(km) {
-            const valorTotal = km * PRECO_POR_KM;
-            const seuLucro = valorTotal * (SUA_PORCENTAGEM / 100);
-            const valorEntregador = valorTotal * (ENTREGADOR_PORCENTAGEM / 100);
+            let valorTotal = km * PRECO_POR_KM;
+            let usouMinimo = false;
+            
+            if (valorTotal < VALOR_MINIMO_CORRIDA) {
+                valorTotal = VALOR_MINIMO_CORRIDA;
+                usouMinimo = true;
+            }
+            
+            const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
+            const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
 
             document.getElementById('area-km').innerHTML = `📏 <strong>${km.toFixed(1)} km</strong>`;
             document.getElementById('valor-total').textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('seu-lucro').textContent = `R$ ${seuLucro.toFixed(2).replace('.', ',')}`;
             document.getElementById('valor-entregador').textContent = `R$ ${valorEntregador.toFixed(2).replace('.', ',')}`;
+            document.getElementById('sua-taxa').textContent = `R$ ${suaTaxa.toFixed(2).replace('.', ',')}`;
+            
+            document.getElementById('aviso-minimo').style.display = usouMinimo ? 'block' : 'none';
             document.getElementById('caixa-valores').style.display = 'block';
         }
 
-        // 💳 SELECIONAR FORMA DE PAGAMENTO
         function selecionarPagamento(tipo) {
             ['dinheiro', 'pix', 'debito'].forEach(t => {
                 document.getElementById(`pag-${t}`).classList.remove('selecionado');
@@ -308,10 +328,10 @@
                 pix: document.getElementById('pix').value || 'Não informada',
                 cnh: document.getElementById('cnh').value,
                 regiao: document.getElementById('regiao').value || 'Não informada',
-                status: 'pendente'
+                status: 'ativo'
             };
             entregadores.push(novo);
-            alert('✅ Cadastro enviado! Entraremos em contato em breve.');
+            alert('✅ Cadastro realizado com sucesso! Bem-vindo à Rota Cheia!');
             e.target.reset();
             voltar();
         }
@@ -328,9 +348,13 @@
                 return;
             }
 
-            const valorTotal = kmCalculado * PRECO_POR_KM;
-            const seuLucro = valorTotal * (SUA_PORCENTAGEM / 100);
-            const valorEntregador = valorTotal * (ENTREGADOR_PORCENTAGEM / 100);
+            let valorTotal = kmCalculado * PRECO_POR_KM;
+            if (valorTotal < VALOR_MINIMO_CORRIDA) valorTotal = VALOR_MINIMO_CORRIDA;
+            
+            const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
+            const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
+            
+            lucroTotal += suaTaxa;
 
             const entrega = {
                 id: Date.now(),
@@ -339,7 +363,7 @@
                 destino: document.getElementById('destino').value,
                 km: kmCalculado,
                 valorTotal,
-                seuLucro,
+                suaTaxa,
                 valorEntregador,
                 pagamento: formaPag,
                 status: 'disponivel'
@@ -349,10 +373,13 @@
             const pagTexto = {
                 'dinheiro': '💵 Dinheiro',
                 'pix': '🔷 Pix',
-                'debito': '💳 Cartão de Débito'
+                'debito': '💳 Débito'
             };
 
-            alert(`✅ Entrega Publicada!\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n📏 ${kmCalculado.toFixed(1)} km\n💵 Total: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n💰 SEU LUCRO: R$ ${seuLucro.toFixed(2).replace('.', ',')}\n🏍️ Entregador: R$ ${valorEntregador.toFixed(2).replace('.', ',')}\n💳 Pagamento: ${pagTexto[formaPag]}`);
+            const avisoMin = (kmCalculado * PRECO_POR_KM < VALOR_MINIMO_CORRIDA) 
+                ? '\n⚡ Arrancada mínima de R$ 5,00 aplicada' : '';
+
+            alert(`✅ ENTREGA PUBLICADA! 🚀\n\n📍 De: ${entrega.saida}\n📍 Para: ${entrega.destino}\n📏 Distância: ${kmCalculado.toFixed(1)} km${avisoMin}\n\n💵 Valor total: R$ ${valorTotal.toFixed(2).replace('.', ',')}\n🏍️ Entregador recebe: R$ ${valorEntregador.toFixed(2).replace('.', ',')} (80%)\n💰 Sua taxa: R$ ${suaTaxa.toFixed(2).replace('.', ',')} (20%)\n💳 Pagamento: ${pagTexto[formaPag]}`);
             
             e.target.reset();
             document.getElementById('caixa-valores').style.display = 'none';
@@ -364,70 +391,71 @@
         function mostrarEntregasDisponiveis() {
             const caixa = document.getElementById('lista-entregas');
             if (entregas.length === 0) {
-                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>';
+                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.<br>Aguarde novas solicitações!</p>';
                 return;
             }
             caixa.innerHTML = entregas.map(e => {
                 const pagIcone = { 'dinheiro': '💵', 'pix': '🔷', 'debito': '💳' };
                 return `
                 <div class="cartao">
-                    <p><strong>Loja:</strong> ${e.loja}</p>
-                    <p><strong>De:</strong> ${e.saida}</p>
-                    <p><strong>Para:</strong> ${e.destino}</p>
-                    <p><strong>Distância:</strong> ${e.km.toFixed(1)} km</p>
-                    <p style="color:#22c55e; font-weight:bold; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                    <p><strong>🏪 Loja:</strong> ${e.loja}</p>
+                    <p><strong>📍 De:</strong> ${e.saida}</p>
+                    <p><strong>🎯 Para:</strong> ${e.destino}</p>
+                    <p><strong>📏 Distância:</strong> ${e.km.toFixed(1)} km</p>
+                    <p style="color:#22c55e; font-weight:bold; margin-top:8px; font-size:1.1rem;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
                     <p style="font-size:0.85rem; color:#94a3b8;">${pagIcone[e.pagamento]} Pagamento: ${e.pagamento}</p>
                     ${e.status === 'disponivel' 
-                        ? `<button class="aceitar" onclick="aceitarEntrega(${e.id})">Aceitar Entrega ✅</button>` 
-                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Aceita</p>'}
+                        ? `<button class="aceitar" onclick="aceitarEntrega(${e.id})">✅ Aceitar Entrega</button>` 
+                        : '<p style="color:#60a5fa; font-weight:bold; margin-top:10px;">✅ Entrega aceita</p>'}
                 </div>
-            `}).join('');
+                `;
+            }).join('');
         }
 
         function aceitarEntrega(id) {
             const entrega = entregas.find(e => e.id === id);
-            if (entrega) {
+            if (entrega && entrega.status === 'disponivel') {
                 entrega.status = 'aceita';
-                alert(`✅ Entrega Aceita!\n\nLoja: ${entrega.loja}\nRota: ${entrega.saida} → ${entrega.destino}\nVocê recebe: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}`);
+                alert(`✅ Entrega aceita! 🛵\n\n📍 ${entrega.saida}\n➡️ ${entrega.destino}\n💰 Valor: R$ ${entrega.valorEntregador.toFixed(2).replace('.', ',')}\n\nBoa entrega! 🚀`);
                 mostrarEntregasDisponiveis();
             }
         }
 
         function mostrarPainelAdmin() {
-            const lucroTotal = entregas.reduce((soma, e) => soma + e.seuLucro, 0);
             document.getElementById('qtd-entregadores').textContent = entregadores.length;
             document.getElementById('qtd-entregas').textContent = entregas.length;
             document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
-
+            
             const listaCad = document.getElementById('lista-cadastros');
-            listaCad.innerHTML = entregadores.length === 0 
-                ? '<p style="color:#94a3b8;">Nenhum cadastro recebido ainda.</p>'
-                : entregadores.map(e => `
-                    <div class="cartao" style="border-color:#3b82f6;">
-                        <span class="etiqueta-pendente">⏳ Pendente</span>
-                        <p><strong>Nome:</strong> ${e.nome}</p>
-                        <p><strong>Telefone:</strong> ${e.telefone}</p>
-                        <p><strong>Veículo:</strong> ${e.veiculo}</p>
-                        <p><strong>Chave Pix:</strong> ${e.pix}</p>
-                        <p><strong>Região:</strong> ${e.regiao}</p>
-                    </div>
+            if (entregadores.length === 0) {
+                listaCad.innerHTML = '<p style="color:#94a3b8;">Nenhum entregador cadastrado ainda.</p>';
+            } else {
+                listaCad.innerHTML = entregadores.map(e => `
+                <div class="cartao">
+                    <p><strong>${e.nome}</strong></p>
+                    <p>📞 ${e.telefone}</p>
+                    <p>🚗 ${e.veiculo}</p>
+                    <p>📍 ${e.regiao}</p>
+                </div>
                 `).join('');
-
+            }
+            
             const listaEnt = document.getElementById('lista-admin-entregas');
-            listaEnt.innerHTML = entregas.length === 0
-                ? '<p style="color:#94a3b8;">Nenhuma entrega registrada.</p>'
-                : entregas.map(e => `
-                    <div class="cartao" style="border-color:#3b82f6;">
-                        <p><strong>Loja:</strong> ${e.loja}</p>
-                        <p><strong>Rota:</strong> ${e.saida} → ${e.destino}</p>
-                        <p><strong>Distância:</strong> ${e.km.toFixed(1)} km</p>
-                        <p><strong>Valor Total:</strong> R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
-                        <p style="color:#fbbf24;">💰 SEU LUCRO (20%): R$ ${e.seuLucro.toFixed(2).replace('.', ',')}</p>
-                        <p style="color:#22c55e;">🏍️ Entregador (80%): R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
-                        <p><strong>Pagamento:</strong> ${e.pagamento}</p>
-                        <p><strong>Status:</strong> ${e.status === 'disponivel' ? '🟢 Disponível' : '🔵 Aceita'}</p>
-                    </div>
+            if (entregas.length === 0) {
+                listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhuma entrega publicada ainda.</p>';
+            } else {
+                listaEnt.innerHTML = entregas.map(e => `
+                <div class="cartao">
+                    <p><strong>${e.loja}</strong></p>
+                    <p>📍 ${e.saida} → ${e.destino}</p>
+                    <p>📏 ${e.km.toFixed(1)} km</p>
+                    <p>💵 Total: R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
+                    <p style="color:#fbbf24;">💰 Sua taxa: R$ ${e.suaTaxa.toFixed(2).replace('.', ',')}</p>
+                    <p style="color:#22c55e;">🏍️ Entregador: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                    <p style="font-size:0.85rem; color:#94a3b8;">Status: ${e.status === 'disponivel' ? 'Disponível' : 'Aceita'}</p>
+                </div>
                 `).join('');
+            }
         }
     </script>
 </body>
