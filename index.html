@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
 
-    <link rel="icon" type="image/jpeg" href="Capa Rota Cheia JPG.jpg">
-    <link rel="apple-touch-icon" href="Capa Rota Cheia JPG.jpg">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
 
@@ -14,13 +14,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA — imagem original que a gente fez */
+        /* 🖼️ CAPA — imagem correta do seu repositório */
         .capa-container {
             width: 100%;
             height: 260px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #7c3aed 0%, #f59e0b 50%, #22c55e 100%);
         }
         .capa-img {
             width: 100%;
@@ -172,9 +171,9 @@
 </head>
 <body>
 
-<!-- 🖼️ IMAGEM ORIGINAL QUE A GENTE FEZ JUNTOS -->
+<!-- 🖼️ IMAGEM CORRETA — capa-rota-cheia.jpg -->
 <div class="capa-container">
-    <img src="Capa Rota Cheia JPG.jpg" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
+    <img src="capa-rota-cheia.jpg" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
     <div class="sobre-imagem">
         <h1 class="titulo-capa">🛵 ROTA CHEIA</h1>
         <p class="subtitulo-capa">O ÚNICO QUE CASA ROTAS — Nenhuma entrega volta vazia!</p>
@@ -274,7 +273,7 @@
         <div id="codigo-gerado" class="oculto">
             <div class="codigo-caixa">
                 <p style="color:#94a3b8;">🔐 Código de confirmação</p>
-                <div class="codigo-numeros" id="exibir-codigo">----</point>
+                <div class="codigo-numeros" id="exibir-codigo">----</div>
                 <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei — Voltar</button>
             </div>
         </div>
@@ -490,8 +489,8 @@ function aceitar(id){ const e = entregas.find(x=>x.id===id); if(e){e.status='ace
 function aceitarDupla(id1,id2){ const a=entregas.find(x=>x.id===id1), b=entregas.find(x=>x.id===id2); if(a&&b){a.status='aceita';b.status='aceita';salvar();listarEntregas();} }
 function concluir(id){
     const e = entregas.find(x=>x.id===id);
-    const dig = document.getElementById(`cod-${e.id}`).value.trim();
-    const msg = document.getElementById(`msg-${e.id}`);
+    const dig = document.getElementById(`cod-${id}`).value.trim();
+    const msg = document.getElementById(`msg-${id}`);
     if(dig === e.codigo){
         e.status='concluida'; salvar(); listarEntregas();
         msg.innerHTML='<span class="sucesso">✅ CONCLUÍDA!</span>';
