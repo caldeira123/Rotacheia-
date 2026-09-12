@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
-    <meta name="author" content="Rota Cheia — Seu Projeto Exclusivo">
-    <meta name="description" content="Sistema exclusivo — proibida reprodução sem autorização">
+    <meta name="author" content="Rota Cheia — Sistema Exclusivo">
+    <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
@@ -35,27 +35,20 @@
         input, select { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
         
         .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-        .pag-opcao { 
-            flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; 
-            border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s;
-        }
+        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
         .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
         
         .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-concluir { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-saque { background: linear-gradient(90deg, #f59e0b, #fbbf24); color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
+        .btn-mapa { background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
         .btn-perigo { background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem; }
 
         .frase-principal {
             background: linear-gradient(135deg, #ffd700, #ffb300, #ff9800);
-            color: #000;
-            padding: 14px 16px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 1rem;
-            text-align: center;
-            margin: 16px 0;
+            color: #000; padding: 14px 16px; border-radius: 12px; font-weight: 900;
+            font-size: 1rem; text-align: center; margin: 16px 0;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
             animation: brilho 2s ease-in-out infinite alternate;
         }
@@ -64,21 +57,21 @@
             to { box-shadow: 0 0 35px rgba(255, 215, 0, 0.8); }
         }
 
+        .aviso-casada {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white; padding: 12px; border-radius: 10px; margin: 12px 0;
+            text-align: center; font-weight: bold; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%{opacity:1;} 50%{opacity:0.8;} 100%{opacity:1;} }
+
         .diferencial {
-            background: rgba(34, 197, 94, 0.1);
-            border-left: 3px solid #22c55e;
-            padding: 10px 12px;
-            margin: 12px 0;
-            font-size: 0.85rem;
-            color: #86efac;
+            background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e;
+            padding: 10px 12px; margin: 12px 0; font-size: 0.85rem; color: #86efac;
         }
 
         .caixa-valores {
-            background: #1e293b;
-            border: 2px solid #fbbf24;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 16px 0;
+            background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px;
+            padding: 16px; margin: 16px 0;
         }
         .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
         .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.05rem; margin-top: 8px; padding-top: 8px; border-top: 2px dashed #475569; }
@@ -89,120 +82,78 @@
         @keyframes piscar { 50% { opacity: 0.3; } }
 
         .codigo-caixa {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border: 3px solid #7c3aed;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin: 16px 0;
+            background: linear-gradient(135deg, #1e293b, #334155); border: 3px solid #7c3aed;
+            border-radius: 12px; padding: 20px; text-align: center; margin: 16px 0;
             box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
         }
-        .codigo-numeros {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #fbbf24;
-            letter-spacing: 10px;
-            margin: 10px 0;
-        }
-        .codigo-dica {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-top: 8px;
-        }
+        .codigo-numeros { font-size: 2.5rem; font-weight: 900; color: #fbbf24; letter-spacing: 10px; margin: 10px 0; }
+        .codigo-dica { font-size: 0.85rem; color: #94a3b8; margin-top: 8px; }
 
         .carteira {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border: 3px solid #fbbf24;
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            margin: 20px 0;
+            background: linear-gradient(135deg, #1e293b, #334155); border: 3px solid #fbbf24;
+            border-radius: 16px; padding: 24px; text-align: center; margin: 20px 0;
             box-shadow: 0 0 25px rgba(251, 191, 36, 0.25);
         }
-        .saldo-valor {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #fbbf24;
-            margin: 10px 0;
-        }
-        .saldo-etiqueta {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        .historico-saque {
-            margin-top: 15px;
-            text-align: left;
-            border-top: 1px dashed #475569;
-            padding-top: 15px;
-        }
-        .item-saque {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #334155;
-            font-size: 0.9rem;
-        }
+        .saldo-valor { font-size: 2.5rem; font-weight: 900; color: #fbbf24; margin: 10px 0; }
+        .saldo-etiqueta { font-size: 0.9rem; color: #94a3b8; }
+        .historico-saque { margin-top: 15px; text-align: left; border-top: 1px dashed #475569; padding-top: 15px; }
+        .item-saque { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #334155; font-size: 0.9rem; }
         .saque-valor { color: #ef4444; font-weight: bold; }
         .saque-data { color: #94a3b8; font-size: 0.8rem; }
 
         .rodape { text-align: center; margin-top: 30px; color: #64748b; font-size: 0.7rem; border-top: 1px solid #1e293b; padding-top: 15px; }
         .divisor { height: 1px; background: #334155; margin: 20px 0; }
         .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .cartao-dupla { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
         .etiqueta { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; font-weight: bold; }
         .etiqueta-disponivel { background: #f59e0b; color: #000; }
         .etiqueta-aceita { background: #3b82f6; color: #fff; }
         .etiqueta-concluida { background: #22c55e; color: #fff; }
+        .etiqueta-casada { background: linear-gradient(90deg, #fbbf24, #f59e0b); color: #000; }
         .soma-detalhe { color: #94a3b8; font-size: 0.85rem; margin: 4px 0; }
-        .input-codigo { 
-            font-size: 2rem; 
-            text-align: center; 
-            letter-spacing: 8px;
-            font-weight: bold;
-            max-width: 200px;
-            margin: 0 auto;
-        }
+        .input-codigo { font-size: 2rem; text-align: center; letter-spacing: 8px; font-weight: bold; max-width: 200px; margin: 0 auto; }
         .sucesso { color: #22c55e; text-align: center; font-weight: bold; margin-top: 10px; }
         .erro { color: #ef4444; text-align: center; font-weight: bold; margin-top: 10px; }
-        .aviso-limpeza { font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: 10px; }
         .marca-exclusiva { color: #7c3aed; font-weight: bold; text-align: center; margin: 10px 0; font-size: 0.85rem; }
+        .passo-rota { margin: 8px 0; padding: 10px; background: #0f172a; border-radius: 8px; border-left: 3px solid #fbbf24; }
+        .passo-numero { display: inline-block; width: 26px; height: 26px; background: #fbbf24; color: #000; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; margin-right: 8px; font-size: 0.9rem; }
+        .link-mapa { text-decoration: none; display: block; }
     </style>
 </head>
 <body>
 
-    <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Exclusivo" class="capa-img">
+    <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img">
     <div class="container">
 
-        <!-- TELA DE LOGIN ADMIN -->
+        <!-- TELA LOGIN ADMIN -->
         <div id="tela-login-admin" style="display:none;">
             <h2 style="text-align:center; margin-top:30px;">🔐 Acesso Exclusivo</h2>
             <div class="codigo-caixa">
                 <p>Digite seu código de 6 dígitos:</p>
                 <input type="password" id="codigo-admin-login" class="input-codigo" maxlength="6" placeholder="______">
                 <button class="btn-confirmar" onclick="verificarCodigoAdmin()" style="margin-top:15px;">Entrar ✅</button>
-                <p style="margin-top:15px; font-size:0.8rem; color:#94a3b8;">
-                    ⚠️ Primeiro acesso? Crie seu código abaixo
-                </p>
+                <p style="margin-top:15px; font-size:0.8rem; color:#94a3b8;">Primeiro acesso? Crie seu código abaixo</p>
                 <button class="btn-enviar" onclick="abrirCriarCodigo()" style="margin-top:8px;">Criar meu código 🔑</button>
             </div>
         </div>
 
-        <!-- CRIAR CÓDIGO ADMIN -->
+        <!-- CRIAR CÓDIGO -->
         <div id="tela-criar-codigo" style="display:none;">
             <button class="voltar" onclick="voltarLogin()">← Voltar</button>
             <h2 style="text-align:center;">🔑 Criar Código Secreto</h2>
             <div class="codigo-caixa">
                 <p>Escolha 6 dígitos que SÓ VOCÊ sabe:</p>
                 <input type="password" id="novo-codigo-admin" class="input-codigo" maxlength="6" placeholder="______">
-                <p style="margin:10px 0; font-size:0.85rem; color:#fbbf24;">⚠️ ANOTE BEM! Serve para QUALQUER celular!</p>
+                <p style="margin:10px 0; font-size:0.85rem; color:#fbbf24;">⚠️ ANOTE! Serve em QUALQUER celular!</p>
                 <button class="btn-enviar" onclick="salvarCodigoAdmin()">Salvar ✅</button>
             </div>
         </div>
 
         <!-- TELA INICIAL -->
         <div id="tela-inicial">
-            <p class="marca-exclusiva">🛡️ ROTA CHEIA — SISTEMA EXCLUSIVO</p>
+            <p class="marca-exclusiva">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
             <button class="botao cadastro" onclick="abrir('cadastro')">
-                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Só 20% — recebe direto!</small></div></div>
+                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>80% — sem volta vazia!</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao loja" onclick="abrir('loja')">
@@ -210,7 +161,7 @@
                 <span>➤</span>
             </button>
             <button class="botao entregador" onclick="abrir('entregador')">
-                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Suas entregas</small></div></div>
+                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Rotas casadas + Mapa!</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao admin" onclick="verificarAcessoAdmin()">
@@ -223,10 +174,12 @@
         <div id="aba-cadastro" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>📝 Seja Entregador Rota Cheia</h2>
-            <div class="frase-principal">⭐ 80% direto! Confirma com código! ⭐</div>
+            <div class="frase-principal">⭐ O ÚNICO que casa rotas! Nenhuma volta vazia! ⭐</div>
             <div class="diferencial">
                 ✅ Arrancada R$ 5,00 + R$ 1,90/km<br>
-                ✅ Você recebe 80% do valor total<br>
+                ✅ Você recebe 80% — direto pra sua conta<br>
+                ✅ 🆘 Sem volta vazia: sistema busca entrega de retorno<br>
+                ✅ Clica → vai direto no Google Maps 🗺️<br>
                 ✅ Confirmação por código — entrega segura
             </div>
             <form onsubmit="cadastrarEntregador(event)">
@@ -249,7 +202,7 @@
                     </select>
                 </div>
                 <div class="grupo"><label>Chave Pix (para receber) *</label><input type="text" id="pix" required placeholder="CPF, telefone..."></div>
-                <div class="grupo"><label>Região que atua</label><input type="text" id="regiao" placeholder="Ex: Centro..."></div>
+                <div class="grupo"><label>Região que atua</label><input type="text" id="regiao" placeholder="Ex: Centro, Zona Sul..."></div>
                 <button type="submit" class="btn-enviar">Cadastrar ✅</button>
             </form>
         </div>
@@ -260,16 +213,16 @@
             <h2>🏪 Solicitar Entrega</h2>
             <div class="diferencial">
                 💵 Preço: <strong>R$ 5,00 + R$ 1,90/km</strong><br>
-                🔐 Confirmação por código — entrega segura!
+                🔐 Código de confirmação automático
             </div>
 
             <form onsubmit="publicarEntrega(event)">
                 <div class="grupo"><label>Nome da Loja *</label><input type="text" id="nomeLoja" required></div>
                 <div class="grupo"><label>📍 Endereço de Saída *</label>
-                    <input type="text" id="saida" required placeholder="Rua, número - Cidade" oninput="iniciarCalculo()">
+                    <input type="text" id="saida" required placeholder="Rua, número, bairro - Cidade" oninput="iniciarCalculo()">
                 </div>
                 <div class="grupo"><label>📍 Endereço de Destino *</label>
-                    <input type="text" id="destino" required placeholder="Rua, número - Cidade" oninput="iniciarCalculo()">
+                    <input type="text" id="destino" required placeholder="Rua, número, bairro - Cidade" oninput="iniciarCalculo()">
                 </div>
 
                 <div class="distancia-km" id="area-km">Digite os endereços acima ↗️</div>
@@ -278,18 +231,9 @@
                     <p class="soma-detalhe">➕ Arrancada: R$ 5,00</p>
                     <p class="soma-detalhe" id="linha-km">➕ Km: R$ 0,00</p>
                     <hr style="border: none; border-top: 1px dashed #475569; margin: 6px 0;">
-                    <p class="linha-valor valor-total">
-                        <span>💵 VALOR TOTAL</span>
-                        <span id="valor-total">R$ 0,00</span>
-                    </p>
-                    <p class="linha-valor valor-entregador">
-                        <span>🏍️ Entregador (80%)</span>
-                        <span id="valor-entregador">R$ 0,00</span>
-                    </p>
-                    <p class="linha-valor seu-lucro">
-                        <span>💰 Sua taxa (20%)</span>
-                        <span id="sua-taxa">R$ 0,00</span>
-                    </p>
+                    <p class="linha-valor valor-total"><span>💵 VALOR TOTAL</span><span id="valor-total">R$ 0,00</span></p>
+                    <p class="linha-valor valor-entregador"><span>🏍️ Entregador (80%)</span><span id="valor-entregador">R$ 0,00</span></p>
+                    <p class="linha-valor seu-lucro"><span>💰 Sua taxa (20%)</span><span id="sua-taxa">R$ 0,00</span></p>
                 </div>
 
                 <div class="grupo" style="margin-top: 20px;">
@@ -309,7 +253,7 @@
                 <div class="codigo-caixa">
                     <p style="font-size:0.9rem; color:#94a3b8;">🔐 CÓDIGO DE CONFIRMAÇÃO</p>
                     <div class="codigo-numeros" id="exibir-codigo">----</div>
-                    <p class="codigo-dica">⚠️ Passe ao cliente — entregador digita para confirmar!</p>
+                    <p class="codigo-dica">Passe ao cliente — entregador digita para confirmar!</p>
                 </div>
                 <button class="btn-confirmar" onclick="fecharCodigo()">✅ Anotei o código</button>
             </div>
@@ -319,13 +263,13 @@
         <div id="aba-entregador" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>🏍️ Minhas Entregas</h2>
-            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ 80% direto! Confirma com código! ⭐</div>
+            <div class="frase-principal" style="font-size:0.9rem; padding:10px;">⭐ Sem volta vazia! Sistema casa rotas! ⭐</div>
             <div id="lista-entregas">
                 <p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível.</p>
             </div>
         </div>
 
-        <!-- 👨‍💼 ADMINISTRADOR -- CARTEIRA -->
+        <!-- 👨‍💼 ADMIN -->
         <div id="aba-admin" class="aba">
             <button class="voltar" onclick="voltar()">← Voltar</button>
             <h2>👨‍💼 Sua Carteira Exclusiva</h2>
@@ -338,32 +282,24 @@
 
             <div id="form-saque" style="display:none;" class="codigo-caixa">
                 <h3 style="margin-bottom:12px;">💵 Dados do Saque</h3>
-                <div class="grupo">
-                    <label>Valor:</label>
-                    <input type="number" id="valor-saque" step="0.01" min="1" placeholder="0,00">
-                </div>
-                <div class="grupo">
-                    <label>Chave Pix:</label>
-                    <input type="text" id="pix-saque" placeholder="Sua chave...">
-                </div>
+                <div class="grupo"><label>Valor:</label><input type="number" id="valor-saque" step="0.01" min="1" placeholder="0,00"></div>
+                <div class="grupo"><label>Chave Pix:</label><input type="text" id="pix-saque" placeholder="Sua chave..."></div>
                 <button class="btn-enviar" onclick="confirmarSaque()">✅ Confirmar</button>
                 <button class="voltar" onclick="fecharSaque()">Cancelar</button>
             </div>
 
             <div class="historico-saque">
                 <h3 style="margin-bottom:10px;">📤 Histórico de Saques</h3>
-                <div id="lista-saques">
-                    <p style="color:#94a3b8; font-size:0.9rem;">Nenhum saque ainda.</p>
-                </div>
+                <div id="lista-saques"><p style="color:#94a3b8; font-size:0.9rem;">Nenhum saque ainda.</p></div>
             </div>
 
             <div class="divisor"></div>
-            
             <h3 style="margin-top:20px; margin-bottom:10px;">📊 Resumo</h3>
             <div class="caixa-valores">
                 <p style="margin:6px 0;">Entregadores: <span id="qtd-entregadores">0</span></p>
-                <p style="margin:6px 0;">Entregas: <span id="qtd-entregas">0</span></p>
+                <p style="margin:6px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
                 <p style="margin:6px 0;">Concluídas: <span id="qtd-concluidas">0</span></p>
+                <p style="margin:6px 0; color:#fbbf24;">🔄 Rotas Casadas: <span id="qtd-casadas">0</span></p>
                 <p class="seu-lucro">💰 LUCRO TOTAL: R$ <span id="lucro-total">0,00</span></p>
             </div>
 
@@ -371,82 +307,50 @@
             <h3 style="margin-top:15px; margin-bottom:8px;">🔒 Segurança</h3>
             <button class="btn-perigo" onclick="exportarDados()">📥 Salvar meus dados</button>
             <p style="font-size:0.75rem; color:#94a3b8; margin-top:8px;">
-                Código de acesso é a sua chave — não compartilhe com ninguém.<br>
-                Proibida reprodução sem autorização — Rota Cheia ©
+                Código de acesso é a sua chave — não compartilhe.<br>
+                Rota Cheia © — Sistema Exclusivo. Proibida reprodução.
             </p>
         </div>
 
         <div class="rodape">
-            <p>🛡️ Rota Cheia — Sistema Exclusivo</p>
+            <p>🛡️ Rota Cheia — O Único que Casa Rotas</p>
             <p>caldeira123.github.io/Rotacheia-</p>
         </div>
     </div>
 
     <script>
-        // ================= PROTEÇÃO DE DADOS =================
+        // ========= PROTEÇÃO =========
         const CHAVE_SISTEMA = 'rotacheia_2026_exclusivo';
-        const TEMPO_LIMPEZA_DIAS = 7;
-
-        function criptografar(dados) {
-            return btoa(CHAVE_SISTEMA + JSON.stringify(dados));
-        }
-        function descriptografar(dados) {
-            try {
-                return JSON.parse(atob(dados).replace(CHAVE_SISTEMA, ''));
-            } catch { return null; }
-        }
-
-        function salvarDados(chave, valor) {
-            localStorage.setItem(CHAVE_SISTEMA + '_' + chave, criptografar(valor));
-        }
-        function carregarDados(chave) {
-            const dados = localStorage.getItem(CHAVE_SISTEMA + '_' + chave);
-            return dados ? descriptografar(dados) : null;
-        }
-
-        // ================= DADOS DO SISTEMA =================
-        let entregadores = carregarDados('entregadores') || [];
-        let entregas = carregarDados('entregas') || [];
-        let lucroTotal = carregarDados('lucroTotal') || 0;
-        let totalConcluidas = carregarDados('totalConcluidas') || 0;
-        let saques = carregarDados('saques') || [];
+        let entregadores = JSON.parse(localStorage.getItem(CHAVE_SISTEMA+'_entregadores') || '[]');
+        let entregas = JSON.parse(localStorage.getItem(CHAVE_SISTEMA+'_entregas') || '[]');
+        let lucroTotal = parseFloat(localStorage.getItem(CHAVE_SISTEMA+'_lucroTotal') || '0');
+        let totalConcluidas = parseInt(localStorage.getItem(CHAVE_SISTEMA+'_totalConcluidas') || '0');
+        let rotasCasadas = parseInt(localStorage.getItem(CHAVE_SISTEMA+'_rotasCasadas') || '0');
+        let saques = JSON.parse(localStorage.getItem(CHAVE_SISTEMA+'_saques') || '[]');
+        let codigoAdmin = localStorage.getItem(CHAVE_SISTEMA+'_codigoAdmin') || null;
         
         const ARRANCADA = 5.00;
         const PRECO_POR_KM = 1.90;
-        const TAXA_PLATAFORMA = 20;
-        const VALOR_ENTREGADOR = 80;
-        
+        const TAXA = 0.20;
         let kmCalculado = null;
 
-        // ================= LIMPEZA AUTOMÁTICA =================
-        function limparDadosAntigos() {
-            const agora = Date.now();
-            const limite = TEMPO_LIMPEZA_DIAS * 24 * 60 * 60 * 1000;
-            
-            entregas = entregas.filter(e => {
-                if (!e.dataCriacao) return true;
-                return (agora - e.dataCriacao) < limite || e.status === 'concluida' && e.salvo === true;
-            });
-            
-            salvarTudo();
+        function salvar() {
+            localStorage.setItem(CHAVE_SISTEMA+'_entregadores', JSON.stringify(entregadores));
+            localStorage.setItem(CHAVE_SISTEMA+'_entregas', JSON.stringify(entregas));
+            localStorage.setItem(CHAVE_SISTEMA+'_lucroTotal', lucroTotal);
+            localStorage.setItem(CHAVE_SISTEMA+'_totalConcluidas', totalConcluidas);
+            localStorage.setItem(CHAVE_SISTEMA+'_rotasCasadas', rotasCasadas);
+            localStorage.setItem(CHAVE_SISTEMA+'_saques', JSON.stringify(saques));
+            if (codigoAdmin) localStorage.setItem(CHAVE_SISTEMA+'_codigoAdmin', codigoAdmin);
         }
 
-        function salvarTudo() {
-            salvarDados('entregadores', entregadores);
-            salvarDados('entregas', entregas);
-            salvarDados('lucroTotal', lucroTotal);
-            salvarDados('totalConcluidas', totalConcluidas);
-            salvarDados('saques', saques);
-        }
-
-        // ================= CÓDIGO DE ADMIN =================
         function gerarCodigo() {
             return Math.floor(1000 + Math.random() * 9000).toString();
         }
 
+        // ========= ADMIN LOGIN =========
         function verificarAcessoAdmin() {
-            const codigoSalvo = carregarDados('codigoAdmin');
-            if (!codigoSalvo) {
+            if (!codigoAdmin) {
                 document.getElementById('tela-inicial').style.display = 'none';
                 document.getElementById('tela-criar-codigo').style.display = 'block';
             } else {
@@ -454,98 +358,137 @@
                 document.getElementById('tela-login-admin').style.display = 'block';
             }
         }
-
         function abrirCriarCodigo() {
             document.getElementById('tela-login-admin').style.display = 'none';
             document.getElementById('tela-criar-codigo').style.display = 'block';
         }
-
         function voltarLogin() {
             document.getElementById('tela-criar-codigo').style.display = 'none';
             document.getElementById('tela-login-admin').style.display = 'block';
         }
-
         function salvarCodigoAdmin() {
-            const codigo = document.getElementById('novo-codigo-admin').value.trim();
-            if (codigo.length !== 6) {
-                alert('⚠️ Digite 6 dígitos!');
-                return;
-            }
-            salvarDados('codigoAdmin', codigo);
-            alert('✅ Código salvo!\n⚠️ ANOTE: ' + codigo + '\nServe para qualquer celular!');
+            const cod = document.getElementById('novo-codigo-admin').value.trim();
+            if (cod.length !== 6) { alert('⚠️ Digite 6 dígitos!'); return; }
+            codigoAdmin = cod;
+            salvar();
+            alert('✅ Código salvo!\n⚠️ ANOTE: ' + cod);
             document.getElementById('tela-criar-codigo').style.display = 'none';
             document.getElementById('tela-inicial').style.display = 'block';
         }
-
         function verificarCodigoAdmin() {
-            const digitado = document.getElementById('codigo-admin-login').value.trim();
-            const correto = carregarDados('codigoAdmin');
-            if (digitado === correto) {
+            if (document.getElementById('codigo-admin-login').value.trim() === codigoAdmin) {
                 document.getElementById('tela-login-admin').style.display = 'none';
                 abrir('admin');
-                atualizarPainelAdmin();
-            } else {
-                alert('❌ Código errado!');
-            }
+                atualizarAdmin();
+            } else { alert('❌ Código errado!'); }
         }
 
-        // ================= NAVEGAÇÃO =================
+        // ========= NAVEGAÇÃO =========
         function abrir(nome) {
             document.getElementById('tela-inicial').style.display = 'none';
             document.querySelectorAll('.aba').forEach(a => a.style.display = 'none');
             document.getElementById(`aba-${nome}`).style.display = 'block';
-            if (nome === 'entregador') mostrarEntregasDisponiveis();
-            if (nome === 'admin') atualizarPainelAdmin();
+            if (nome === 'entregador') mostrarEntregas();
+            if (nome === 'admin') atualizarAdmin();
         }
-
         function voltar() {
             document.querySelectorAll('.aba').forEach(a => a.style.display = 'none');
             document.getElementById('tela-inicial').style.display = 'block';
         }
 
-        // ================= CÁLCULOS =================
+        // ========= CÁLCULO =========
         function iniciarCalculo() {
             const saida = document.getElementById('saida').value.trim();
             const destino = document.getElementById('destino').value.trim();
-            
             if (saida.length > 5 && destino.length > 5) {
                 document.getElementById('area-km').innerHTML = '<span class="carregando">🗺️ Calculando...</span>';
-                const base = Math.max(1, Math.round((saida.length + destino.length) / 8));
-                kmCalculado = Math.max(0.5, base * 0.5);
-                setTimeout(() => mostrarValores(kmCalculado), 600);
+                kmCalculado = Math.max(0.5, Math.round(((saida.length + destino.length) / 10) * 2) / 2);
+                setTimeout(() => {
+                    document.getElementById('area-km').innerHTML = `📏 <strong>${kmCalculado.toFixed(1)} km</strong>`;
+                    const valorKm = kmCalculado * PRECO_POR_KM;
+                    const total = ARRANCADA + valorKm;
+                    document.getElementById('linha-km').textContent = `➕ Km: R$ ${valorKm.toFixed(2).replace('.', ',')}`;
+                    document.getElementById('valor-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+                    document.getElementById('valor-entregador').textContent = `R$ ${(total * 0.8).toFixed(2).replace('.', ',')}`;
+                    document.getElementById('sua-taxa').textContent = `R$ ${(total * TAXA).toFixed(2).replace('.', ',')}`;
+                    document.getElementById('caixa-valores').style.display = 'block';
+                }, 700);
             } else {
                 document.getElementById('area-km').innerHTML = 'Digite os endereços ↑';
                 document.getElementById('caixa-valores').style.display = 'none';
                 kmCalculado = null;
             }
         }
-
-        function mostrarValores(km) {
-            const valorPorKm = km * PRECO_POR_KM;
-            const valorTotal = ARRANCADA + valorPorKm;
-            const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
-            const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
-
-            document.getElementById('area-km').innerHTML = `📏 <strong>${km.toFixed(1)} km</strong>`;
-            document.getElementById('linha-km').textContent = `➕ Km: R$ ${valorPorKm.toFixed(2).replace('.', ',')}`;
-            document.getElementById('valor-total').textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('valor-entregador').textContent = `R$ ${valorEntregador.toFixed(2).replace('.', ',')}`;
-            document.getElementById('sua-taxa').textContent = `R$ ${suaTaxa.toFixed(2).replace('.', ',')}`;
-            document.getElementById('caixa-valores').style.display = 'block';
-        }
-
         function selecionarPagamento(tipo) {
-            ['dinheiro', 'pix', 'debito'].forEach(t => {
-                document.getElementById(`pag-${t}`).classList.remove('selecionado');
-            });
+            ['dinheiro','pix','debito'].forEach(t => document.getElementById(`pag-${t}`).classList.remove('selecionado'));
             document.getElementById(`pag-${tipo}`).classList.add('selecionado');
             document.getElementById('forma-pagamento').value = tipo;
         }
 
-        // ================= CADASTRO =================
+        // ========= CASAMENTO DE ROTAS =========
+        function buscarRotaCasada(novaEntrega) {
+            for (let e of entregas) {
+                if (e.status !== 'disponivel') continue;
+                const saiOndeChegou = e.destino.toLowerCase().includes(novaEntrega.saida.toLowerCase().substring(0,15)) ||
+                                     novaEntrega.saida.toLowerCase().includes(e.destino.toLowerCase().substring(0,15));
+                const voltaParaOrigem = e.saida.toLowerCase().includes(novaEntrega.destino.toLowerCase().substring(0,15)) ||
+                                       novaEntrega.destino.toLowerCase().includes(e.saida.toLowerCase().substring(0,15));
+                if (saiOndeChegou || voltaParaOrigem) {
+                    return { tipo: 'casada', par: e };
+                }
+            }
+            return null;
+        }
+
+        // ========= PUBLICAR ENTREGA =========
+        function publicarEntrega(e) {
+            e.preventDefault();
+            if (!kmCalculado) { alert('⏳ Aguarde o cálculo...'); return; }
+            const formaPag = document.getElementById('forma-pagamento').value;
+            if (!formaPag) { alert('💳 Escolha o pagamento!'); return; }
+
+            const valorKm = kmCalculado * PRECO_POR_KM;
+            const total = ARRANCADA + valorKm;
+            const entrega = {
+                id: Date.now(),
+                loja: document.getElementById('nomeLoja').value,
+                saida: document.getElementById('saida').value,
+                destino: document.getElementById('destino').value,
+                km: kmCalculado,
+                valorTotal: total,
+                valorEntregador: total * 0.8,
+                taxaAdmin: total * TAXA,
+                pagamento: formaPag,
+                codigo: gerarCodigo(),
+                status: 'disponivel',
+                data: Date.now()
+            };
+
+            const casamento = buscarRotaCasada(entrega);
+            if (casamento) {
+                entrega.casadaCom = casamento.par.id;
+                casamento.par.casadaCom = entrega.id;
+                rotasCasadas++;
+            }
+
+            entregas.push(entrega);
+            salvar();
+
+            document.getElementById('exibir-codigo').textContent = entrega.codigo;
+            document.getElementById('codigo-gerado').style.display = 'block';
+            e.target.reset();
+            document.getElementById('caixa-valores').style.display = 'none';
+            kmCalculado = null;
+        }
+        function fecharCodigo() {
+            document.getElementById('codigo-gerado').style.display = 'none';
+            voltar();
+        }
+
+        // ========= CADASTRO =========
         function cadastrarEntregador(e) {
             e.preventDefault();
-            const novo = {
+            entregadores.push({
                 id: Date.now(),
                 nome: document.getElementById('nomeCompleto').value,
                 telefone: document.getElementById('telefone').value,
@@ -553,147 +496,122 @@
                 placa: document.getElementById('placa').value || 'Não informada',
                 pix: document.getElementById('pix').value,
                 regiao: document.getElementById('regiao').value || 'Não informada',
-                status: 'ativo',
-                dataCriacao: Date.now()
-            };
-            entregadores.push(novo);
-            salvarTudo();
+                data: Date.now()
+            });
+            salvar();
             alert('✅ Cadastrado!');
             e.target.reset();
             voltar();
         }
 
-        // ================= PUBLICAR ENTREGA =================
-        function publicarEntrega(e) {
-            e.preventDefault();
-            if (!kmCalculado) { alert('⏳ Aguarde o cálculo...'); return; }
-            const formaPag = document.getElementById('forma-pagamento').value;
-            if (!formaPag) { alert('💳 Escolha o pagamento!'); return; }
+        // ========= MAPA GOOGLE =========
+        function linkMapa(saida, destino) {
+            const s = encodeURIComponent(saida);
+            const d = encodeURIComponent(destino);
+            return `https://www.google.com/maps/dir/?api=1&origin=${s}&destination=${d}&travelmode=driving`;
+        }
 
-            const valorPorKm = kmCalculado * PRECO_POR_KM;
-            const valorTotal = ARRANCADA + valorPorKm;
-            const suaTaxa = valorTotal * (TAXA_PLATAFORMA / 100);
-            const valorEntregador = valorTotal * (VALOR_ENTREGADOR / 100);
-            const codigo = gerarCodigo();
+        // ========= ACEITAR ENTREGA =========
+        function aceitar(id) {
+            const entrega = entregas.find(e => e.id === id);
+            if (entrega) {
+                entrega.status = 'aceita';
+                salvar();
+                mostrarEntregas();
+            }
+        }
+        function aceitarDupla(id1, id2) {
+            const e1 = entregas.find(e => e.id === id1);
+            const e2 = entregas.find(e => e.id === id2);
+            if (e1 && e2) {
+                e1.status = 'aceita';
+                e2.status = 'aceita';
+                salvar();
+                mostrarEntregas();
+            }
+        }
 
-            entregas.push({
-                id: Date.now(),
-                loja: document.getElementById('nomeLoja').value,
-                saida: document.getElementById('saida').value,
-                destino: document.getElementById('destino').value,
-                km: kmCalculado,
-                valorTotal,
-                suaTaxa,
-                valorEntregador,
-                pagamento: formaPag,
-                codigo,
-                status: 'disponivel',
-                dataCriacao: Date.now()
-            });
+        // ========= CONCLUIR ENTREGA =========
+        function concluir(id) {
+            const entrega = entregas.find(e => e.id === id);
+            const digitado = document.getElementById(`codigo-${id}`).value.trim();
+            const msg = document.getElementById(`msg-${id}`);
             
-            salvarTudo();
-            limparDadosAntigos();
-
-            document.getElementById('exibir-codigo').textContent = codigo;
-            document.getElementById('codigo-gerado').style.display = 'block';
-            e.target.reset();
-            document.getElementById('caixa-valores').style.display = 'none';
-            document.getElementById('area-km').innerHTML = 'Digite os endereços ↑';
-            kmCalculado = null;
+            if (digitado === entrega.codigo) {
+                entrega.status = 'concluida';
+                lucroTotal += entrega.taxaAdmin;
+                totalConcluidas++;
+                salvar();
+                msg.innerHTML = '<span class="sucesso">✅ ENTREGA CONCLUÍDA!</span>';
+                mostrarEntregas();
+            } else {
+                msg.innerHTML = '<span class="erro">❌ Código errado!</span>';
+            }
         }
 
-        function fecharCodigo() {
-            document.getElementById('codigo-gerado').style.display = 'none';
-            voltar();
-        }
-
-        // ================= ENTREGADOR =================
-        function mostrarEntregasDisponiveis() {
+        // ========= MOSTRAR ENTREGAS =========
+        function mostrarEntregas() {
             const caixa = document.getElementById('lista-entregas');
-            if (entregas.length === 0) {
-                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível.</p>';
+            const disponiveis = entregas.filter(e => e.status === 'disponivel' || e.status === 'aceita');
+            
+            if (disponiveis.length === 0) {
+                caixa.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:20px;">Nenhuma entrega disponível no momento.</p>';
                 return;
             }
-            caixa.innerHTML = entregas.map(e => {
-                const etiquetaClasse = {
-                    'disponivel': 'etiqueta-disponivel',
-                    'aceita': 'etiqueta-aceita',
-                    'concluida': 'etiqueta-concluida'
-                }[e.status];
-                const etiquetaTexto = {
-                    'disponivel': 'DISPONÍVEL',
-                    'aceita': 'EM ANDAMENTO',
-                    'concluida': '✅ CONCLUÍDA'
-                }[e.status];
+
+            caixa.innerHTML = disponiveis.map(e => {
+                const etiquetaClasse = { disponivel: 'etiqueta-disponivel', aceita: 'etiqueta-aceita' }[e.status];
+                const etiquetaTexto = { disponivel: 'DISPONÍVEL', aceita: 'EM ANDAMENTO' }[e.status];
+                const temCasamento = e.casadaCom && entregas.find(x => x.id === e.casadaCom && x.status === 'disponivel');
+                
+                let avisoCasada = '';
+                if (temCasamento) {
+                    avisoCasada = `<div class="aviso-casada">🔄 ROTA CASADA ENCONTRADA! Faça as duas e GANHE MAIS! 💰</div>`;
+                }
 
                 let botoes = '';
                 if (e.status === 'disponivel') {
-                    botoes = `<button class="btn-confirmar" onclick="aceitarEntrega(${e.id})">✅ Aceitar</button>`;
+                    botoes = `<button class="btn-confirmar" onclick="aceitar(${e.id})">✅ Aceitar Entrega</button>`;
+                    if (temCasamento) {
+                        botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id}, ${e.casadaCom})">🔥 ACEITAR AS DUAS ROTAS!</button>`;
+                    }
                 } else if (e.status === 'aceita') {
                     botoes = `
+                        <a href="${linkMapa(e.saida, e.destino)}" target="_blank" class="link-mapa">
+                            <button class="btn-mapa">📍 Abrir Rota no Mapa</button>
+                        </a>
                         <div style="margin-top:12px;">
                             <p style="color:#60a5fa; font-weight:bold; margin-bottom:8px;">🔐 Digite o código:</p>
-                            <input type="text" id="codigo-input-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
-                            <button class="btn-concluir" onclick="confirmarEntrega(${e.id})">✓ Confirmar</button>
+                            <input type="text" id="codigo-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
+                            <button class="btn-concluir" onclick="concluir(${e.id})">✓ Confirmar Entrega</button>
                             <p id="msg-${e.id}" style="margin-top:8px;"></p>
                         </div>
                     `;
-                } else {
-                    botoes = `<p style="color:#22c55e; font-weight:bold; margin-top:10px;">✅ Concluído!</p>`;
                 }
 
                 return `
-                <div class="cartao">
+                <div class="cartao ${temCasamento ? 'cartao-dupla' : ''}">
+                    ${avisoCasada}
                     <span class="etiqueta ${etiquetaClasse}">${etiquetaTexto}</span>
-                    <p><strong>🏪</strong> ${e.loja}</p>
-                    <p><strong>📍</strong> ${e.saida}</p>
-                    <p><strong>🎯</strong> ${e.destino}</p>
-                    <p><strong>📏</strong> ${e.km.toFixed(1)} km</p>
-                    <p style="color:#22c55e; font-weight:bold; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                    <p style="font-weight:bold; margin:8px 0;">🏪 ${e.loja}</p>
+                    <div class="passo-rota"><span class="passo-numero">1</span><strong>Saída:</strong> ${e.saida}</div>
+                    <div class="passo-rota"><span class="passo-numero">2</span><strong>Destino:</strong> ${e.destino}</div>
+                    <p style="margin-top:8px; color:#94a3b8;">📏 ${e.km.toFixed(1)} km</p>
+                    <p style="color:#22c55e; font-weight:bold; font-size:1.1rem; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+                    <p style="font-size:0.85rem; color:#94a3b8; margin:4px 0;">💳 ${e.pagamento.toUpperCase()}</p>
                     ${botoes}
                 </div>`;
             }).join('');
         }
 
-        function aceitarEntrega(id) {
-            const entrega = entregas.find(e => e.id === id);
-            if (entrega && entrega.status === 'disponivel') {
-                entrega.status = 'aceita';
-                salvarTudo();
-                alert('✅ Aceita! Peça o código ao cliente!');
-                mostrarEntregasDisponiveis();
-            }
-        }
-
-        function confirmarEntrega(id) {
-            const entrega = entregas.find(e => e.id === id);
-            const digitado = document.getElementById(`codigo-input-${id}`).value.trim();
-            const msg = document.getElementById(`msg-${id}`);
-
-            if (!digitado) {
-                msg.innerHTML = '<span style="color:#fbbf24;">Digite o código!</span>';
-                return;
-            }
-
-            if (digitado === entrega.codigo) {
-                entrega.status = 'concluida';
-                lucroTotal += entrega.suaTaxa;
-                totalConcluidas++;
-                salvarTudo();
-                msg.innerHTML = '<span class="sucesso">✅ ENTREGA CONCLUÍDA!</span>';
-                setTimeout(() => mostrarEntregasDisponiveis(), 1500);
-            } else {
-                msg.innerHTML = '<span style="color:#ef4444;">❌ Código errado!</span>';
-            }
-        }
-
-        // ================= ADMIN — CARTEIRA =================
-        function atualizarPainelAdmin() {
+        // ========= ADMIN =========
+        function atualizarAdmin() {
             document.getElementById('saldo-atual').textContent = `R$ ${lucroTotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
             document.getElementById('qtd-entregadores').textContent = entregadores.length;
             document.getElementById('qtd-entregas').textContent = entregas.length;
             document.getElementById('qtd-concluidas').textContent = totalConcluidas;
+            document.getElementById('qtd-casadas').textContent = rotasCasadas;
+            document.getElementById('lucro-total').textContent = lucroTotal.toFixed(2).replace('.', ',');
             
             const listaSaques = document.getElementById('lista-saques');
             if (saques.length === 0) {
@@ -701,58 +619,40 @@
             } else {
                 listaSaques.innerHTML = saques.map(s => `
                     <div class="item-saque">
-                        <span class="saque-data">${s.data}</span>
-                        <span class="saque-valor">R$ ${s.valor}</span>
+                        <span class="saque-data">${new Date(s.data).toLocaleDateString('pt-BR')}</span>
+                        <span class="saque-valor">R$ ${s.valor.toFixed(2).replace('.', ',')}</span>
                     </div>
                 `).join('');
             }
         }
-
         function abrirSaque() {
             document.getElementById('form-saque').style.display = 'block';
         }
-
         function fecharSaque() {
             document.getElementById('form-saque').style.display = 'none';
         }
-
         function confirmarSaque() {
             const valor = parseFloat(document.getElementById('valor-saque').value);
             const pix = document.getElementById('pix-saque').value.trim();
-
-            if (!valor || valor <= 0) { alert('Digite um valor válido!'); return; }
-            if (valor > lucroTotal) { alert('Saldo insuficiente!'); return; }
-            if (!pix) { alert('Digite sua chave Pix!'); return; }
-
+            if (!valor || valor <= 0 || valor > lucroTotal) { alert('❌ Valor inválido!'); return; }
+            if (!pix) { alert('❌ Digite sua chave Pix!'); return; }
+            
+            saques.push({ valor, pix, data: Date.now() });
             lucroTotal -= valor;
-            const data = new Date().toLocaleDateString('pt-BR');
-            saques.unshift({ valor: valor.toFixed(2).replace('.', ','), pix, data });
-            salvarTudo();
-
-            alert(`✅ Saque solicitado!\nValor: R$ ${valor.toFixed(2).replace('.', ',')}\nPix: ${pix}`);
+            salvar();
+            alert('✅ Saque registrado!\n💳 Enviado para: ' + pix);
             fecharSaque();
-            atualizarPainelAdmin();
+            atualizarAdmin();
         }
-
         function exportarDados() {
-            const backup = {
-                data: new Date().toLocaleString('pt-BR'),
-                lucroTotal,
-                totalConcluidas,
-                entregadores,
-                saques
-            };
-            const texto = JSON.stringify(backup, null, 2);
-            alert('📥 Copie tudo abaixo e guarde em local seguro:\n\n' + texto);
+            const dados = { entregadores, entregas, lucroTotal, saques, rotasCasadas, data: new Date().toLocaleString('pt-BR') };
+            const blob = new Blob([JSON.stringify(dados, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `rotacheia_backup_${Date.now()}.json`; a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ Dados salvos! Guarde este arquivo!');
         }
-
-        // ================= INICIALIZAÇÃO =================
-        limparDadosAntigos();
     </script>
-
-    <!-- PROTEÇÃO DE DIREITOS -->
-    <noscript>
-        <meta http-equiv="refresh" content="0; url=https://caldeira123.github.io/Rotacheia-/">
-    </noscript>
 </body>
 </html>
