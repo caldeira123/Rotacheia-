@@ -3,620 +3,580 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
-    <meta name="author" content="Rota Cheia — Sistema Exclusivo">
-    <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
+    <title>Rota Cheia</title>
+    
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #0f172a, #1e293b); min-height: 100vh; color: #fff; }
 
-        .capa-img { width: 100%; height: auto; display: block; }
-        .container { padding: 20px; max-width: 520px; margin: 0 auto; }
+        /* TELA DE ACESSO */
+        .tela-acesso {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .caixa-acesso {
+            background: rgba(255,255,255,0.05);
+            padding: 30px 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+        .titulo { font-size: 2rem; color: #facc15; margin-bottom: 5px; }
+        .sub { color: #94a3b8; margin-bottom: 15px; }
+        .dica-senha {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-amarelo { background: #facc15; color: #000; }
+        .btn-verde { background: #22c55e; color: white; }
+        .btn-azul { background: #3b82f6; color: white; }
+        .btn-link {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+        .erro { color: #ef4444; margin-top: 12px; display: none; }
+        .sucesso { color: #22c55e; margin-top: 12px; display: none; }
+        .aviso { color: #3b82f6; margin-top: 12px; font-size: 0.9rem; }
 
-        .botao {
-            width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
-            font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 12px;
-            display: flex; align-items: center; justify-content: space-between;
-            transition: transform 0.15s;
+        /* TELA PRINCIPAL */
+        .tela-principal { display: none; }
+        .capa {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .botao:active { transform: scale(0.97); }
-        .cadastro { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
-        .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
-        .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
-        .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
-        .botao-esq { display: flex; align-items: center; gap: 10px; }
+        .capa-img {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+        .botoes {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            max-width: 350px;
+        }
+        .btn-loja { background: #facc15; color: #000; }
+        .btn-entregador { background: #22c55e; color: white; }
+        .btn-admin { background: #3b82f6; color: white; }
+        .sair {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            margin-top: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
 
-        .aba { display: none; }
-        .aba.ativa { display: block; }
-        .voltar { background: #334155; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; }
-        h2 { margin-bottom: 18px; color: #fbbf24; font-size: 1.4rem; }
-        .grupo { margin-bottom: 14px; }
-        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; font-size: 0.9rem; }
-        input, select { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
-        
-        .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
-        
-        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .btn-mapa { background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
-        .btn-local { 
-            background: linear-gradient(90deg, #7c3aed, #a855f7); 
-            color: white; border: none; padding: 12px; border-radius: 10px; 
-            font-weight: bold; width: 100%; margin-top: 4px; margin-bottom: 8px; 
-            cursor: pointer; font-size: 0.95rem;
-            transition: all 0.2s;
+        /* Seções */
+        .secao { display: none; padding: 20px; min-height: 100vh; }
+        .ativa { display: block; }
+        .voltar {
+            background: transparent;
+            border: none;
+            color: #facc15;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
         }
-        .btn-local:disabled { background: #475569; cursor: not-allowed; opacity: 0.7; }
-        .btn-local:active { transform: scale(0.98); }
-        .btn-concluir { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .btn-perigo { background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem; }
-
-        .aviso-preco {
-            background: linear-gradient(90deg, #166534, #15803d);
-            padding: 12px 16px; border-radius: 10px; margin: 16px 0;
-            border-left: 4px solid #22c55e;
+        h2 { font-size: 1.4rem; margin-bottom: 20px; color: #facc15; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .distancia-km { text-align: center; font-size: 1.4rem; font-weight: bold; color: #22c55e; margin: 16px 0; min-height: 40px; }
-        .caixa-valores {
-            background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px;
-            padding: 16px; margin: 16px 0;
+        .calculo {
+            background: rgba(250,204,21,0.1);
+            border-left: 3px solid #facc15;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
         }
-        .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
-        .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.05rem; margin-top: 8px; padding-top: 8px; border-top: 2px dashed #475569; }
-        .valor-entregador { color: #22c55e; font-weight: bold; font-size: 1.05rem; }
-        .valor-total { color: #fff; font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
-        .codigo-caixa {
-            background: linear-gradient(135deg, #1e293b, #334155); border: 3px solid #7c3aed;
-            border-radius: 12px; padding: 20px; text-align: center; margin: 16px 0;
+        .motoboy-valor { color: #facc15; font-weight: bold; font-size: 1.1rem; }
+        .lucro { color: #22c55e; font-weight: bold; }
+        .pergunta-recuperacao {
+            background: rgba(59,130,246,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 3px solid #3b82f6;
         }
-        .codigo-numeros { font-size: 2.5rem; font-weight: 900; color: #fbbf24; letter-spacing: 10px; margin: 10px 0; }
-        .aviso-casada {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white; padding: 12px; border-radius: 10px; margin: 12px 0;
-            text-align: center; font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%{opacity:1;}50%{opacity:0.8;}100%{opacity:1;} }
-        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
-        .cartao-dupla { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
-        .etiqueta { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; font-weight: bold; }
-        .etiqueta-disponivel { background: #f59e0b; color: #000; }
-        .etiqueta-aceita { background: #3b82f6; color: #fff; }
-        .input-codigo { font-size: 1.5rem; text-align: center; letter-spacing: 6px; font-weight: bold; max-width: 150px; margin: 0 auto; }
-        .sucesso { color: #22c55e; font-weight: bold; margin-top: 10px; }
-        .erro { color: #ef4444; font-weight: bold; margin-top: 10px; }
-        .passo-rota { margin: 8px 0; padding: 10px; background: #0f172a; border-radius: 8px; border-left: 3px solid #fbbf24; }
-        .passo-numero { display: inline-block; width: 26px; height: 26px; background: #fbbf24; color: #000; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; margin-right: 8px; font-size: 0.9rem; }
-        .rodape { text-align: center; margin-top: 30px; color: #64748b; font-size: 0.75rem; border-top: 1px solid #1e293b; padding-top: 15px; }
-        .link-mapa { text-decoration: none; display: block; }
-        .oculto { display: none; }
-        .lista-cadastrados { max-height: 300px; overflow-y: auto; margin-top: 15px; }
-        .item-entregador { padding: 12px; background: #1e293b; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
-        .cidade-fixa { background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85rem; color: #86efac; text-align: center; }
-        .dica-gps { font-size: 0.8rem; color: #fbbf24; margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
-        .carregando { color: #fbbf24; font-style: italic; }
     </style>
 </head>
 <body>
 
-    <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img">
-    
-    <div class="container">
-        <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
+<!-- ======================================
+     TELA DE ACESSO COMPLETA
+     ====================================== -->
+<div id="telaAcesso" class="tela-acesso">
+    <div class="caixa-acesso">
+        <h1 class="titulo">ROTA CHEIA</h1>
+        <p id="textoAcesso" class="sub">Crie sua conta de acesso exclusivo 🔐</p>
+        <p class="dica-senha">
+            ✅ Pode usar: Letras <strong>Maiúsculas</strong> e <strong>minúsculas</strong>,<br>
+            Números, acentos, pontos, vírgulas, ! ? @ # $ % e qualquer caractere.
+        </p>
 
-        <!-- TELA INICIAL -->
-        <div id="inicial" class="aba ativa">
-            <button class="botao cadastro" onclick="abrirAba('cadastro')">
-                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Cadastro oficial</small></div></div>
-                <span>➤</span>
-            </button>
-            <button class="botao loja" onclick="abrirAba('loja')">
-                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>GPS + Distância correta</small></div></div>
-                <span>➤</span>
-            </button>
-            <button class="botao entregador" onclick="abrirAba('entregador')">
-                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b><br><small>Rotas casadas + Mapa!</small></div></div>
-                <span>➤</span>
-            </button>
-            <button class="botao admin" onclick="abrirAba('admin')">
-                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b><br><small>Controle de cadastrados</small></div></div>
-                <span>➤</span>
-            </button>
+        <!-- ========== CRIAR SENHA ========== -->
+        <div id="formCriarSenha">
+            <input type="password" id="senha1" placeholder="Digite sua senha">
+            <input type="password" id="senha2" placeholder="Repita a senha">
+            <p class="aviso">💡 Defina uma pergunta de segurança para recuperar sua senha:</p>
+            <input type="text" id="perguntaRecuperacao" placeholder="Ex: Qual é o nome do meu primeiro motoboy?">
+            <input type="password" id="respostaRecuperacao" placeholder="Resposta secreta">
+            <button class="btn btn-verde" onclick="criarSenha()">💾 Cadastrar Conta</button>
+            <p id="erroCriar" class="erro">As senhas não coincidem! Digite novamente.</p>
+            <p id="sucessoCriar" class="sucesso">✅ Conta criada! Entrando...</p>
         </div>
 
-        <!-- 📝 CADASTRO ENTREGADOR -->
-        <div id="cadastro" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
-            <h2>📝 Seja Entregador Rota Cheia</h2>
-            <div class="aviso-preco" style="background:linear-gradient(90deg, #4c1d95, #7c3aed); border-left-color:#a855f7;">
-                ✅ 80% do valor vai pra você<br>
-                ✅ Sistema casa rotas — sem volta vazia!
+        <!-- ========== ENTRAR ========== -->
+        <div id="formEntrar" style="display:none;">
+            <input type="password" id="senhaEntrar" placeholder="Digite sua senha para entrar">
+            <button class="btn btn-amarelo" onclick="verificarSenha()">🔑 Entrar</button>
+            <p id="erroEntrar" class="erro">Senha incorreta! Tente novamente.</p>
+            <button class="btn-link" onclick="mostrarRecuperar()">❓ Esqueci minha senha</button>
+        </div>
+
+        <!-- ========== RECUPERAR SENHA ========== -->
+        <div id="formRecuperar" style="display:none;">
+            <h3 style="color:#3b82f6; margin-bottom:15px;">Recuperar Senha</h3>
+            <div class="pergunta-recuperacao">
+                <strong>Sua pergunta secreta:</strong><br>
+                <span id="perguntaSecreta"></span>
             </div>
-            <form onsubmit="cadastrar(event)">
-                <div class="grupo">
-                    <label>Nome Completo *</label>
-                    <input type="text" id="nomeCompleto" required placeholder="Seu nome completo">
-                </div>
-                <div class="grupo">
-                    <label>WhatsApp / Telefone *</label>
-                    <input type="tel" id="telefone" required placeholder="(53) 9XXXX-XXXX">
-                </div>
-                <div class="grupo">
-                    <label>Veículo *</label>
-                    <select id="veiculo" required>
-                        <option value="">Selecione...</option>
-                        <option value="moto">🏍️ Moto</option>
-                        <option value="carro">🚗 Carro</option>
-                        <option value="bicicleta">🚲 Bicicleta</option>
-                    </select>
-                </div>
-                <div class="grupo">
-                    <label>Chave Pix (para receber) *</label>
-                    <input type="text" id="pix" required placeholder="CPF, telefone, e-mail...">
-                </div>
-                <div class="grupo">
-                    <label>Região que atua</label>
-                    <input type="text" id="regiao" placeholder="Ex: Centro, Zona Norte, Cassino...">
-                </div>
-                <button type="submit" class="btn-enviar">✅ Cadastrar</button>
-            </form>
-        </div>
-
-        <!-- 🏪 LOJA COM GPS FORTE -->
-        <div id="loja" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
-            <h2>🏪 Solicitar Entrega</h2>
+            <input type="password" id="respostaDigitada" placeholder="Digite sua resposta secreta">
+            <button class="btn btn-azul" onclick="verificarResposta()">🔓 Verificar Resposta</button>
+            <p id="erroResposta" class="erro">Resposta incorreta!</p>
+            <button class="btn-link" onclick="voltarParaEntrar()">← Voltar para entrar</button>
             
-            <div class="cidade-fixa">
-                📍 Cidade padrão: <strong>Rio Grande / RS</strong>
+            <div id="novaSenhaArea" style="display:none; margin-top:20px; padding-top:15px; border-top:1px solid #333;">
+                <p class="sucesso">✅ Resposta correta! Crie sua nova senha:</p>
+                <input type="password" id="novaSenha1" placeholder="Nova senha">
+                <input type="password" id="novaSenha2" placeholder="Repita a nova senha">
+                <button class="btn btn-verde" onclick="salvarNovaSenha()">💾 Salvar Nova Senha</button>
+                <p id="erroNovaSenha" class="erro">As senhas não coincidem!</p>
+                <p id="sucessoNovaSenha" class="sucesso">✅ Senha alterada! Entrando...</p>
             </div>
-
-            <div class="aviso-preco">
-                <p style="font-weight:bold;">💵 Preço: R$ 5,00 fixo + R$ 1,90/km</p>
-            </div>
-
-            <div class="grupo">
-                <label>Nome da Loja *</label>
-                <input type="text" id="nomeLoja" placeholder="Ex: Mercearia Moron">
-            </div>
-
-            <div class="grupo">
-                <label>📍 Endereço de Saída *</label>
-                <button type="button" id="btn-gps" class="btn-local" onclick="usarMinhaLocalizacao()">
-                    📍 Usar minha localização atual
-                </button>
-                <input type="text" id="saida" placeholder="Ex: Rio Branco 1406" oninput="calcular()">
-                <p class="dica-gps" id="dica-gps">
-                    💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir
-                </p>
-            </div>
-
-            <div class="grupo">
-                <label>📍 Endereço de Destino *</label>
-                <input type="text" id="destino" placeholder="Ex: Morom 322" oninput="calcular()">
-            </div>
-
-            <div class="distancia-km" id="area-km">Aguardando endereços...</div>
-
-            <div id="caixa-valores" class="caixa-valores oculto">
-                <p class="linha-valor"><span>➕ Arrancada</span><span>R$ 5,00</span></p>
-                <p class="linha-valor" id="linha-km"><span>➕ Quilometragem</span><span>R$ 0,00</span></p>
-                <hr style="border:none; border-top:1px dashed #475569; margin:8px 0;">
-                <p class="linha-valor valor-total"><span>💵 VALOR TOTAL</span><span id="valor-total">R$ 0,00</span></p>
-                <p class="linha-valor valor-entregador"><span>🏍️ Entregador recebe (80%)</span><span id="valor-entregador">R$ 0,00</span></p>
-                <p class="linha-valor seu-lucro"><span>💰 Taxa Rota Cheia (20%)</span><span id="sua-taxa">R$ 0,00</span></p>
-            </div>
-
-            <div class="grupo">
-                <label>💳 Forma de Pagamento *</label>
-                <div class="pagamento-opcoes">
-                    <div class="pag-opcao" id="pag-dinheiro" onclick="escolherPag('dinheiro')">💵 Dinheiro</div>
-                    <div class="pag-opcao" id="pag-pix" onclick="escolherPag('pix')">🔷 Pix</div>
-                    <div class="pag-opcao" id="pag-cartao" onclick="escolherPag('cartao')">💳 Cartão</div>
-                </div>
-            </div>
-
-            <button class="btn-enviar" onclick="publicar()">✅ Publicar Entrega</button>
-
-            <div id="codigo-gerado" class="oculto">
-                <div class="codigo-caixa">
-                    <p style="color:#94a3b8; font-size:0.9rem;">🔐 Código de confirmação</p>
-                    <div class="codigo-numeros" id="exibir-codigo">----</div>
-                    <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px;">Entregador digita esse código para concluir</p>
-                </div>
-                <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei — Voltar</button>
-            </div>
-        </div>
-
-        <!-- 🏍️ ENTREGADOR -->
-        <div id="entregador" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
-            <h2>🏍️ Entregas Disponíveis</h2>
-            <p style="color:#fbbf24; text-align:center; margin:10px 0; font-size:0.9rem;">🔄 Sistema casa rotas — nenhuma volta vazia!</p>
-            <div id="lista-entregas">
-                <p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>
-            </div>
-        </div>
-
-        <!-- 👨‍💼 ADMIN -->
-        <div id="admin" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
-            <h2>👨‍💼 Painel de Controle</h2>
-            
-            <div class="caixa-valores">
-                <p style="font-size:1.1rem; font-weight:bold; margin-bottom:15px;">📋 Cadastrados: <span id="qtd-cadastrados">0</span></p>
-                <p style="margin:8px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
-                <p style="margin:8px 0;">Concluídas: <span id="qtd-concluidas">0</span></p>
-                <p style="margin:8px 0; color:#22c55e;">🔄 Rotas Casadas: <span id="qtd-casadas">0</span></p>
-                <p style="margin-top:15px; font-size:1.05rem; color:#fbbf24;">💰 Saldo: R$ <span id="saldo">0,00</span></p>
-            </div>
-
-            <h3 style="margin-top:20px; margin-bottom:10px;">📋 Lista de Entregadores</h3>
-            <div class="lista-cadastrados" id="lista-cadastrados">
-                <p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>
-            </div>
-
-            <div style="margin-top:20px;">
-                <button class="btn-perigo" onclick="limparEntregas()">🗑️ Limpar entregas</button>
-                <button class="btn-perigo" onclick="limparTudo()" style="margin-top:8px;">⚠️ Zerar tudo</button>
-            </div>
-        </div>
-
-        <div class="rodape">
-            <p>🛡️ Rota Cheia © — O Único que Casa Rotas</p>
         </div>
     </div>
+</div>
+
+<!-- ======================================
+     TELA PRINCIPAL — SÓ COM SENHA
+     ====================================== -->
+<div id="telaPrincipal" class="tela-principal">
+    <div id="capa" class="capa">
+        <img src="capa-rota-cheia.jpg" alt="Rota Cheia" class="capa-img">
+        <h1 class="titulo">ROTA CHEIA</h1>
+        <p class="sub">Nenhuma entrega volta vazia 💛</p>
+        
+        <div class="botoes">
+            <button class="btn btn-loja" onclick="irPara('loja')">🏪 LOJA / CLIENTE</button>
+            <button class="btn btn-entregador" onclick="irPara('entregador')">🏍️ ENTREGADOR</button>
+            <button class="btn btn-admin" onclick="irPara('painel-admin')">👨‍💼 ADMINISTRADOR</button>
+        </div>
+        
+        <button class="sair" onclick="sair()">🚪 Sair</button>
+    </div>
+
+    <!-- LOJA -->
+    <div id="loja" class="secao">
+        <button class="voltar" onclick="voltar()">← Voltar</button>
+        <h2>🏪 Publicar Entrega</h2>
+        <div class="card">
+            <label>📍 Endereço de Saída</label>
+            <input type="text" id="saida" placeholder="Digite o endereço">
+            <button class="btn btn-amarelo" onclick="pegarLocal('saida')">📍 Usar minha localização</button>
+            
+            <label>➡️ Endereço de Entrega</label>
+            <input type="text" id="chegada" placeholder="Digite o endereço">
+            
+            <label>📏 Distância (km)</label>
+            <input type="number" id="km" placeholder="Ex: 10" oninput="calcularValor()">
+            
+            <div id="caixaCalculo" class="calculo">
+                <p>Arrancada mínima: R$ 5,00</p>
+                <p>Por km: R$ 1,90 × <span id="qtdKm">0</span> = R$ <span id="valorKm">0,00</span></p>
+                <p><strong>Total da corrida: R$ <span id="totalCorrida">0,00</span></strong></p>
+                <hr style="border-color:#333; margin:10px 0;">
+                <p>🏍️ Motoboy recebe (80%): <span class="motoboy-valor">R$ <span id="parteMotoboy">0,00</span></span></p>
+                <p>💵 Seu lucro (20%): <span class="lucro">R$ <span id="parteAdmin">0,00</span></span></p>
+            </div>
+            
+            <label>💵 Forma de Pagamento</label>
+            <input type="text" id="pagamento" placeholder="Pix, Dinheiro, Cartão...">
+            <button class="btn btn-verde" onclick="publicar()">✅ Publicar Entrega</button>
+        </div>
+        <h3>📋 Entregas Disponíveis</h3>
+        <div id="listaLoja"></div>
+    </div>
+
+    <!-- ENTREGADOR -->
+    <div id="entregador" class="secao">
+        <button class="voltar" onclick="voltar()">← Voltar</button>
+        <h2>🏍️ Área do Entregador</h2>
+        <div class="card">
+            <input type="text" id="nomeMoto" placeholder="Nome completo">
+            <input type="text" id="foneMoto" placeholder="WhatsApp com DDD">
+            <input type="text" id="cidadeMoto" placeholder="Cidade / Bairro">
+            <button class="btn btn-verde" onclick="salvarMoto()">💾 Salvar Cadastro</button>
+        </div>
+        <h3>📦 Entregas Disponíveis</h3>
+        <div id="listaMoto"></div>
+    </div>
+
+    <!-- PAINEL ADMIN -->
+    <div id="painel-admin" class="secao">
+        <button class="voltar" onclick="voltar()">← Voltar</button>
+        <h2>👨‍💼 Painel — Rota Cheia</h2>
+        <div class="card">
+            <h3>📊 Resumo Geral</h3>
+            <p>Total de entregas: <strong id="qtdEntregas">0</strong></p>
+            <p>Valor total movimentado: R$ <span id="valorGeral">0,00</span></p>
+            <p style="color:#22c55e;">Seu lucro total (20%): R$ <span id="lucroGeral">0,00</span></p>
+            <p style="color:#facc15;">Total pago aos motoboys (80%): R$ <span id="pagoGeral">0,00</span></p>
+        </div>
+        <h3>📋 Todas as Entregas</h3>
+        <div id="todasEntregas"></div>
+    </div>
+</div>
 
 <script>
-const CHAVE = 'rotacheia_v4_';
-const CIDADE = 'Rio Grande - RS';
-const ARRANCADA = 5.00;
-const PRECO_KM = 1.90;
-const TAXA = 0.20;
+// Dados
+let entregas = JSON.parse(localStorage.getItem('entregas')) || [];
+let motoboy = JSON.parse(localStorage.getItem('motoboy')) || null;
 
-let entregadores = JSON.parse(localStorage.getItem(CHAVE+'entregadores') || '[]');
-let entregas = JSON.parse(localStorage.getItem(CHAVE+'entregas') || '[]');
-let rotasCasadas = parseInt(localStorage.getItem(CHAVE+'casadas') || '0');
-let escolhaPag = '';
-let kmAtual = null;
+// ========== INICIO — Verifica se já tem conta ==========
+window.onload = function() {
+    const senhaSalva = localStorage.getItem('senhaMaster');
+    if (senhaSalva) {
+        document.getElementById('formCriarSenha').style.display = 'none';
+        document.getElementById('formEntrar').style.display = 'block';
+        document.getElementById('textoAcesso').textContent = 'Digite sua senha para entrar 🔐';
+    }
+};
 
-function salvar(){
-    localStorage.setItem(CHAVE+'entregadores', JSON.stringify(entregadores));
-    localStorage.setItem(CHAVE+'entregas', JSON.stringify(entregas));
-    localStorage.setItem(CHAVE+'casadas', rotasCasadas);
-}
-
-function abrirAba(nome){
-    document.querySelectorAll('.aba').forEach(a=>a.classList.remove('ativa'));
-    document.getElementById(nome).classList.add('ativa');
-    if(nome==='entregador') listarEntregas();
-    if(nome==='admin') atualizarAdmin();
-}
-
-// 📍 GPS MELHORADO COM DETALHES DE ERRO
-async function usarMinhaLocalizacao(){
-    const saida = document.getElementById('saida');
-    const btnGps = document.getElementById('btn-gps');
-    const dica = document.getElementById('dica-gps');
+// ========== CRIAR SENHA COM PERGUNTA DE SEGURANÇA ==========
+function criarSenha() {
+    const s1 = document.getElementById('senha1').value;
+    const s2 = document.getElementById('senha2').value;
+    const pergunta = document.getElementById('perguntaRecuperacao').value.trim();
+    const resposta = document.getElementById('respostaRecuperacao').value.trim();
     
-    // Bloqueia botão durante busca
-    btnGps.disabled = true;
-    btnGps.textContent = '⏳ Buscando localização...';
-    saida.value = '';
-    saida.placeholder = 'Aguardando permissão...';
-
-    // Verifica suporte
-    if(!navigator.geolocation){
-        dica.innerHTML = '❌ Navegador não suporta GPS. Digite o endereço manualmente.';
-        dica.style.color = '#ef4444';
-        btnGps.disabled = false;
-        btnGps.textContent = '📍 Usar minha localização atual';
-        saida.placeholder = 'Ex: Rio Branco 1406';
+    if (!s1 || !s2 || !pergunta || !resposta) {
+        document.getElementById('erroCriar').style.display = 'block';
         return;
     }
-
-    try {
-        const posicao = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {
-                enableHighAccuracy: true,  // ⚡ PRECISÃO MÁXIMA
-                timeout: 15000,             // ⏳ Mais tempo pra responder
-                maximumAge: 0               // 🔄 Sem dados antigos
-            });
-        });
-
-        const lat = posicao.coords.latitude.toFixed(6);
-        const lng = posicao.coords.longitude.toFixed(6);
-        const precisao = Math.round(posicao.coords.accuracy);
-
-        saida.value = `📍 (${lat}, ${lng}) — ${CIDADE}`;
-        dica.innerHTML = `✅ Localização encontrada! Precisão: ~${precisao} metros`;
-        dica.style.color = '#22c55e';
-        
-        calcular(); // Atualiza distância automaticamente
-
-    } catch (erro) {
-        let mensagem = '';
-        switch(erro.code){
-            case 1:
-                mensagem = '⚠️ Você negou a permissão! <strong>Clique no cadeado 🔒 na barra de endereço → Permitir Localização</strong> e tente de novo.';
-                break;
-            case 2:
-                mensagem = '📡 Sinal de GPS perdido. Verifique se o GPS do celular está ligado.';
-                break;
-            case 3:
-                mensagem = '⏳ Demorou demais. Tente novamente em local aberto.';
-                break;
-            default:
-                mensagem = '❌ Erro desconhecido. Digite o endereço manualmente.';
-        }
-        dica.innerHTML = mensagem;
-        dica.style.color = '#fbbf24';
-        saida.placeholder = 'Ex: Rio Branco 1406';
-    }
-
-    btnGps.disabled = false;
-    btnGps.textContent = '📍 Usar minha localização atual';
-}
-
-function escolherPag(tipo){
-    document.querySelectorAll('.pag-opcao').forEach(p=>p.classList.remove('selecionado'));
-    document.getElementById('pag-'+tipo).classList.add('selecionado');
-    escolhaPag = tipo;
-}
-
-// ⚡ CÁLCULO PRECISO PARA RIO GRANDE
-function calcular(){
-    let s = document.getElementById('saida').value.trim();
-    let d = document.getElementById('destino').value.trim();
-    const areaKm = document.getElementById('area-km');
-    const caixa = document.getElementById('caixa-valores');
-
-    if(s.length < 5 || d.length < 5){
-        areaKm.textContent = 'Digite os dois endereços ↑';
-        caixa.classList.add('oculto');
-        kmAtual = null;
+    
+    if (s1 !== s2) {
+        document.getElementById('erroCriar').style.display = 'block';
         return;
     }
-
-    if(!s.toLowerCase().includes('rio grande')) s += ', ' + CIDADE;
-    if(!d.toLowerCase().includes('rio grande')) d += ', ' + CIDADE;
-
-    const enderecoSaida = s.toLowerCase();
-    const enderecoDestino = d.toLowerCase();
-    const numSaida = (s.match(/\d+/) || ['0'])[0];
-    const numDestino = (d.match(/\d+/) || ['0'])[0];
-    const ruaSaida = s.replace(/[,\d]/g, '').toLowerCase().trim();
-    const ruaDestino = d.replace(/[,\d]/g, '').toLowerCase().trim();
-
-    // Caso específico: Rio Branco ↔ Morom
-    const temRioBranco = ruaSaida.includes('rio branco') || ruaDestino.includes('rio branco');
-    const temMorom = ruaSaida.includes('moron') || ruaDestino.includes('morom');
     
-    if(temRioBranco && temMorom){
-        kmAtual = 3.6;
-    }
-    else if(ruaSaida === ruaDestino || ruaSaida.includes(ruaDestino) || ruaDestino.includes(ruaSaida)){
-        const diferencaNum = Math.abs(parseInt(numSaida) - parseInt(numDestino)) / 200;
-        kmAtual = Math.max(0.3, Math.min(diferencaNum, 2.5));
-    }
-    else {
-        const fatorTamanho = Math.abs(s.length - d.length) / 15;
-        const base = 0.8 + fatorTamanho;
-        kmAtual = Math.max(0.5, Math.min(base + Math.random() * 2.5, 6.0));
-    }
-
-    kmAtual = Math.round(kmAtual * 10) / 10;
-
-    const valorKm = kmAtual * PRECO_KM;
-    const total = ARRANCADA + valorKm;
+    // Salva TUDO — senha + pergunta + resposta
+    localStorage.setItem('senhaMaster', s1);
+    localStorage.setItem('perguntaSecreta', pergunta);
+    localStorage.setItem('respostaSecreta', resposta.toLowerCase());
     
-    areaKm.innerHTML = `✅ ${kmAtual.toFixed(1)} km — Pronto! ⚡`;
-    document.getElementById('linha-km').innerHTML = `<span>➕ Quilometragem</span><span>R$ ${valorKm.toFixed(2).replace('.', ',')}</span>`;
-    document.getElementById('valor-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    document.getElementById('valor-entregador').textContent = `R$ ${(total * 0.8).toFixed(2).replace('.', ',')}`;
-    document.getElementById('sua-taxa').textContent = `R$ ${(total * TAXA).toFixed(2).replace('.', ',')}`;
-    caixa.classList.remove('oculto');
+    document.getElementById('erroCriar').style.display = 'none';
+    document.getElementById('sucessoCriar').style.display = 'block';
+    
+    setTimeout(() => entrarSistema(), 1200);
 }
 
-function gerarCodigo(){
-    return Math.floor(1000 + Math.random() * 9000).toString();
-}
-
-function buscarCasada(nova){
-    for(let e of entregas){
-        if(e.status !== 'disponivel') continue;
-        const saidaIgual = e.destino.toLowerCase().includes(nova.saida.toLowerCase().substring(0,6)) || 
-                           nova.saida.toLowerCase().includes(e.destino.toLowerCase().substring(0,6));
-        const voltaIgual = e.saida.toLowerCase().includes(nova.destino.toLowerCase().substring(0,6)) || 
-                           nova.destino.toLowerCase().includes(e.saida.toLowerCase().substring(0,6));
-        if(saidaIgual || voltaIgual) return e;
-    }
-    return null;
-}
-
-function publicar(){
-    const nome = document.getElementById('nomeLoja').value.trim();
-    let saida = document.getElementById('saida').value.trim();
-    let destino = document.getElementById('destino').value.trim();
+// ========== ENTRAR ==========
+function verificarSenha() {
+    const senhaDigitada = document.getElementById('senhaEntrar').value;
+    const senhaSalva = localStorage.getItem('senhaMaster');
     
-    if(!nome || !saida || !destino || !escolhaPag || !kmAtual){
-        alert('⚠️ Preencha todos os campos!');
+    if (senhaDigitada === senhaSalva) {
+        document.getElementById('erroEntrar').style.display = 'none';
+        entrarSistema();
+    } else {
+        document.getElementById('erroEntrar').style.display = 'block';
+    }
+}
+
+// ========== RECUPERAR SENHA ==========
+function mostrarRecuperar() {
+    document.getElementById('formEntrar').style.display = 'none';
+    document.getElementById('formRecuperar').style.display = 'block';
+    document.getElementById('perguntaSecreta').textContent = localStorage.getItem('perguntaSecreta');
+}
+
+function voltarParaEntrar() {
+    document.getElementById('formRecuperar').style.display = 'none';
+    document.getElementById('novaSenhaArea').style.display = 'none';
+    document.getElementById('formEntrar').style.display = 'block';
+    document.getElementById('erroResposta').style.display = 'none';
+    document.getElementById('respostaDigitada').value = '';
+}
+
+function verificarResposta() {
+    const digitada = document.getElementById('respostaDigitada').value.trim().toLowerCase();
+    const correta = localStorage.getItem('respostaSecreta');
+    
+    if (digitada === correta) {
+        document.getElementById('erroResposta').style.display = 'none';
+        document.getElementById('novaSenhaArea').style.display = 'block';
+    } else {
+        document.getElementById('erroResposta').style.display = 'block';
+    }
+}
+
+function salvarNovaSenha() {
+    const n1 = document.getElementById('novaSenha1').value;
+    const n2 = document.getElementById('novaSenha2').value;
+    
+    if (n1 !== n2 || !n1) {
+        document.getElementById('erroNovaSenha').style.display = 'block';
         return;
     }
-
-    if(!saida.toLowerCase().includes('rio grande')) saida += ', ' + CIDADE;
-    if(!destino.toLowerCase().includes('rio grande')) destino += ', ' + CIDADE;
-
-    const valorKm = kmAtual * PRECO_KM;
-    const total = ARRANCADA + valorKm;
     
+    localStorage.setItem('senhaMaster', n1);
+    document.getElementById('erroNovaSenha').style.display = 'none';
+    document.getElementById('sucessoNovaSenha').style.display = 'block';
+    
+    setTimeout(() => entrarSistema(), 1200);
+}
+
+// ========== ENTRAR NO SISTEMA ==========
+function entrarSistema() {
+    document.getElementById('telaAcesso').style.display = 'none';
+    document.getElementById('telaPrincipal').style.display = 'block';
+}
+
+// ========== SAIR ==========
+function sair() {
+    document.getElementById('telaPrincipal').style.display = 'none';
+    window.location.reload();
+}
+
+// ========== NAVEGAÇÃO ==========
+function irPara(id) {
+    document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
+    document.getElementById('capa').style.display = 'none';
+    document.getElementById(id).classList.add('ativa');
+    
+    if (id === 'loja') listarLoja();
+    if (id === 'entregador') listarMoto();
+    if (id === 'painel-admin') carregarPainel();
+}
+
+function voltar() {
+    document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
+    document.getElementById('capa').style.display = 'flex';
+}
+
+// ========== GPS ==========
+function pegarLocal(campo) {
+    if (!navigator.geolocation) {
+        alert("⚠️ Digite o endereço manualmente");
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            document.getElementById(campo).value = 
+                `Lat: ${pos.coords.latitude.toFixed(4)} | Long: ${pos.coords.longitude.toFixed(4)}`;
+            alert("✅ Localização capturada!");
+        },
+        () => alert("⚠️ Não foi possível capturar. Digite o endereço.")
+    );
+}
+
+// ========== CÁLCULO ==========
+function calcularValor() {
+    const km = parseFloat(document.getElementById('km').value) || 0;
+    const total = 5.00 + (1.90 * km);
+    
+    if (km > 0) {
+        document.getElementById('caixaCalculo').style.display = 'block';
+        document.getElementById('qtdKm').textContent = km;
+        document.getElementById('valorKm').textContent = (1.90 * km).toFixed(2).replace('.', ',');
+        document.getElementById('totalCorrida').textContent = total.toFixed(2).replace('.', ',');
+        document.getElementById('parteMotoboy').textContent = (total * 0.8).toFixed(2).replace('.', ',');
+        document.getElementById('parteAdmin').textContent = (total * 0.2).toFixed(2).replace('.', ',');
+    } else {
+        document.getElementById('caixaCalculo').style.display = 'none';
+    }
+}
+
+// ========== PUBLICAR ==========
+function publicar() {
+    const saida = document.getElementById('saida').value.trim();
+    const chegada = document.getElementById('chegada').value.trim();
+    const km = parseFloat(document.getElementById('km').value);
+    const pagamento = document.getElementById('pagamento').value.trim();
+    
+    if (!saida || !chegada || !km) {
+        alert("⚠️ Preencha saída, chegada e distância!");
+        return;
+    }
+    
+    const total = 5 + (1.90 * km);
     const entrega = {
         id: Date.now(),
-        loja: nome,
-        saida,
-        destino,
-        km: kmAtual,
+        saida, chegada, km,
         valorTotal: total,
-        valorEntregador: total * 0.8,
-        taxa: total * TAXA,
-        pagamento: escolhaPag,
-        codigo: gerarCodigo(),
+        valorMotoboy: total * 0.8,
+        valorAdmin: total * 0.2,
+        pagamento: pagamento || 'A combinar',
         status: 'disponivel',
-        data: Date.now()
+        data: new Date().toLocaleString('pt-BR')
     };
-
-    const casadaCom = buscarCasada(entrega);
-    if(casadaCom){
-        entrega.casadaCom = casadaCom.id;
-        casadaCom.casadaCom = entrega.id;
-        rotasCasadas++;
-    }
-
+    
     entregas.unshift(entrega);
-    salvar();
-
-    document.getElementById('exibir-codigo').textContent = entrega.codigo;
-    document.getElementById('codigo-gerado').classList.remove('oculto');
+    localStorage.setItem('entregas', JSON.stringify(entregas));
     
-    document.getElementById('nomeLoja').value = '';
+    // Limpar
     document.getElementById('saida').value = '';
-    document.getElementById('destino').value = '';
-    document.querySelectorAll('.pag-opcao').forEach(p=>p.classList.remove('selecionado'));
-    escolhaPag = '';
-    kmAtual = null;
-    document.getElementById('caixa-valores').classList.add('oculto');
-    document.getElementById('area-km').textContent = 'Aguardando endereços...';
-    document.getElementById('dica-gps').innerHTML = '💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir';
-    document.getElementById('dica-gps').style.color = '#fbbf24';
-}
-
-function cadastrar(e){
-    e.preventDefault();
-    entregadores.push({
-        id: Date.now(),
-        nome: document.getElementById('nomeCompleto').value.trim(),
-        telefone: document.getElementById('telefone').value.trim(),
-        veiculo: document.getElementById('veiculo').value,
-        pix: document.getElementById('pix').value.trim(),
-        regiao: document.getElementById('regiao').value.trim() || 'Não informada',
-        data: Date.now()
-    });
-    salvar();
-    alert('✅ Cadastrado com sucesso!');
-    e.target.reset();
-    abrirAba('inicial');
-}
-
-function listarEntregas(){
-    const lista = document.getElementById('lista-entregas');
-    const disp = entregas.filter(e=>e.status==='disponivel'||e.status==='aceita');
+    document.getElementById('chegada').value = '';
+    document.getElementById('km').value = '';
+    document.getElementById('pagamento').value = '';
+    document.getElementById('caixaCalculo').style.display = 'none';
     
-    if(disp.length===0){
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>';
+    alert("✅ Entrega publicada!");
+    listarLoja();
+}
+
+function listarLoja() {
+    const el = document.getElementById('listaLoja');
+    if (entregas.length === 0) {
+        el.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma entrega publicada.</p>';
         return;
     }
-
-    lista.innerHTML = disp.map(e=>{
-        const temCasada = e.casadaCom && entregas.find(x=>x.id===e.casadaCom && x.status==='disponivel');
-        let aviso = temCasada ? `<div class="aviso-casada">🔥 ROTA CASADA! Nenhuma volta vazia!</div>` : '';
-
-        let botoes = '';
-        if(e.status==='disponivel'){
-            botoes = `<button class="btn-confirmar" onclick="aceitar(${e.id})">✅ Aceitar Entrega</button>`;
-            if(temCasada){
-                botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id},${e.casadaCom})">🔥 ACEITAR AS DUAS!</button>`;
-            }
-        } else {
-            botoes = `
-                <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(e.saida)}&destination=${encodeURIComponent(e.destino)}&travelmode=driving" target="_blank" class="link-mapa">
-                    <button class="btn-mapa">📍 Abrir Rota no Google Maps 🗺️</button>
-                </a>
-                <div style="margin-top:12px;">
-                    <p style="color:#60a5fa; font-weight:bold; margin-bottom:8px;">🔐 Digite o código:</p>
-                    <input type="text" id="cod-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
-                    <button class="btn-concluir" onclick="concluir(${e.id})">✓ Confirmar</button>
-                    <p id="msg-${e.id}" style="margin-top:8px;"></p>
-                </div>
-            `;
-        }
-
-        return `
-        <div class="cartao ${temCasada?'cartao-dupla':''}">
-            ${aviso}
-            <span class="etiqueta ${e.status==='disponivel'?'etiqueta-disponivel':'etiqueta-aceita'}">
-                ${e.status==='disponivel'?'DISPONÍVEL':'EM ANDAMENTO'}
-            </span>
-            <p style="font-weight:bold; margin:10px 0; font-size:1.05rem;">🏪 ${e.loja}</p>
-            <div class="passo-rota"><span class="passo-numero">1</span><strong>Saída:</strong> ${e.saida}</div>
-            <div class="passo-rota"><span class="passo-numero">2</span><strong>Destino:</strong> ${e.destino}</div>
-            <p style="margin-top:10px; color:#94a3b8;">📏 ${e.km.toFixed(1)} km</p>
-            <p style="color:#22c55e; font-weight:bold; font-size:1.1rem; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
-            <p style="font-size:0.85rem; color:#94a3b8; margin:4px 0;">💳 ${e.pagamento.toUpperCase()}</p>
-            ${botoes}
-        </div>`;
-    }).join('');
+    el.innerHTML = entregas.map(e => `
+        <div class="card">
+            <p><strong>De:</strong> ${e.saida}</p>
+            <p><strong>Para:</strong> ${e.chegada}</p>
+            <p><strong>Distância:</strong> ${e.km} km</p>
+            <p><strong>Total:</strong> R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
+            <p><strong>Motoboy recebe:</strong> R$ ${e.valorMotoboy.toFixed(2).replace('.', ',')}</p>
+            <p><strong>Status:</strong> ${e.status === 'disponivel' ? '✅ Disponível' : '🏍️ Aceita'}</p>
+        </div>
+    `).join('');
 }
 
-function aceitar(id){
-    const e = entregas.find(x=>x.id===id);
-    if(e){ e.status='aceita'; salvar(); listarEntregas(); }
+// ========== MOTOBOY ==========
+function salvarMoto() {
+    const nome = document.getElementById('nomeMoto').value.trim();
+    const fone = document.getElementById('foneMoto').value.trim();
+    if (!nome || !fone) {
+        alert("⚠️ Preencha nome e WhatsApp!");
+        return;
+    }
+    motoboy = { nome, fone, cidade: document.getElementById('cidadeMoto').value.trim() };
+    localStorage.setItem('motoboy', JSON.stringify(motoboy));
+    alert("✅ Cadastro salvo!");
+    listarMoto();
 }
-function aceitarDupla(id1,id2){
-    const a = entregas.find(x=>x.id===id1);
-    const b = entregas.find(x=>x.id===id2);
-    if(a&&b){ a.status='aceita'; b.status='aceita'; salvar(); listarEntregas(); }
+
+function listarMoto() {
+    const el = document.getElementById('listaMoto');
+    if (!motoboy) {
+        el.innerHTML = '<p style="color:#facc15; text-align:center; padding:20px;">👆 Faça seu cadastro acima!</p>';
+        return;
+    }
+    const disp = entregas.filter(e => e.status === 'disponivel');
+    if (disp.length === 0) {
+        el.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma entrega disponível.</p>';
+        return;
+    }
+    el.innerHTML = disp.map(e => `
+        <div class="card">
+            <p><strong>De:</strong> ${e.saida}</p>
+            <p><strong>Para:</strong> ${e.chegada}</p>
+            <p><strong>Você recebe:</strong> <span style="color:#facc15; font-size:1.2rem; font-weight:bold;">R$ ${e.valorMotoboy.toFixed(2).replace('.', ',')}</span></p>
+            <p><strong>Pagamento:</strong> ${e.pagamento}</p>
+            <button onclick="aceitar(${e.id})" class="btn btn-verde">✅ Aceitar</button>
+        </div>
+    `).join('');
 }
-function concluir(id){
-    const e = entregas.find(x=>x.id===id);
-    const dig = document.getElementById(`cod-${id}`).value.trim();
-    const msg = document.getElementById(`msg-${id}`);
-    if(dig === e.codigo){
-        e.status='concluida'; salvar(); listarEntregas();
-        msg.innerHTML='<span class="sucesso">✅ CONCLUÍDA!</span>';
-    } else {
-        msg.innerHTML='<span class="erro">❌ Código errado!</span>';
+
+function aceitar(id) {
+    if (!confirm("Aceitar esta entrega?")) return;
+    const idx = entregas.findIndex(e => e.id === id);
+    if (idx !== -1) {
+        entregas[idx].status = 'aceita';
+        entregas[idx].nomeMotoboy = motoboy.nome;
+        localStorage.setItem('entregas', JSON.stringify(entregas));
+        alert("✅ Aceita! Boa viagem! 🛵");
+        listarMoto();
     }
 }
 
-function atualizarAdmin(){
-    const concluidas = entregas.filter(e=>e.status==='concluida');
-    const saldo = concluidas.reduce((s,e)=>s+e.taxa,0);
+// ========== PAINEL ADMIN ==========
+function carregarPainel() {
+    document.getElementById('qtdEntregas').textContent = entregas.length;
+    const totalGeral = entregas.reduce((s, e) => s + e.valorTotal, 0);
+    const lucroGeral = entregas.reduce((s, e) => s + e.valorAdmin, 0);
+    const pagoGeral = entregas.reduce((s, e) => s + e.valorMotoboy, 0);
     
-    document.getElementById('qtd-cadastrados').textContent = entregadores.length;
-    document.getElementById('qtd-entregas').textContent = entregas.length;
-    document.getElementById('qtd-concluidas').textContent = concluidas.length;
-    document.getElementById('qtd-casadas').textContent = rotasCasadas;
-    document.getElementById('saldo').textContent = saldo.toFixed(2).replace('.', ',');
-
-    const lista = document.getElementById('lista-cadastrados');
-    if(entregadores.length===0){
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>';
-    } else {
-        lista.innerHTML = entregadores.map((e,i)=>`
-            <div class="item-entregador">
-                <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">📱 ${e.telefone}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">🚗 ${e.veiculo} | 📍 ${e.regiao}</p>
-                <p style="font-size:0.85rem; color:#86efac;">💳 ${e.pix}</p>
-            </div>
-        `).join('');
+    document.getElementById('valorGeral').textContent = totalGeral.toFixed(2).replace('.', ',');
+    document.getElementById('lucroGeral').textContent = lucroGeral.toFixed(2).replace('.', ',');
+    document.getElementById('pagoGeral').textContent = pagoGeral.toFixed(2).replace('.', ',');
+    
+    const el = document.getElementById('todasEntregas');
+    if (entregas.length === 0) {
+        el.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma entrega registrada.</p>';
+        return;
     }
-}
-
-function limparEntregas(){
-    if(confirm('Apagar apenas entregas? Cadastros ficam!')){
-        entregas = []; rotasCasadas = 0; salvar(); listarEntregas(); atualizarAdmin();
-    }
-}
-function limparTudo(){
-    if(confirm('⚠️ APAGAR TUDO — cadastros E entregas?')){
-        localStorage.clear();
-        entregadores = []; entregas = []; rotasCasadas = 0;
-        listarEntregas(); atualizarAdmin();
-    }
+    el.innerHTML = entregas.map(e => `
+        <div class="card">
+            <p><strong>Data:</strong> ${e.data}</p>
+            <p><strong>Trajeto:</strong> ${e.saida} → ${e.chegada}</p>
+            <p><strong>Distância:</strong> ${e.km} km</p>
+            <p><strong>Total:</strong> R$ ${e.valorTotal.toFixed(2).replace('.', ',')}</p>
+            <p style="color:#facc15;"><strong>Motoboy:</strong> R$ ${e.valorMotoboy.toFixed(2).replace('.', ',')} (80%)</p>
+            <p style="color:#22c55e;"><strong>Seu lucro:</strong> R$ ${e.valorAdmin.toFixed(2).replace('.', ',')} (20%)</p>
+            <p><strong>Status:</strong> ${e.status === 'disponivel' ? '✅ Disponível' : '🏍️ Aceita por: ' + (e.nomeMotoboy || '---')}</p>
+        </div>
+    `).join('');
 }
 </script>
+
 </body>
 </html>
