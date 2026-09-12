@@ -308,7 +308,7 @@
     </div>
 
     <script>
-        // ========= SISTEMA =========
+        // ========= SISTEMA COMPLETO =========
         const CHAVE_SISTEMA = 'rotacheia_2026_exclusivo';
         let entregadores = JSON.parse(localStorage.getItem(CHAVE_SISTEMA+'_entregadores') || '[]');
         let entregas = JSON.parse(localStorage.getItem(CHAVE_SISTEMA+'_entregas') || '[]');
@@ -343,7 +343,6 @@
             const destino = document.getElementById('destino').value.trim();
             
             if (saida.length > 5 && destino.length > 5) {
-                // Fórmula rápida baseada no tamanho do endereço + fator de viagem
                 const fatorSaida = saida.split(' ').length + saida.length / 20;
                 const fatorDestino = destino.split(' ').length + destino.length / 20;
                 kmCalculado = Math.max(0.5, Math.round((fatorSaida + fatorDestino) * 0.8) / 2);
@@ -449,7 +448,7 @@
             voltar();
         }
 
-        // 🗺️ LINK DO GOOGLE MAPS — abre a rota completa no celular
+        // 🗺️ GOOGLE MAPS — abre direto no celular do entregador
         function linkMapa(saida, destino) {
             const s = encodeURIComponent(saida);
             const d = encodeURIComponent(destino);
@@ -494,7 +493,7 @@
             }
         }
 
-        // 📋 MOSTRAR ENTREGAS
+        // 📋 LISTA DE ENTREGAS
         function mostrarEntregas() {
             const caixa = document.getElementById('lista-entregas');
             const disponiveis = entregas.filter(e => e.status === 'disponivel' || e.status === 'aceita');
