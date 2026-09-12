@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
+    
+    <!-- 📱 ÍCONE QUE APARECE NA TELA DO CELULAR -->
+    <link rel="icon" type="image/jpeg" href="capa-dia.jpg">
+    <link rel="apple-touch-icon" href="capa-dia.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Rota Cheia">
+    
     <meta name="author" content="Rota Cheia © — Todos os direitos reservados">
     <meta name="description" content="O único que casa rotas! Sistema proprietário.">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         
-        /* 🌙 TEMA DINÂMICO — DIA E NOITE */
+        /* 🌙 TEMA DINÂMICO */
         :root {
             --fundo: #0f172a;
             --texto: #fff;
@@ -33,23 +40,64 @@
             --borda: #475569;
             background: linear-gradient(180deg, #0c1222 0%, #1e1b4b 100%);
         }
-        body { background-color: var(--fundo); color: var(--texto); min-height: 100vh; transition: all 0.8s ease; }
+        body { background-color: var(--fundo); color: var(--texto); min-height: 100vh; transition: all 0.8s ease; padding-top: 0; }
 
-        .capa-container { position: relative; width: 100%; overflow: hidden; }
-        .capa-img { width: 100%; height: auto; display: block; transition: opacity 0.8s ease; }
-        .capa-dia, .capa-noite { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+        /* 🖼️ CAPA COM MOTOQUEIRO EM DESTAQUE */
+        .capa-container { 
+            position: relative; 
+            width: 100%; 
+            height: 280px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .capa-img { 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.8s ease;
+        }
+        .capa-dia, .capa-noite { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+        }
         .capa-dia { opacity: 0; z-index: 2; }
         .capa-noite { opacity: 0; z-index: 1; }
         .mostra-dia .capa-dia { opacity: 1; position: relative; }
         .mostra-noite .capa-noite { opacity: 1; position: relative; }
 
+        /* Texto sobre a imagem */
+        .sobre-imagem {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 15px 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            z-index: 10;
+        }
+        .titulo-capa {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+        .subtitulo-capa {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-top: 4px;
+        }
         .marca-agua {
-            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.5); padding: 8px 20px; border-radius: 50px;
-            font-weight: bold; color: #fbbf24; font-size: 1.1rem; z-index: 10;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 8px;
         }
 
-        .container { padding: 20px; max-width: 520px; margin: 0 auto; }
+        .container { padding: 0 20px 20px; max-width: 520px; margin: 0 auto; }
+        .status-horario { text-align: right; font-size: 0.75rem; color: #94a3b8; margin-bottom: 10px; }
 
         .botao {
             width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
@@ -136,24 +184,26 @@
         .item-entregador { padding: 12px; background: var(--fundo); border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
         .cidade-fixa { background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85rem; color: #86efac; text-align: center; }
         .dica-gps { font-size: 0.8rem; color: var(--destaque); margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
-        .status-horario { text-align: right; font-size: 0.75rem; color: #94a3b8; margin-top: -10px; margin-bottom: 10px; }
+        .btn-concluir { background: linear-gradient(90deg, #22c55e, #16a34a); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<!-- 🌅 CAPA DINÂMICA — DIA E NOITE AUTOMÁTICO -->
+<!-- 🖼️ CAPA COM MOTOQUEIRO DESTAQUE -->
 <div class="capa-container" id="capa-wrapper">
-    <!-- ☀️ IMAGEM DO DIA -->
-    <img src="capa-dia.jpg" alt="Rota Cheia — Dia" class="capa-img capa-dia" id="img-dia">
-    <!-- 🌙 IMAGEM DA NOITE -->
-    <img src="capa-noite.jpg" alt="Rota Cheia — Noite" class="capa-img capa-noite" id="img-noite">
-    <!-- Marca d'água sempre visível -->
-    <div class="marca-agua">🛡️ ROTA CHEIA ©</div>
+    <img src="capa-dia.jpg" alt="Rota Cheia — Dia" class="capa-img capa-dia" id="img-dia" onerror="this.style.display='none'">
+    <img src="capa-noite.jpg" alt="Rota Cheia — Noite" class="capa-img capa-noite" id="img-noite" onerror="this.style.display='none'">
+    
+    <!-- Texto sempre visível sobre a imagem -->
+    <div class="sobre-imagem">
+        <h1 class="titulo-capa">🛵 ROTA CHEIA</h1>
+        <p class="subtitulo-capa">O ÚNICO QUE CASA ROTAS — Nenhuma entrega volta vazia!</p>
+        <p class="marca-agua">🛡️ Sistema proprietário © — Todos os direitos reservados</p>
+    </div>
 </div>
 
 <div class="container">
     <p class="status-horario" id="status-horario">☀️ Manhã</p>
-    <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:10px 0;">O ÚNICO QUE CASA ROTAS</p>
 
     <!-- TELA INICIAL -->
     <div id="inicial" class="aba ativa">
@@ -301,7 +351,7 @@
         </div>
     </div>
 
-    <!-- 👨‍💼 ADMIN — SÓ COM SENHA -->
+    <!-- 👨‍💼 ADMIN -->
     <div id="admin" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <h2>👨‍💼 Painel do Criador</h2>
@@ -333,7 +383,7 @@
 
 <script>
 const CHAVE = 'rotacheia_v5_';
-const SENHA_ADMIN = 'rotacheia2026'; // 🔑 ALTERE AQUI PARA SUA SENHA
+const SENHA_ADMIN = 'rotacheia2026'; // 🔑 Altere aqui para sua senha
 const CIDADE = 'Rio Grande - RS';
 const ARRANCADA = 5.00;
 const PRECO_KM = 1.90;
@@ -345,42 +395,30 @@ let rotasCasadas = parseInt(localStorage.getItem(CHAVE+'casadas') || '0');
 let escolhaPag = '';
 let kmAtual = null;
 
-// 🌅 SISTEMA DIA / NOITE AUTOMÁTICO
+// 🌅 DIA/NOITE AUTOMÁTICO
 function definirTemaPorHorario(){
-    const hora = new Date().getHours;
+    const hora = new Date().getHours();
     const corpo = document.body;
     const capa = document.getElementById('capa-wrapper');
     const status = document.getElementById('status-horario');
     
-    // 06:00 às 18:00 = DIA
     if (hora >= 6 && hora < 18) {
         corpo.classList.add('dia');
         corpo.classList.remove('noite');
         capa.classList.add('mostra-dia');
         capa.classList.remove('mostra-noite');
-        
-        if (hora >= 6 && hora < 12) {
-            status.textContent = '☀️ Manhã';
-        } else {
-            status.textContent = '🌤️ Tarde';
-        }
-    } 
-    // 18:00 às 06:00 = NOITE
-    else {
+        if (hora >= 6 && hora < 12) status.textContent = '☀️ Manhã';
+        else status.textContent = '🌤️ Tarde';
+    } else {
         corpo.classList.add('noite');
         corpo.classList.remove('dia');
         capa.classList.add('mostra-noite');
         capa.classList.remove('mostra-dia');
-        
-        if (hora >= 18 && hora < 22) {
-            status.textContent = '🌆 Entardecer';
-        } else {
-            status.textContent = '🌙 Noite';
-        }
+        if (hora >= 18 && hora < 22) status.textContent = '🌆 Entardecer';
+        else status.textContent = '🌙 Noite';
     }
 }
 
-// Executa na carga e atualiza a cada minuto
 definirTemaPorHorario();
 setInterval(definirTemaPorHorario, 60000);
 
@@ -397,11 +435,9 @@ function abrirAba(nome){
     if(nome==='admin') atualizarAdmin();
 }
 
-// 🔐 VERIFICAR SENHA
 function verificarSenha(){
     const digitada = document.getElementById('senha-acesso').value;
     const aviso = document.getElementById('aviso-senha');
-    
     if(digitada === SENHA_ADMIN){
         aviso.textContent = '✅ Acesso liberado!';
         aviso.style.color = '#22c55e';
@@ -412,19 +448,17 @@ function verificarSenha(){
     }
 }
 
-// 📍 GPS
 async function usarMinhaLocalizacao(){
     const saida = document.getElementById('saida');
     const btnGps = document.getElementById('btn-gps');
     const dica = document.getElementById('dica-gps');
-    
     btnGps.disabled = true;
     btnGps.textContent = '⏳ Buscando...';
     saida.value = '';
     saida.placeholder = 'Aguardando permissão...';
 
     if(!navigator.geolocation){
-        dica.innerHTML = '❌ Navegador não suporta GPS. Digite o endereço.';
+        dica.innerHTML = '❌ Digite o endereço manualmente.';
         dica.style.color = '#ef4444';
         btnGps.disabled = false;
         btnGps.textContent = '📍 Usar minha localização';
@@ -433,34 +467,19 @@ async function usarMinhaLocalizacao(){
 
     try {
         const posicao = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0
-            });
+            navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy: true, timeout: 15000});
         });
-
         const lat = posicao.coords.latitude.toFixed(6);
         const lng = posicao.coords.longitude.toFixed(6);
-        const precisao = Math.round(posicao.coords.accuracy);
-
         saida.value = `📍 (${lat}, ${lng}) — ${CIDADE}`;
-        dica.innerHTML = `✅ Localização! Precisão: ~${precisao}m`;
+        dica.innerHTML = '✅ Localização obtida!';
         dica.style.color = '#22c55e';
         calcular();
     } catch (erro) {
-        let mensagem = '';
-        switch(erro.code){
-            case 1: mensagem = '⚠️ Permita a localização pelo cadeado 🔒 da barra de endereço.'; break;
-            case 2: mensagem = '📡 Sinal de GPS fraco. Tente em local aberto.'; break;
-            case 3: mensagem = '⏳ Demorou demais. Tente de novo.'; break;
-            default: mensagem = '❌ Erro. Digite o endereço manualmente.';
-        }
-        dica.innerHTML = mensagem;
+        dica.innerHTML = '⚠️ Permita a localização ou digite o endereço.';
         dica.style.color = '#fbbf24';
         saida.placeholder = 'Ex: Rio Branco 1406';
     }
-
     btnGps.disabled = false;
     btnGps.textContent = '📍 Usar minha localização atual';
 }
@@ -471,7 +490,6 @@ function escolherPag(tipo){
     escolhaPag = tipo;
 }
 
-// ⚡ CÁLCULO PRECISO PARA RIO GRANDE
 function calcular(){
     let s = document.getElementById('saida').value.trim();
     let d = document.getElementById('destino').value.trim();
@@ -488,27 +506,14 @@ function calcular(){
     if(!s.toLowerCase().includes('rio grande')) s += ', ' + CIDADE;
     if(!d.toLowerCase().includes('rio grande')) d += ', ' + CIDADE;
 
-    const ruaSaida = s.replace(/[,\d]/g, '').toLowerCase().trim();
-    const ruaDestino = d.replace(/[,\d]/g, '').toLowerCase().trim();
-    const numSaida = (s.match(/\d+/) || ['0'])[0];
-    const numDestino = (d.match(/\d+/) || ['0'])[0];
-
-    const temRioBranco = ruaSaida.includes('rio branco') || ruaDestino.includes('rio branco');
-    const temMorom = ruaSaida.includes('moron') || ruaDestino.includes('morom');
+    const temRioBranco = s.toLowerCase().includes('rio branco') || d.toLowerCase().includes('rio branco');
+    const temMorom = s.toLowerCase().includes('moron') || d.toLowerCase().includes('morom');
     
-    if(temRioBranco && temMorom){
-        kmAtual = 3.6;
-    }
-    else if(ruaSaida === ruaDestino || ruaSaida.includes(ruaDestino) || ruaDestino.includes(ruaSaida)){
-        const diferencaNum = Math.abs(parseInt(numSaida) - parseInt(numDestino)) / 200;
-        kmAtual = Math.max(0.3, Math.min(diferencaNum, 2.5));
-    }
+    if(temRioBranco && temMorom) kmAtual = 3.6;
     else {
-        const fatorTamanho = Math.abs(s.length - d.length) / 15;
-        kmAtual = Math.max(0.5, Math.min(0.8 + fatorTamanho + Math.random() * 2.5, 6.0));
+        kmAtual = Math.max(0.5, Math.min(2.5 + Math.random() * 2, 6.0));
+        kmAtual = Math.round(kmAtual * 10) / 10;
     }
-
-    kmAtual = Math.round(kmAtual * 10) / 10;
 
     const valorKm = kmAtual * PRECO_KM;
     const total = ARRANCADA + valorKm;
@@ -528,10 +533,8 @@ function gerarCodigo(){
 function buscarCasada(nova){
     for(let e of entregas){
         if(e.status !== 'disponivel') continue;
-        const saidaIgual = e.destino.toLowerCase().includes(nova.saida.toLowerCase().substring(0,6)) || 
-                           nova.saida.toLowerCase().includes(e.destino.toLowerCase().substring(0,6));
-        const voltaIgual = e.saida.toLowerCase().includes(nova.destino.toLowerCase().substring(0,6)) || 
-                           nova.destino.toLowerCase().includes(e.saida.toLowerCase().substring(0,6));
+        const saidaIgual = e.destino.toLowerCase().includes(nova.saida.toLowerCase().substring(0,6));
+        const voltaIgual = e.saida.toLowerCase().includes(nova.destino.toLowerCase().substring(0,6));
         if(saidaIgual || voltaIgual) return e;
     }
     return null;
@@ -556,9 +559,7 @@ function publicar(){
     const entrega = {
         id: Date.now(),
         loja: nome,
-        saida,
-        destino,
-        km: kmAtual,
+        saida, destino, km: kmAtual,
         valorTotal: total,
         valorEntregador: total * 0.8,
         taxa: total * TAXA,
@@ -589,8 +590,6 @@ function publicar(){
     kmAtual = null;
     document.getElementById('caixa-valores').classList.add('oculto');
     document.getElementById('area-km').textContent = 'Aguardando endereços...';
-    document.getElementById('dica-gps').innerHTML = '💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir';
-    document.getElementById('dica-gps').style.color = '';
 }
 
 function cadastrar(e){
@@ -660,15 +659,8 @@ function listarEntregas(){
     }).join('');
 }
 
-function aceitar(id){
-    const e = entregas.find(x=>x.id===id);
-    if(e){ e.status='aceita'; salvar(); listarEntregas(); }
-}
-function aceitarDupla(id1,id2){
-    const a = entregas.find(x=>x.id===id1);
-    const b = entregas.find(x=>x.id===id2);
-    if(a&&b){ a.status='aceita'; b.status='aceita'; salvar(); listarEntregas(); }
-}
+function aceitar(id){ const e = entregas.find(x=>x.id===id); if(e){e.status='aceita'; salvar(); listarEntregas();} }
+function aceitarDupla(id1,id2){ const a=entregas.find(x=>x.id===id1), b=entregas.find(x=>x.id===id2); if(a&&b){a.status='aceita';b.status='aceita';salvar();listarEntregas();} }
 function concluir(id){
     const e = entregas.find(x=>x.id===id);
     const dig = document.getElementById(`cod-${id}`).value.trim();
@@ -706,18 +698,8 @@ function atualizarAdmin(){
     }
 }
 
-function limparEntregas(){
-    if(confirm('Apagar entregas? Cadastros ficam!')){
-        entregas = []; rotasCasadas = 0; salvar(); listarEntregas(); atualizarAdmin();
-    }
-}
-function limparTudo(){
-    if(confirm('⚠️ ZERAR TUDO?')){
-        localStorage.clear();
-        entregadores = []; entregas = []; rotasCasadas = 0;
-        listarEntregas(); atualizarAdmin();
-    }
-}
+function limparEntregas(){ if(confirm('Apagar entregas?')){ entregas=[]; rotasCasadas=0; salvar(); listarEntregas(); atualizarAdmin(); } }
+function limparTudo(){ if(confirm('⚠️ ZERAR TUDO?')){ localStorage.clear(); entregadores=[]; entregas=[]; rotasCasadas=0; listarEntregas(); atualizarAdmin(); } }
 </script>
 </body>
 </html>
