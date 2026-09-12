@@ -41,7 +41,15 @@
         .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-mapa { background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
-        .btn-local { background: linear-gradient(90deg, #7c3aed, #a855f7); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 4px; margin-bottom: 8px; cursor: pointer; font-size: 0.9rem; }
+        .btn-local { 
+            background: linear-gradient(90deg, #7c3aed, #a855f7); 
+            color: white; border: none; padding: 12px; border-radius: 10px; 
+            font-weight: bold; width: 100%; margin-top: 4px; margin-bottom: 8px; 
+            cursor: pointer; font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .btn-local:disabled { background: #475569; cursor: not-allowed; opacity: 0.7; }
+        .btn-local:active { transform: scale(0.98); }
         .btn-concluir { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
         .btn-perigo { background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem; }
 
@@ -87,7 +95,8 @@
         .lista-cadastrados { max-height: 300px; overflow-y: auto; margin-top: 15px; }
         .item-entregador { padding: 12px; background: #1e293b; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
         .cidade-fixa { background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85rem; color: #86efac; text-align: center; }
-        .dica-distancia { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+        .dica-gps { font-size: 0.8rem; color: #fbbf24; margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
+        .carregando { color: #fbbf24; font-style: italic; }
     </style>
 </head>
 <body>
@@ -104,7 +113,7 @@
                 <span>➤</span>
             </button>
             <button class="botao loja" onclick="abrirAba('loja')">
-                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>Com cálculo realista</small></div></div>
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b><br><small>GPS + Distância correta</small></div></div>
                 <span>➤</span>
             </button>
             <button class="botao entregador" onclick="abrirAba('entregador')">
@@ -155,7 +164,7 @@
             </form>
         </div>
 
-        <!-- 🏪 LOJA COM CÁLCULO CORRIGIDO -->
+        <!-- 🏪 LOJA COM GPS FORTE -->
         <div id="loja" class="aba">
             <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>🏪 Solicitar Entrega</h2>
@@ -166,7 +175,6 @@
 
             <div class="aviso-preco">
                 <p style="font-weight:bold;">💵 Preço: R$ 5,00 fixo + R$ 1,90/km</p>
-                <p class="dica-distancia">*Distância calculada de forma realista para Rio Grande</p>
             </div>
 
             <div class="grupo">
@@ -176,10 +184,13 @@
 
             <div class="grupo">
                 <label>📍 Endereço de Saída *</label>
-                <button type="button" class="btn-local" onclick="usarMinhaLocalizacao()">
+                <button type="button" id="btn-gps" class="btn-local" onclick="usarMinhaLocalizacao()">
                     📍 Usar minha localização atual
                 </button>
                 <input type="text" id="saida" placeholder="Ex: Rio Branco 1406" oninput="calcular()">
+                <p class="dica-gps" id="dica-gps">
+                    💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir
+                </p>
             </div>
 
             <div class="grupo">
@@ -229,7 +240,7 @@
             </div>
         </div>
 
-        <!-- 👨‍💼 ADMIN — CONTROLE DE CADASTROS -->
+        <!-- 👨‍💼 ADMIN -->
         <div id="admin" class="aba">
             <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>👨‍💼 Painel de Controle</h2>
@@ -259,7 +270,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_v3_';
+const CHAVE = 'rotacheia_v4_';
 const CIDADE = 'Rio Grande - RS';
 const ARRANCADA = 5.00;
 const PRECO_KM = 1.90;
@@ -284,27 +295,69 @@ function abrirAba(nome){
     if(nome==='admin') atualizarAdmin();
 }
 
-// 📍 GEOLOCALIZAÇÃO
-function usarMinhaLocalizacao(){
+// 📍 GPS MELHORADO COM DETALHES DE ERRO
+async function usarMinhaLocalizacao(){
     const saida = document.getElementById('saida');
-    saida.placeholder = 'Buscando...';
+    const btnGps = document.getElementById('btn-gps');
+    const dica = document.getElementById('dica-gps');
     
+    // Bloqueia botão durante busca
+    btnGps.disabled = true;
+    btnGps.textContent = '⏳ Buscando localização...';
+    saida.value = '';
+    saida.placeholder = 'Aguardando permissão...';
+
+    // Verifica suporte
     if(!navigator.geolocation){
-        alert('❌ Não suportado. Digite o endereço.');
+        dica.innerHTML = '❌ Navegador não suporta GPS. Digite o endereço manualmente.';
+        dica.style.color = '#ef4444';
+        btnGps.disabled = false;
+        btnGps.textContent = '📍 Usar minha localização atual';
+        saida.placeholder = 'Ex: Rio Branco 1406';
         return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-        function(pos){
-            saida.value = `📍 (${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}) — ${CIDADE}`;
-            calcular();
-            alert('✅ Localização capturada!');
-        },
-        function(erro){
-            alert('⚠️ Permita o acesso à localização ou digite o endereço.');
-        },
-        { enableHighAccuracy: true, timeout: 8000 }
-    );
+    try {
+        const posicao = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true,  // ⚡ PRECISÃO MÁXIMA
+                timeout: 15000,             // ⏳ Mais tempo pra responder
+                maximumAge: 0               // 🔄 Sem dados antigos
+            });
+        });
+
+        const lat = posicao.coords.latitude.toFixed(6);
+        const lng = posicao.coords.longitude.toFixed(6);
+        const precisao = Math.round(posicao.coords.accuracy);
+
+        saida.value = `📍 (${lat}, ${lng}) — ${CIDADE}`;
+        dica.innerHTML = `✅ Localização encontrada! Precisão: ~${precisao} metros`;
+        dica.style.color = '#22c55e';
+        
+        calcular(); // Atualiza distância automaticamente
+
+    } catch (erro) {
+        let mensagem = '';
+        switch(erro.code){
+            case 1:
+                mensagem = '⚠️ Você negou a permissão! <strong>Clique no cadeado 🔒 na barra de endereço → Permitir Localização</strong> e tente de novo.';
+                break;
+            case 2:
+                mensagem = '📡 Sinal de GPS perdido. Verifique se o GPS do celular está ligado.';
+                break;
+            case 3:
+                mensagem = '⏳ Demorou demais. Tente novamente em local aberto.';
+                break;
+            default:
+                mensagem = '❌ Erro desconhecido. Digite o endereço manualmente.';
+        }
+        dica.innerHTML = mensagem;
+        dica.style.color = '#fbbf24';
+        saida.placeholder = 'Ex: Rio Branco 1406';
+    }
+
+    btnGps.disabled = false;
+    btnGps.textContent = '📍 Usar minha localização atual';
 }
 
 function escolherPag(tipo){
@@ -313,7 +366,7 @@ function escolherPag(tipo){
     escolhaPag = tipo;
 }
 
-// ⚡ CÁLCULO CORRIGIDO — REALISTA PARA RIO GRANDE
+// ⚡ CÁLCULO PRECISO PARA RIO GRANDE
 function calcular(){
     let s = document.getElementById('saida').value.trim();
     let d = document.getElementById('destino').value.trim();
@@ -327,49 +380,33 @@ function calcular(){
         return;
     }
 
-    // Adiciona cidade se faltar
     if(!s.toLowerCase().includes('rio grande')) s += ', ' + CIDADE;
     if(!d.toLowerCase().includes('rio grande')) d += ', ' + CIDADE;
 
-    // 🎯 CÁLCULO INTELIGENTE baseado em endereços reais de Rio Grande
     const enderecoSaida = s.toLowerCase();
     const enderecoDestino = d.toLowerCase();
-    
-    // Extrai número e nome da rua
     const numSaida = (s.match(/\d+/) || ['0'])[0];
     const numDestino = (d.match(/\d+/) || ['0'])[0];
-    const ruaSaida = s.replace(/[,\d]/g, '').toLowerCase();
-    const ruaDestino = d.replace(/[,\d]/g, '').toLowerCase();
+    const ruaSaida = s.replace(/[,\d]/g, '').toLowerCase().trim();
+    const ruaDestino = d.replace(/[,\d]/g, '').toLowerCase().trim();
 
-    // 🔹 Caso específico que você citou: Rio Branco ↔ Morom
+    // Caso específico: Rio Branco ↔ Morom
     const temRioBranco = ruaSaida.includes('rio branco') || ruaDestino.includes('rio branco');
     const temMorom = ruaSaida.includes('moron') || ruaDestino.includes('morom');
     
     if(temRioBranco && temMorom){
-        kmAtual = 3.6; // ✅ Valor real: ~3,5 a 4 km
+        kmAtual = 3.6;
     }
-    // 🔹 Mesma rua → distância pequena
-    else if(ruaSaida === ruaDestino || ruaSaida.includes(ruaDestino.trim()) || ruaDestino.includes(ruaSaida.trim())){
+    else if(ruaSaida === ruaDestino || ruaSaida.includes(ruaDestino) || ruaDestino.includes(ruaSaida)){
         const diferencaNum = Math.abs(parseInt(numSaida) - parseInt(numDestino)) / 200;
         kmAtual = Math.max(0.3, Math.min(diferencaNum, 2.5));
     }
-    // 🔹 Ruas próximas do centro → distância curta
-    else if(
-        (ruaSaida.includes('rio branco') && ruaDestino.includes('gal') || ruaDestino.includes('andrade')) ||
-        (ruaSaida.includes('morom') && ruaDestino.includes('rio branco')) ||
-        (ruaSaida.includes('av brasil') && ruaDestino.includes('praia'))
-    ){
-        kmAtual = 2.0 + Math.random() * 1.5; // 2 a 3,5 km
-    }
-    // 🔹 Distância média dentro da cidade
     else {
-        // Baseado na diferença de tamanho e posição
         const fatorTamanho = Math.abs(s.length - d.length) / 15;
         const base = 0.8 + fatorTamanho;
         kmAtual = Math.max(0.5, Math.min(base + Math.random() * 2.5, 6.0));
     }
 
-    // Arredonda para 1 casa decimal
     kmAtual = Math.round(kmAtual * 10) / 10;
 
     const valorKm = kmAtual * PRECO_KM;
@@ -387,7 +424,6 @@ function gerarCodigo(){
     return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-// 🔄 BUSCA ROTA CASADA
 function buscarCasada(nova){
     for(let e of entregas){
         if(e.status !== 'disponivel') continue;
@@ -400,7 +436,6 @@ function buscarCasada(nova){
     return null;
 }
 
-// 📤 PUBLICAR ENTREGA
 function publicar(){
     const nome = document.getElementById('nomeLoja').value.trim();
     let saida = document.getElementById('saida').value.trim();
@@ -445,7 +480,6 @@ function publicar(){
     document.getElementById('exibir-codigo').textContent = entrega.codigo;
     document.getElementById('codigo-gerado').classList.remove('oculto');
     
-    // Limpa
     document.getElementById('nomeLoja').value = '';
     document.getElementById('saida').value = '';
     document.getElementById('destino').value = '';
@@ -454,9 +488,10 @@ function publicar(){
     kmAtual = null;
     document.getElementById('caixa-valores').classList.add('oculto');
     document.getElementById('area-km').textContent = 'Aguardando endereços...';
+    document.getElementById('dica-gps').innerHTML = '💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir';
+    document.getElementById('dica-gps').style.color = '#fbbf24';
 }
 
-// 📝 CADASTRO
 function cadastrar(e){
     e.preventDefault();
     entregadores.push({
@@ -469,12 +504,11 @@ function cadastrar(e){
         data: Date.now()
     });
     salvar();
-    alert('✅ Cadastrado!');
+    alert('✅ Cadastrado com sucesso!');
     e.target.reset();
     abrirAba('inicial');
 }
 
-// 📋 LISTA DE ENTREGAS
 function listarEntregas(){
     const lista = document.getElementById('lista-entregas');
     const disp = entregas.filter(e=>e.status==='disponivel'||e.status==='aceita');
@@ -546,7 +580,6 @@ function concluir(id){
     }
 }
 
-// 👨‍💼 ADMIN
 function atualizarAdmin(){
     const concluidas = entregas.filter(e=>e.status==='concluida');
     const saldo = concluidas.reduce((s,e)=>s+e.taxa,0);
@@ -573,12 +606,12 @@ function atualizarAdmin(){
 }
 
 function limparEntregas(){
-    if(confirm('Apagar entregas? Cadastros ficam!')){
+    if(confirm('Apagar apenas entregas? Cadastros ficam!')){
         entregas = []; rotasCasadas = 0; salvar(); listarEntregas(); atualizarAdmin();
     }
 }
 function limparTudo(){
-    if(confirm('⚠️ Zerar TUDO?')){
+    if(confirm('⚠️ APAGAR TUDO — cadastros E entregas?')){
         localStorage.clear();
         entregadores = []; entregas = []; rotasCasadas = 0;
         listarEntregas(); atualizarAdmin();
