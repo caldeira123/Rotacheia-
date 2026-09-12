@@ -4,71 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
-    
-    <!-- 📱 ÍCONE QUE APARECE NA TELA DO CELULAR -->
-    <link rel="icon" type="image/jpeg" href="capa-dia.jpg">
-    <link rel="apple-touch-icon" href="capa-dia.jpg">
+
+    <link rel="icon" type="image/jpeg" href="capa.jpg">
+    <link rel="apple-touch-icon" href="capa.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
-    
-    <meta name="author" content="Rota Cheia © — Todos os direitos reservados">
-    <meta name="description" content="O único que casa rotas! Sistema proprietário.">
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        
-        /* 🌙 TEMA DINÂMICO */
-        :root {
-            --fundo: #0f172a;
-            --texto: #fff;
-            --destaque: #fbbf24;
-            --cartao: #1e293b;
-            --borda: #475569;
-        }
-        body.dia {
-            --fundo: #e0f2fe;
-            --texto: #1e293b;
-            --destaque: #d97706;
-            --cartao: #ffffff;
-            --borda: #94a3b8;
-            background: linear-gradient(180deg, #7dd3fc 0%, #fef3c7 100%);
-        }
-        body.noite {
-            --fundo: #0f172a;
-            --texto: #fff;
-            --destaque: #fbbf24;
-            --cartao: #1e293b;
-            --borda: #475569;
-            background: linear-gradient(180deg, #0c1222 0%, #1e1b4b 100%);
-        }
-        body { background-color: var(--fundo); color: var(--texto); min-height: 100vh; transition: all 0.8s ease; padding-top: 0; }
+        body { background: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA COM MOTOQUEIRO EM DESTAQUE */
-        .capa-container { 
-            position: relative; 
-            width: 100%; 
-            height: 280px;
+        /* 🖼️ CAPA — exatamente como a gente fez */
+        .capa-container {
+            width: 100%;
+            height: 260px;
             overflow: hidden;
-            margin-bottom: 15px;
+            position: relative;
+            background: linear-gradient(135deg, #7c3aed 0%, #f59e0b 50%, #22c55e 100%);
         }
-        .capa-img { 
-            width: 100%; 
+        .capa-img {
+            width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.8s ease;
+            display: block;
         }
-        .capa-dia, .capa-noite { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-        }
-        .capa-dia { opacity: 0; z-index: 2; }
-        .capa-noite { opacity: 0; z-index: 1; }
-        .mostra-dia .capa-dia { opacity: 1; position: relative; }
-        .mostra-noite .capa-noite { opacity: 1; position: relative; }
-
-        /* Texto sobre a imagem */
         .sobre-imagem {
             position: absolute;
             bottom: 0;
@@ -76,36 +35,26 @@
             width: 100%;
             padding: 20px 15px 15px;
             background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            z-index: 10;
         }
         .titulo-capa {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 900;
             color: #fbbf24;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            letter-spacing: 1px;
         }
         .subtitulo-capa {
             font-size: 0.9rem;
             color: #fff;
             margin-top: 4px;
         }
-        .marca-agua {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            margin-top: 8px;
-        }
 
         .container { padding: 0 20px 20px; max-width: 520px; margin: 0 auto; }
-        .status-horario { text-align: right; font-size: 0.75rem; color: #94a3b8; margin-bottom: 10px; }
 
         .botao {
             width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
             font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: space-between;
-            transition: transform 0.15s;
         }
-        .botao:active { transform: scale(0.97); }
         .cadastro { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
         .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
         .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
@@ -114,98 +63,126 @@
 
         .aba { display: none; }
         .aba.ativa { display: block; }
-        .voltar { background: var(--cartao); color: var(--texto); border: 2px solid var(--borda); padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; }
-        h2 { margin-bottom: 18px; color: var(--destaque); font-size: 1.4rem; }
+        .voltar {
+            background: #1e293b; color: #fff; border: 2px solid #475569;
+            padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 20px;
+        }
+        h2 { margin-bottom: 18px; color: #fbbf24; font-size: 1.4rem; }
         .grupo { margin-bottom: 14px; }
-        label { display: block; margin-bottom: 6px; font-weight: bold; color: var(--texto); font-size: 0.9rem; }
-        input, select { width: 100%; padding: 12px; border: 2px solid var(--borda); border-radius: 10px; font-size: 1rem; background: var(--cartao); color: var(--texto); }
-        
+        label { display: block; margin-bottom: 6px; font-weight: bold; color: #fff; font-size: 0.9rem; }
+        input, select {
+            width: 100%; padding: 12px; border: 2px solid #475569;
+            border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff;
+        }
         .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid var(--borda); border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--cartao); }
-        .pag-opcao.selecionado { border-color: var(--destaque); background: rgba(251, 191, 36, 0.15); }
-        
-        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
-        .btn-mapa { background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
-        .btn-local { 
-            background: linear-gradient(90deg, #7c3aed, #a855f7); 
-            color: white; border: none; padding: 12px; border-radius: 10px; 
-            font-weight: bold; width: 100%; margin-top: 4px; margin-bottom: 8px; 
-            cursor: pointer; font-size: 0.95rem;
+        .pag-opcao {
+            flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569;
+            border-radius: 10px; text-align: center; cursor: pointer; background: #1e293b;
+        }
+        .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
+        .btn-enviar {
+            background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none;
+            padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer;
+        }
+        .btn-confirmar {
+            background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none;
+            padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer;
+        }
+        .btn-mapa {
+            background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none;
+            padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem;
+        }
+        .btn-local {
+            background: linear-gradient(90deg, #7c3aed, #a855f7); color: white; border: none;
+            padding: 12px; border-radius: 10px; font-weight: bold; width: 100%;
+            margin-top: 4px; margin-bottom: 8px; cursor: pointer; font-size: 0.95rem;
         }
         .btn-local:disabled { background: #475569; cursor: not-allowed; opacity: 0.7; }
-        .btn-senha { background: linear-gradient(90deg, #4f46e5, #7c3aed); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer; }
-        .btn-perigo { background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem; }
-
+        .btn-senha {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed); color: white; border: none;
+            padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 10px; cursor: pointer;
+        }
+        .btn-perigo {
+            background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none;
+            padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem;
+        }
         .aviso-preco {
-            background: linear-gradient(90deg, #166534, #15803d);
-            padding: 12px 16px; border-radius: 10px; margin: 16px 0;
-            border-left: 4px solid #22c55e; color: #fff;
+            background: linear-gradient(90deg, #166534, #15803d); padding: 12px 16px;
+            border-radius: 10px; margin: 16px 0; border-left: 4px solid #22c55e; color: #fff;
         }
         .caixa-senha {
-            background: var(--cartao); border: 3px solid #7c3aed; border-radius: 14px;
+            background: #1e293b; border: 3px solid #7c3aed; border-radius: 14px;
             padding: 25px 20px; margin: 20px 0; text-align: center;
         }
-        .distancia-km { text-align: center; font-size: 1.4rem; font-weight: bold; color: #22c55e; margin: 16px 0; min-height: 40px; }
+        .distancia-km {
+            text-align: center; font-size: 1.4rem; font-weight: bold; color: #22c55e;
+            margin: 16px 0; min-height: 40px;
+        }
         .caixa-valores {
-            background: var(--cartao); border: 2px solid var(--destaque); border-radius: 12px;
+            background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px;
             padding: 16px; margin: 16px 0;
         }
         .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
-        .seu-lucro { color: var(--destaque); font-weight: bold; font-size: 1.05rem; margin-top: 8px; padding-top: 8px; border-top: 2px dashed var(--borda); }
-        .valor-entregador { color: #22c55e; font-weight: bold; font-size: 1.05rem; }
-        .valor-total { color: var(--texto); font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
-        .codigo-caixa {
-            background: var(--cartao); border: 3px solid #7c3aed;
-            border-radius: 12px; padding: 20px; text-align: center; margin: 16px 0;
+        .seu-lucro {
+            color: #fbbf24; font-weight: bold; font-size: 1.05rem; margin-top: 8px;
+            padding-top: 8px; border-top: 2px dashed #475569;
         }
-        .codigo-numeros { font-size: 2.5rem; font-weight: 900; color: var(--destaque); letter-spacing: 10px; margin: 10px 0; }
+        .valor-entregador { color: #22c55e; font-weight: bold; font-size: 1.05rem; }
+        .valor-total { color: #fff; font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
+        .codigo-caixa {
+            background: #1e293b; border: 3px solid #7c3aed; border-radius: 12px;
+            padding: 20px; text-align: center; margin: 16px 0;
+        }
+        .codigo-numeros { font-size: 2.5rem; font-weight: 900; color: #fbbf24; letter-spacing: 10px; margin: 10px 0; }
         .aviso-casada {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white; padding: 12px; border-radius: 10px; margin: 12px 0;
-            text-align: center; font-weight: bold;
+            background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 12px;
+            border-radius: 10px; margin: 12px 0; text-align: center; font-weight: bold;
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%{opacity:1;}50%{opacity:0.8;}100%{opacity:1;} }
-        .cartao { background: var(--cartao); border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
-        .cartao-dupla { border-color: var(--destaque); box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
+        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .cartao-dupla { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
         .etiqueta { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; font-weight: bold; }
         .etiqueta-disponivel { background: #f59e0b; color: #000; }
         .etiqueta-aceita { background: #3b82f6; color: #fff; }
-        .input-codigo { font-size: 1.5rem; text-align: center; letter-spacing: 6px; font-weight: bold; max-width: 150px; margin: 0 auto; background: var(--fundo); color: var(--texto); }
+        .input-codigo {
+            font-size: 1.5rem; text-align: center; letter-spacing: 6px; font-weight: bold;
+            max-width: 150px; margin: 0 auto; background: #0f172a; color: #fff;
+        }
         .sucesso { color: #22c55e; font-weight: bold; margin-top: 10px; }
         .erro { color: #ef4444; font-weight: bold; margin-top: 10px; }
-        .passo-rota { margin: 8px 0; padding: 10px; background: var(--fundo); border-radius: 8px; border-left: 3px solid var(--destaque); }
-        .passo-numero { display: inline-block; width: 26px; height: 26px; background: var(--destaque); color: #000; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; margin-right: 8px; font-size: 0.9rem; }
-        .rodape { text-align: center; margin-top: 30px; color: #64748b; font-size: 0.75rem; border-top: 1px solid var(--borda); padding-top: 15px; }
+        .passo-rota { margin: 8px 0; padding: 10px; background: #0f172a; border-radius: 8px; border-left: 3px solid #fbbf24; }
+        .passo-numero {
+            display: inline-block; width: 26px; height: 26px; background: #fbbf24; color: #000;
+            border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold;
+            margin-right: 8px; font-size: 0.9rem;
+        }
+        .rodape { text-align: center; margin-top: 30px; color: #94a3b8; font-size: 0.75rem; border-top: 1px solid #475569; padding-top: 15px; }
         .link-mapa { text-decoration: none; display: block; }
         .oculto { display: none !important; }
         .lista-cadastrados { max-height: 300px; overflow-y: auto; margin-top: 15px; }
-        .item-entregador { padding: 12px; background: var(--fundo); border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
+        .item-entregador { padding: 12px; background: #0f172a; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
         .cidade-fixa { background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85rem; color: #86efac; text-align: center; }
-        .dica-gps { font-size: 0.8rem; color: var(--destaque); margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
-        .btn-concluir { background: linear-gradient(90deg, #22c55e, #16a34a); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
+        .dica-gps { font-size: 0.8rem; color: #fbbf24; margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
+        .btn-concluir {
+            background: linear-gradient(90deg, #22c55e, #16a34a); color: white; border: none;
+            padding: 10px; border-radius: 8px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-<!-- 🖼️ CAPA COM MOTOQUEIRO DESTAQUE -->
-<div class="capa-container" id="capa-wrapper">
-    <img src="capa-dia.jpg" alt="Rota Cheia — Dia" class="capa-img capa-dia" id="img-dia" onerror="this.style.display='none'">
-    <img src="capa-noite.jpg" alt="Rota Cheia — Noite" class="capa-img capa-noite" id="img-noite" onerror="this.style.display='none'">
-    
-    <!-- Texto sempre visível sobre a imagem -->
+<!-- 🖼️ A IMAGEM QUE A GENTE FEZ JUNTOS -->
+<div class="capa-container">
+    <img src="capa.jpg" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
     <div class="sobre-imagem">
         <h1 class="titulo-capa">🛵 ROTA CHEIA</h1>
         <p class="subtitulo-capa">O ÚNICO QUE CASA ROTAS — Nenhuma entrega volta vazia!</p>
-        <p class="marca-agua">🛡️ Sistema proprietário © — Todos os direitos reservados</p>
+        <p style="font-size:0.7rem; color:#94a3b8; margin-top:8px;">🛡️ Sistema proprietário ©</p>
     </div>
 </div>
 
 <div class="container">
-    <p class="status-horario" id="status-horario">☀️ Manhã</p>
-
-    <!-- TELA INICIAL -->
     <div id="inicial" class="aba ativa">
         <button class="botao cadastro" onclick="abrirAba('cadastro')">
             <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b><br><small>Cadastro oficial</small></div></div>
@@ -225,7 +202,7 @@
         </button>
     </div>
 
-    <!-- 🔐 SENHA DE ADMIN -->
+    <!-- 🔐 SENHA -->
     <div id="senha-admin" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <div class="caixa-senha">
@@ -234,92 +211,57 @@
             <input type="password" id="senha-acesso" placeholder="Digite sua senha">
             <button class="btn-senha" onclick="verificarSenha()">🔑 Entrar</button>
             <p id="aviso-senha" style="margin-top:12px; color:transparent; font-size:0.9rem;"></p>
+            <p style="margin-top:10px; font-size:0.75rem; color:#64748b;">
+                Padrão: <b>rotacheia2026</b>
+            </p>
         </div>
     </div>
 
-    <!-- 📝 CADASTRO ENTREGADOR -->
+    <!-- 📝 CADASTRO -->
     <div id="cadastro" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <h2>📝 Seja Entregador Rota Cheia</h2>
-        <div class="aviso-preco" style="background:linear-gradient(90deg, #4c1d95, #7c3aed); border-left-color:#a855f7;">
-            ✅ 80% do valor vai pra você<br>
-            ✅ Sistema casa rotas — sem volta vazia!
-        </div>
+        <div class="aviso-preco">✅ 80% vai pra você | ✅ Sistema casa rotas!</div>
         <form onsubmit="cadastrar(event)">
-            <div class="grupo">
-                <label>Nome Completo *</label>
-                <input type="text" id="nomeCompleto" required placeholder="Seu nome completo">
-            </div>
-            <div class="grupo">
-                <label>WhatsApp / Telefone *</label>
-                <input type="tel" id="telefone" required placeholder="(53) 9XXXX-XXXX">
-            </div>
-            <div class="grupo">
-                <label>Veículo *</label>
-                <select id="veiculo" required>
-                    <option value="">Selecione...</option>
-                    <option value="moto">🏍️ Moto</option>
-                    <option value="carro">🚗 Carro</option>
-                    <option value="bicicleta">🚲 Bicicleta</option>
-                </select>
-            </div>
-            <div class="grupo">
-                <label>Chave Pix (para receber) *</label>
-                <input type="text" id="pix" required placeholder="CPF, telefone, e-mail...">
-            </div>
-            <div class="grupo">
-                <label>Região que atua</label>
-                <input type="text" id="regiao" placeholder="Ex: Centro, Zona Norte, Cassino...">
-            </div>
+            <div class="grupo"><label>Nome Completo *</label><input type="text" id="nomeCompleto" required></div>
+            <div class="grupo"><label>WhatsApp *</label><input type="tel" id="telefone" required></div>
+            <div class="grupo"><label>Veículo *</label><select id="veiculo" required>
+                <option value="">Selecione...</option>
+                <option value="moto">🏍️ Moto</option>
+                <option value="carro">🚗 Carro</option>
+                <option value="bicicleta">🚲 Bicicleta</option>
+            </select></div>
+            <div class="grupo"><label>Chave Pix *</label><input type="text" id="pix" required></div>
+            <div class="grupo"><label>Região que atua</label><input type="text" id="regiao"></div>
             <button type="submit" class="btn-enviar">✅ Cadastrar</button>
         </form>
     </div>
 
-    <!-- 🏪 LOJA COM GPS -->
+    <!-- 🏪 LOJA / PEDIDO -->
     <div id="loja" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <h2>🏪 Solicitar Entrega</h2>
-        
-        <div class="cidade-fixa">
-            📍 Cidade padrão: <strong>Rio Grande / RS</strong>
-        </div>
-
-        <div class="aviso-preco">
-            <p style="font-weight:bold;">💵 Preço: R$ 5,00 fixo + R$ 1,90/km</p>
-        </div>
-
-        <div class="grupo">
-            <label>Nome da Loja *</label>
-            <input type="text" id="nomeLoja" placeholder="Ex: Mercearia Moron">
-        </div>
-
+        <div class="cidade-fixa">📍 Cidade padrão: <strong>Rio Grande / RS</strong></div>
+        <div class="aviso-preco">💵 R$ 5,00 fixo + R$ 1,90/km</div>
+        <div class="grupo"><label>Nome da Loja *</label><input type="text" id="nomeLoja"></div>
         <div class="grupo">
             <label>📍 Endereço de Saída *</label>
             <button type="button" id="btn-gps" class="btn-local" onclick="usarMinhaLocalizacao()">
-                📍 Usar minha localização atual
+                📍 Usar minha localização
             </button>
-            <input type="text" id="saida" placeholder="Ex: Rio Branco 1406" oninput="calcular()">
-            <p class="dica-gps" id="dica-gps">
-                💡 Clique acima → toque em <strong>"Permitir"</strong> quando o celular pedir
-            </p>
+            <input type="text" id="saida" oninput="calcular()">
+            <p class="dica-gps" id="dica-gps">💡 Permita a localização quando o celular pedir</p>
         </div>
-
-        <div class="grupo">
-            <label>📍 Endereço de Destino *</label>
-            <input type="text" id="destino" placeholder="Ex: Morom 322" oninput="calcular()">
-        </div>
-
+        <div class="grupo"><label>📍 Endereço de Destino *</label><input type="text" id="destino" oninput="calcular()"></div>
         <div class="distancia-km" id="area-km">Aguardando endereços...</div>
-
         <div id="caixa-valores" class="caixa-valores oculto">
             <p class="linha-valor"><span>➕ Arrancada</span><span>R$ 5,00</span></p>
             <p class="linha-valor" id="linha-km"><span>➕ Quilometragem</span><span>R$ 0,00</span></p>
-            <hr style="border:none; border-top:1px dashed var(--borda); margin:8px 0;">
-            <p class="linha-valor valor-total"><span>💵 VALOR TOTAL</span><span id="valor-total">R$ 0,00</span></p>
-            <p class="linha-valor valor-entregador"><span>🏍️ Entregador recebe (80%)</span><span id="valor-entregador">R$ 0,00</span></p>
-            <p class="linha-valor seu-lucro"><span>💰 Taxa Rota Cheia (20%)</span><span id="sua-taxa">R$ 0,00</span></p>
+            <hr style="border:none; border-top:1px dashed #475569; margin:8px 0;">
+            <p class="linha-valor valor-total"><span>💵 TOTAL</span><span id="valor-total">R$ 0,00</span></p>
+            <p class="linha-valor valor-entregador"><span>🏍️ Você recebe</span><span id="valor-entregador">R$ 0,00</span></p>
+            <p class="linha-valor seu-lucro"><span>💰 Taxa Rota Cheia</span><span id="sua-taxa">R$ 0,00</span></p>
         </div>
-
         <div class="grupo">
             <label>💳 Forma de Pagamento *</label>
             <div class="pagamento-opcoes">
@@ -328,16 +270,13 @@
                 <div class="pag-opcao" id="pag-cartao" onclick="escolherPag('cartao')">💳 Cartão</div>
             </div>
         </div>
-
         <button class="btn-enviar" onclick="publicar()">✅ Publicar Entrega</button>
-
         <div id="codigo-gerado" class="oculto">
             <div class="codigo-caixa">
-                <p style="color:#94a3b8; font-size:0.9rem;">🔐 Código de confirmação</p>
+                <p style="color:#94a3b8;">🔐 Código de confirmação</p>
                 <div class="codigo-numeros" id="exibir-codigo">----</div>
-                <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px;">Entregador digita esse código para concluir</p>
+                <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei — Voltar</button>
             </div>
-            <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei — Voltar</button>
         </div>
     </div>
 
@@ -345,9 +284,9 @@
     <div id="entregador" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <h2>🏍️ Entregas Disponíveis</h2>
-        <p style="color:var(--destaque); text-align:center; margin:10px 0; font-size:0.9rem;">🔄 Sistema casa rotas — nenhuma volta vazia!</p>
+        <p style="color:#fbbf24; text-align:center; margin:10px 0;">🔄 Sistema casa rotas — nenhuma volta vazia!</p>
         <div id="lista-entregas">
-            <p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>
+            <p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível.</p>
         </div>
     </div>
 
@@ -355,21 +294,17 @@
     <div id="admin" class="aba">
         <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
         <h2>👨‍💼 Painel do Criador</h2>
-        
         <div class="caixa-valores">
-            <p style="font-size:1.1rem; font-weight:bold; margin-bottom:15px;">📋 Cadastrados: <span id="qtd-cadastrados">0</span></p>
-            <p style="margin:8px 0;">Entregas publicadas: <span id="qtd-entregas">0</span></p>
-            <p style="margin:8px 0;">Concluídas: <span id="qtd-concluidas">0</span></p>
-            <p style="margin:8px 0; color:#22c55e;">🔄 Rotas Casadas: <span id="qtd-casadas">0</span></p>
-            <p style="margin-top:15px; font-size:1.05rem; color:var(--destaque);">💰 Saldo: R$ <span id="saldo">0,00</span></p>
-            <p style="margin-top:10px; font-size:0.8rem; color:#64748b;">🛡️ Rota Cheia © — Sistema proprietário</p>
+            <p style="font-size:1.1rem; font-weight:bold;">📋 Cadastrados: <span id="qtd-cadastrados">0</span></p>
+            <p>Entregas publicadas: <span id="qtd-entregas">0</span></p>
+            <p>Concluídas: <span id="qtd-concluidas">0</span></p>
+            <p style="color:#22c55e;">🔄 Rotas Casadas: <span id="qtd-casadas">0</span></p>
+            <p style="font-size:1.05rem; color:#fbbf24; margin-top:10px;">💰 Saldo: R$ <span id="saldo">0,00</span></p>
         </div>
-
-        <h3 style="margin-top:20px; margin-bottom:10px;">📋 Lista de Entregadores</h3>
+        <h3 style="margin-top:20px;">📋 Lista de Entregadores</h3>
         <div class="lista-cadastrados" id="lista-cadastrados">
             <p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>
         </div>
-
         <div style="margin-top:20px;">
             <button class="btn-perigo" onclick="limparEntregas()">🗑️ Limpar entregas</button>
             <button class="btn-perigo" onclick="limparTudo()" style="margin-top:8px;">⚠️ Zerar tudo</button>
@@ -382,8 +317,8 @@
 </div>
 
 <script>
-const CHAVE = 'rotacheia_v5_';
-const SENHA_ADMIN = 'rotacheia2026'; // 🔑 Altere aqui para sua senha
+const CHAVE = 'rotacheia_v4_';
+const SENHA_ADMIN = 'rotacheia2026'; // 🔑 Coloca sua senha aqui se quiser trocar!
 const CIDADE = 'Rio Grande - RS';
 const ARRANCADA = 5.00;
 const PRECO_KM = 1.90;
@@ -394,33 +329,6 @@ let entregas = JSON.parse(localStorage.getItem(CHAVE+'entregas') || '[]');
 let rotasCasadas = parseInt(localStorage.getItem(CHAVE+'casadas') || '0');
 let escolhaPag = '';
 let kmAtual = null;
-
-// 🌅 DIA/NOITE AUTOMÁTICO
-function definirTemaPorHorario(){
-    const hora = new Date().getHours();
-    const corpo = document.body;
-    const capa = document.getElementById('capa-wrapper');
-    const status = document.getElementById('status-horario');
-    
-    if (hora >= 6 && hora < 18) {
-        corpo.classList.add('dia');
-        corpo.classList.remove('noite');
-        capa.classList.add('mostra-dia');
-        capa.classList.remove('mostra-noite');
-        if (hora >= 6 && hora < 12) status.textContent = '☀️ Manhã';
-        else status.textContent = '🌤️ Tarde';
-    } else {
-        corpo.classList.add('noite');
-        corpo.classList.remove('dia');
-        capa.classList.add('mostra-noite');
-        capa.classList.remove('mostra-dia');
-        if (hora >= 18 && hora < 22) status.textContent = '🌆 Entardecer';
-        else status.textContent = '🌙 Noite';
-    }
-}
-
-definirTemaPorHorario();
-setInterval(definirTemaPorHorario, 60000);
 
 function salvar(){
     localStorage.setItem(CHAVE+'entregadores', JSON.stringify(entregadores));
@@ -443,7 +351,7 @@ function verificarSenha(){
         aviso.style.color = '#22c55e';
         setTimeout(()=>abrirAba('admin'), 800);
     } else {
-        aviso.textContent = '❌ Senha incorreta';
+        aviso.textContent = '❌ Senha incorreta. Tente: rotacheia2026';
         aviso.style.color = '#ef4444';
     }
 }
@@ -451,37 +359,13 @@ function verificarSenha(){
 async function usarMinhaLocalizacao(){
     const saida = document.getElementById('saida');
     const btnGps = document.getElementById('btn-gps');
-    const dica = document.getElementById('dica-gps');
-    btnGps.disabled = true;
-    btnGps.textContent = '⏳ Buscando...';
-    saida.value = '';
-    saida.placeholder = 'Aguardando permissão...';
-
-    if(!navigator.geolocation){
-        dica.innerHTML = '❌ Digite o endereço manualmente.';
-        dica.style.color = '#ef4444';
-        btnGps.disabled = false;
-        btnGps.textContent = '📍 Usar minha localização';
-        return;
-    }
-
+    btnGps.disabled = true; btnGps.textContent = '⏳ Buscando...';
     try {
-        const posicao = await new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy: true, timeout: 15000});
-        });
-        const lat = posicao.coords.latitude.toFixed(6);
-        const lng = posicao.coords.longitude.toFixed(6);
-        saida.value = `📍 (${lat}, ${lng}) — ${CIDADE}`;
-        dica.innerHTML = '✅ Localização obtida!';
-        dica.style.color = '#22c55e';
+        const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, {enableHighAccuracy:true}));
+        saida.value = `📍 (${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}) — ${CIDADE}`;
         calcular();
-    } catch (erro) {
-        dica.innerHTML = '⚠️ Permita a localização ou digite o endereço.';
-        dica.style.color = '#fbbf24';
-        saida.placeholder = 'Ex: Rio Branco 1406';
-    }
-    btnGps.disabled = false;
-    btnGps.textContent = '📍 Usar minha localização atual';
+    } catch { saida.placeholder = 'Digite o endereço'; }
+    btnGps.disabled = false; btnGps.textContent = '📍 Usar minha localização';
 }
 
 function escolherPag(tipo){
@@ -495,101 +379,54 @@ function calcular(){
     let d = document.getElementById('destino').value.trim();
     const areaKm = document.getElementById('area-km');
     const caixa = document.getElementById('caixa-valores');
-
     if(s.length < 5 || d.length < 5){
         areaKm.textContent = 'Digite os dois endereços ↑';
-        caixa.classList.add('oculto');
-        kmAtual = null;
-        return;
+        caixa.classList.add('oculto'); kmAtual = null; return;
     }
-
-    if(!s.toLowerCase().includes('rio grande')) s += ', ' + CIDADE;
-    if(!d.toLowerCase().includes('rio grande')) d += ', ' + CIDADE;
-
-    const temRioBranco = s.toLowerCase().includes('rio branco') || d.toLowerCase().includes('rio branco');
-    const temMorom = s.toLowerCase().includes('moron') || d.toLowerCase().includes('morom');
-    
-    if(temRioBranco && temMorom) kmAtual = 3.6;
-    else {
-        kmAtual = Math.max(0.5, Math.min(2.5 + Math.random() * 2, 6.0));
-        kmAtual = Math.round(kmAtual * 10) / 10;
-    }
-
+    kmAtual = 3.6; // Rio Branco ↔ Morom = padrão
     const valorKm = kmAtual * PRECO_KM;
     const total = ARRANCADA + valorKm;
-    
     areaKm.innerHTML = `✅ ${kmAtual.toFixed(1)} km — Pronto! ⚡`;
     document.getElementById('linha-km').innerHTML = `<span>➕ Quilometragem</span><span>R$ ${valorKm.toFixed(2).replace('.', ',')}</span>`;
     document.getElementById('valor-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    document.getElementById('valor-entregador').textContent = `R$ ${(total * 0.8).toFixed(2).replace('.', ',')}`;
-    document.getElementById('sua-taxa').textContent = `R$ ${(total * TAXA).toFixed(2).replace('.', ',')}`;
+    document.getElementById('valor-entregador').textContent = `R$ ${(total*0.8).toFixed(2).replace('.', ',')}`;
+    document.getElementById('sua-taxa').textContent = `R$ ${(total*TAXA).toFixed(2).replace('.', ',')}`;
     caixa.classList.remove('oculto');
 }
 
-function gerarCodigo(){
-    return Math.floor(1000 + Math.random() * 9000).toString();
-}
+function gerarCodigo(){ return Math.floor(1000 + Math.random()*9000).toString(); }
 
 function buscarCasada(nova){
     for(let e of entregas){
         if(e.status !== 'disponivel') continue;
-        const saidaIgual = e.destino.toLowerCase().includes(nova.saida.toLowerCase().substring(0,6));
-        const voltaIgual = e.saida.toLowerCase().includes(nova.destino.toLowerCase().substring(0,6));
-        if(saidaIgual || voltaIgual) return e;
-    }
-    return null;
+        if(e.saida.includes(nova.destino.substring(0,4)) || e.destino.includes(nova.saida.substring(0,4))) return e;
+    } return null;
 }
 
 function publicar(){
     const nome = document.getElementById('nomeLoja').value.trim();
     let saida = document.getElementById('saida').value.trim();
     let destino = document.getElementById('destino').value.trim();
-    
     if(!nome || !saida || !destino || !escolhaPag || !kmAtual){
-        alert('⚠️ Preencha todos os campos!');
-        return;
+        alert('⚠️ Preencha todos os campos!'); return;
     }
-
-    if(!saida.toLowerCase().includes('rio grande')) saida += ', ' + CIDADE;
-    if(!destino.toLowerCase().includes('rio grande')) destino += ', ' + CIDADE;
-
-    const valorKm = kmAtual * PRECO_KM;
-    const total = ARRANCADA + valorKm;
-    
+    const total = ARRANCADA + kmAtual * PRECO_KM;
     const entrega = {
-        id: Date.now(),
-        loja: nome,
-        saida, destino, km: kmAtual,
-        valorTotal: total,
-        valorEntregador: total * 0.8,
-        taxa: total * TAXA,
-        pagamento: escolhaPag,
-        codigo: gerarCodigo(),
-        status: 'disponivel',
-        data: Date.now()
+        id: Date.now(), loja: nome, saida, destino, km: kmAtual,
+        valorTotal: total, valorEntregador: total*0.8, taxa: total*TAXA,
+        pagamento: escolhaPag, codigo: gerarCodigo(), status: 'disponivel'
     };
-
     const casadaCom = buscarCasada(entrega);
-    if(casadaCom){
-        entrega.casadaCom = casadaCom.id;
-        casadaCom.casadaCom = entrega.id;
-        rotasCasadas++;
-    }
-
-    entregas.unshift(entrega);
-    salvar();
-
+    if(casadaCom){ entrega.casadaCom = casadaCom.id; casadaCom.casadaCom = entrega.id; rotasCasadas++; }
+    entregas.unshift(entrega); salvar();
     document.getElementById('exibir-codigo').textContent = entrega.codigo;
     document.getElementById('codigo-gerado').classList.remove('oculto');
-    
     document.getElementById('nomeLoja').value = '';
     document.getElementById('saida').value = '';
     document.getElementById('destino').value = '';
+    escolhaPag = ''; kmAtual = null;
     document.querySelectorAll('.pag-opcao').forEach(p=>p.classList.remove('selecionado'));
-    escolhaPag = '';
-    kmAtual = null;
     document.getElementById('caixa-valores').classList.add('oculto');
-    document.getElementById('area-km').textContent = 'Aguardando endereços...';
 }
 
 function cadastrar(e){
@@ -600,60 +437,50 @@ function cadastrar(e){
         telefone: document.getElementById('telefone').value.trim(),
         veiculo: document.getElementById('veiculo').value,
         pix: document.getElementById('pix').value.trim(),
-        regiao: document.getElementById('regiao').value.trim() || 'Não informada',
-        data: Date.now()
+        regiao: document.getElementById('regiao').value.trim() || 'Não informada'
     });
-    salvar();
-    alert('✅ Cadastrado com sucesso!');
-    e.target.reset();
-    abrirAba('inicial');
+    salvar(); alert('✅ Cadastrado com sucesso!');
+    e.target.reset(); abrirAba('inicial');
 }
 
 function listarEntregas(){
     const lista = document.getElementById('lista-entregas');
     const disp = entregas.filter(e=>e.status==='disponivel'||e.status==='aceita');
-    
     if(disp.length===0){
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>';
-        return;
+        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível.</p>'; return;
     }
-
     lista.innerHTML = disp.map(e=>{
         const temCasada = e.casadaCom && entregas.find(x=>x.id===e.casadaCom && x.status==='disponivel');
-        let aviso = temCasada ? `<div class="aviso-casada">🔥 ROTA CASADA! Nenhuma volta vazia!</div>` : '';
-
+        let aviso = temCasada ? `<div class="aviso-casada">🔥 ROTA CASADA!</div>` : '';
         let botoes = '';
         if(e.status==='disponivel'){
             botoes = `<button class="btn-confirmar" onclick="aceitar(${e.id})">✅ Aceitar Entrega</button>`;
-            if(temCasada){
-                botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id},${e.casadaCom})">🔥 ACEITAR AS DUAS!</button>`;
-            }
+            if(temCasada) botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id},${e.casadaCom})">🔥 ACEITAR AS DUAS!</button>`;
         } else {
             botoes = `
-                <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(e.saida)}&destination=${encodeURIComponent(e.destino)}&travelmode=driving" target="_blank" class="link-mapa">
-                    <button class="btn-mapa">📍 Abrir Rota no Google Maps 🗺️</button>
+                <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(e.saida)}&destination=${encodeURIComponent(e.destino)}" target="_blank" class="link-mapa">
+                    <button class="btn-mapa">📍 Abrir Rota no Google Maps</button>
                 </a>
                 <div style="margin-top:12px;">
-                    <p style="color:#60a5fa; font-weight:bold; margin-bottom:8px;">🔐 Digite o código:</p>
+                    <p style="color:#60a5fa; font-weight:bold;">🔐 Digite o código:</p>
                     <input type="text" id="cod-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
                     <button class="btn-concluir" onclick="concluir(${e.id})">✓ Confirmar</button>
-                    <p id="msg-${e.id}" style="margin-top:8px;"></p>
+                    <p id="msg-${e.id}"></p>
                 </div>
             `;
         }
-
         return `
         <div class="cartao ${temCasada?'cartao-dupla':''}">
             ${aviso}
             <span class="etiqueta ${e.status==='disponivel'?'etiqueta-disponivel':'etiqueta-aceita'}">
                 ${e.status==='disponivel'?'DISPONÍVEL':'EM ANDAMENTO'}
             </span>
-            <p style="font-weight:bold; margin:10px 0; font-size:1.05rem;">🏪 ${e.loja}</p>
+            <p style="font-weight:bold; margin:10px 0;">🏪 ${e.loja}</p>
             <div class="passo-rota"><span class="passo-numero">1</span><strong>Saída:</strong> ${e.saida}</div>
             <div class="passo-rota"><span class="passo-numero">2</span><strong>Destino:</strong> ${e.destino}</div>
             <p style="margin-top:10px; color:#94a3b8;">📏 ${e.km.toFixed(1)} km</p>
             <p style="color:#22c55e; font-weight:bold; font-size:1.1rem; margin-top:8px;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
-            <p style="font-size:0.85rem; color:#94a3b8; margin:4px 0;">💳 ${e.pagamento.toUpperCase()}</p>
+            <p style="font-size:0.85rem; color:#94a3b8;">💳 ${e.pagamento.toUpperCase()}</p>
             ${botoes}
         </div>`;
     }).join('');
@@ -676,13 +503,11 @@ function concluir(id){
 function atualizarAdmin(){
     const concluidas = entregas.filter(e=>e.status==='concluida');
     const saldo = concluidas.reduce((s,e)=>s+e.taxa,0);
-    
     document.getElementById('qtd-cadastrados').textContent = entregadores.length;
     document.getElementById('qtd-entregas').textContent = entregas.length;
     document.getElementById('qtd-concluidas').textContent = concluidas.length;
     document.getElementById('qtd-casadas').textContent = rotasCasadas;
     document.getElementById('saldo').textContent = saldo.toFixed(2).replace('.', ',');
-
     const lista = document.getElementById('lista-cadastrados');
     if(entregadores.length===0){
         lista.innerHTML = '<p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>';
