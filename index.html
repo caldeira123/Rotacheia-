@@ -7,30 +7,45 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
-    <!-- 📱 ÍCONE E TELA DE ABERTURA -- USA A MESMA FOTO -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg">
+    <!-- 📱 FORÇA CARREGAR A FOTO NOVA -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=3">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=3">
     
-    <!-- 🚀 Fica parecendo app de verdade -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
+    <meta name="theme-color" content="#7c3aed">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        .capa-img { width: 100%; height: auto; display: block; max-height: 320px; object-fit: cover; }
+        /* 🖼️ CAPA — VAI APARECER! */
+        .capa-img { 
+            width: 100%; 
+            height: 220px; 
+            object-fit: cover; 
+            display: block;
+        }
+        .sem-foto {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #7c3aed, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
         .container { padding: 20px; max-width: 520px; margin: 0 auto; }
 
         .botao {
             width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
             font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 12px;
             display: flex; align-items: center; justify-content: space-between;
-            transition: transform 0.15s;
         }
-        .botao:active { transform: scale(0.97); }
         .cadastro { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
         .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
         .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
@@ -47,7 +62,6 @@
             padding: 30px 25px; border-radius: 16px; border: 2px solid #3b82f6;
             width: 100%; max-width: 360px; text-align: center;
         }
-        .caixa-senha h2 { color: #3b82f6; margin-bottom: 20px; }
         .caixa-senha input {
             width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #475569;
             background: #0f172a; color: white; font-size: 1rem; margin-bottom: 12px;
@@ -66,7 +80,7 @@
         input, select { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
         
         .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; border-radius: 10px; text-align: center; cursor: pointer; }
         .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
         
         .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
@@ -133,13 +147,18 @@
 </head>
 <body>
 
-    <!-- 🖼️ CAPA DE ENTRADA -- A MESMA FOTO APARECE AQUI -->
-    <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img">
+    <!-- 🖼️ A FOTO VAI APARECER AQUI -->
+    <img 
+        src="capa-rota-cheia.jpg?v=3" 
+        alt="Rota Cheia — Nenhuma entrega volta vazia" 
+        class="capa-img"
+        onerror="this.style.display='none'"
+    >
     
     <div class="container">
         <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-        <!-- TELA DE SENHA DO ADMINISTRADOR -->
+        <!-- TELA DE SENHA -->
         <div id="telaSenhaAdmin" class="tela-senha oculto">
             <div class="caixa-senha">
                 <h2>🔐 Área do Administrador</h2>
@@ -327,7 +346,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_alfa01_';
+const CHAVE = 'rotacheia_alfa01v3_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
@@ -358,8 +377,6 @@ function abrirAdmin(){
         document.getElementById('definirSenha').classList.add('oculto');
         document.getElementById('entrarSenha').classList.remove('oculto');
     }
-    document.getElementById('erroCriar').style.display = 'none';
-    document.getElementById('erroSenha').style.display = 'none';
 }
 
 function fecharSenha(){
@@ -446,15 +463,13 @@ function calcular(){
         return;
     }
 
-    // Cálculo inteligente baseado em endereços conhecidos + estimativa
     const temRB = s.toLowerCase().includes('rio branco') || d.toLowerCase().includes('rio branco');
     const temMoron = s.toLowerCase().includes('morón') || s.toLowerCase().includes('moron') ||
                      d.toLowerCase().includes('morón') || d.toLowerCase().includes('moron');
     
     if(temRB && temMoron){
-        kmAtual = 3.6; // Distância real entre Rio Branco e Morón
+        kmAtual = 3.6;
     } else {
-        // Estimativa baseada no comprimento do endereço (fator de proximidade)
         const fatorProx = Math.min(s.length, d.length) / Math.max(s.length, d.length);
         kmAtual = Number((1 + (1 - fatorProx) * 5).toFixed(1));
     }
@@ -532,7 +547,6 @@ function publicar(){
     document.getElementById('exibirCodigo').textContent = entrega.codigo;
     document.getElementById('codigoGerado').classList.remove('oculto');
     
-    // Limpar
     document.getElementById('nomeLoja').value = '';
     document.getElementById('saida').value = '';
     document.getElementById('destino').value = '';
@@ -701,9 +715,9 @@ function atualizarPainel(){
     
     const chaveSalva = localStorage.getItem(CHAVE+'pixAdmin');
     if(chaveSalva) document.getElementById('chavePixAdmin').value = chaveSalva;
-    document.getElementById('chavePixAdmin').addEventListener('blur', () => {
+    document.getElementById('chavePixAdmin').onblur = () => {
         localStorage.setItem(CHAVE+'pixAdmin', document.getElementById('chavePixAdmin').value.trim());
-    });
+    };
 
     const listaCad = document.getElementById('listaCadastrados');
     listaCad.innerHTML = entregadores.length === 0 
