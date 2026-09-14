@@ -7,10 +7,10 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
-    <!-- 📱 ÍCONE DA TELA DO CELULAR = FOTO DO GUERREIRO -->
-    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
-    <link rel="apple-touch-icon" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
+    <!-- 📱 ÍCONE = MESMA FOTO DA CAPA (igual Instagram/WhatsApp) -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA01">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA01">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=ALFA01">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,12 +21,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA DE ENTRADA DO APP — FOTO DO GUERREIRO INTEIRA, SEM CORTES */
+        /* 🖼️ CAPA INTEIRA — SEM CORTES — ALFA 01 */
         .capa-img { 
             width: 100%; 
-            height: auto;
+            height: auto;          /* ← Altura automática = foto INTEIRA */
             display: block;
-            object-fit: contain;
+            object-fit: contain;   /* ← NÃO CORTA NADA! Mostra tudo */
             background-color: #0f172a;
         }
         .container { padding: 20px; max-width: 520px; margin: 0 auto; }
@@ -139,9 +139,9 @@
 </head>
 <body>
 
-    <!-- 🖼️ CAPA DE ENTRADA DO APP AGORA É A FOTO DO GUERREIRO -->
+    <!-- 🖼️ FOTO INTEIRA — SEM CORTES -->
     <img 
-        src="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02" 
+        src="capa-rota-cheia.jpg?v=ALFA01" 
         alt="Rota Cheia — Nenhuma entrega volta vazia" 
         class="capa-img"
         onerror="this.style.display='none'"
@@ -338,7 +338,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_alfa02_';
+const CHAVE = 'rotacheia_alfa01_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
