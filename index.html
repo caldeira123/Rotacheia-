@@ -8,9 +8,9 @@
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
     <!-- 📱 ÍCONE NA TELA DO CELULAR = MESMA IMAGEM DA CAPA -->
-    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFAFINAL">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFAFINAL">
-    <link rel="apple-touch-icon" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFAFINAL">
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -44,7 +44,7 @@
         .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
         .botao-esq { display: flex; align-items: center; gap: 10px; }
 
-        /* 🔐 TELA DE ACESSO — SÓ VOCÊ VÊ */
+        /* 🔐 TELA DE ACESSO — SÓ PROPRIETÁRIO */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
@@ -145,9 +145,9 @@
 </head>
 <body>
 
-    <!-- 🖼️ IMAGEM DE CAPA — APARECE NA TELA DE ENTRADA -->
+    <!-- 🖼️ IMAGEM DE CAPA — TELA DE ENTRADA -->
     <img 
-        src="https://i.imgur.com/6ZkfKpL.jpg?v=ALFAFINAL" 
+        src="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA02" 
         alt="Rota Cheia — Nenhuma entrega volta vazia" 
         class="capa-img"
         onerror="this.style.display='none'"
@@ -156,7 +156,7 @@
     <div class="container">
         <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-        <!-- 🔐 TELA DE ACESSO — SÓ APARECE QUANDO CLICA EM PROPRIETÁRIO -->
+        <!-- 🔐 TELA DE ACESSO DO PROPRIETÁRIO -->
         <div id="telaSenhaAdmin" class="tela-senha oculto">
             <div class="caixa-senha">
                 <h2>🔐 Acesso do Proprietário</h2>
@@ -174,7 +174,7 @@
                     <p style="color:#94a3b8; margin-bottom:15px;">Senha OU Biometria — você escolhe!</p>
                     <input type="password" id="senhaAdmin" placeholder="Digite sua senha">
                     
-                    <!-- 👆 BIOMETRIA — SÓ VOCÊ VÊ -->
+                    <!-- 👆 BIOMETRIA -->
                     <button class="btn-biometria" onclick="usarBiometria()">
                         👆 Usar Biometria / Rosto
                     </button>
@@ -186,7 +186,7 @@
             </div>
         </div>
 
-        <!-- TELA INICIAL — TODOS VEEM, SEM SENHA -->
+        <!-- TELA INICIAL -->
         <div id="inicial" class="aba ativa">
             <button class="botao cadastro" onclick="abrirAba('cadastro')">
                 <div class="botao-esq">📝 <b>QUERO SER ENTREGADOR</b></div>
@@ -352,7 +352,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_alfa_final_';
+const CHAVE = 'rotacheia_alfa_02_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
@@ -372,7 +372,7 @@ function salvar(){
     localStorage.setItem(CHAVE+'saques', JSON.stringify(historicoSaques));
 }
 
-// 🔐 BIOMETRIA — SÓ NA ÁREA DO PROPRIETÁRIO
+// 🔐 BIOMETRIA
 async function usarBiometria(){
     try {
         if (window.PublicKeyCredential) {
@@ -770,3 +770,7 @@ function atualizarPainel(){
             </div>
         `).join('');
 }
+
+function limparEntregas(){
+    if(confirm('Apagar apenas entregas concluídas? Cadastros ficam!')){
+        entregas = entregas.filter(e => e
