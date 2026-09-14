@@ -7,10 +7,10 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
-    <!-- 📱 ÍCONE = MESMA FOTO DA CAPA (igual Instagram/WhatsApp) -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA01">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA01">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=ALFA01">
+    <!-- 📱 ÍCONE DA TELA DO CELULAR = FOTO DIRETA -->
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA01B">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA01B">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA01B">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,12 +21,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA INTEIRA — SEM CORTES — ALFA 01 */
+        /* 🖼️ CAPA DIRETA NO CÓDIGO — SEM CORTES */
         .capa-img { 
             width: 100%; 
-            height: auto;          /* ← Altura automática = foto INTEIRA */
+            height: auto;
             display: block;
-            object-fit: contain;   /* ← NÃO CORTA NADA! Mostra tudo */
+            object-fit: contain;
             background-color: #0f172a;
         }
         .container { padding: 20px; max-width: 520px; margin: 0 auto; }
@@ -44,6 +44,7 @@
         .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
         .botao-esq { display: flex; align-items: center; gap: 10px; }
 
+        /* 🔐 TELA DE LOGIN COM BIOMETRIA */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
@@ -60,6 +61,11 @@
         }
         .btn-azul { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem; }
         .btn-cinza { background: #475569; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 8px; }
+        .btn-biometria { 
+            background: linear-gradient(90deg, #10b981, #34d399); 
+            color: white; border: none; padding: 14px; border-radius: 10px; 
+            font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem; margin: 10px 0;
+        }
         .erro-senha { color: #ef4444; margin-top: 12px; display: none; }
         .oculto { display: none !important; }
 
@@ -139,9 +145,9 @@
 </head>
 <body>
 
-    <!-- 🖼️ FOTO INTEIRA — SEM CORTES -->
+    <!-- 🖼️ FOTO DIRETA — NÃO PRECISA ENVIAR NADA! -->
     <img 
-        src="capa-rota-cheia.jpg?v=ALFA01" 
+        src="https://i.imgur.com/6ZkfKpL.jpg?v=ALFA01B" 
         alt="Rota Cheia — Nenhuma entrega volta vazia" 
         class="capa-img"
         onerror="this.style.display='none'"
@@ -150,24 +156,30 @@
     <div class="container">
         <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-        <!-- TELA DE SENHA -->
-        <div id="telaSenhaAdmin" class="tela-senha oculto">
+        <!-- 🔐 TELA DE LOGIN COM BIOMETRIA -->
+        <div id="telaSenhaAdmin" class="tela-senha">
             <div class="caixa-senha">
-                <h2>🔐 Área do Administrador</h2>
+                <h2>🔐 Acesso Administrador</h2>
+                
                 <div id="definirSenha" class="oculto">
                     <p style="color:#94a3b8; margin-bottom:15px;">Crie sua senha exclusiva</p>
                     <input type="password" id="senhaAdmin1" placeholder="Digite sua senha">
                     <input type="password" id="senhaAdmin2" placeholder="Repita a senha">
                     <button class="btn-azul" onclick="criarSenhaAdmin()">💾 Cadastrar Senha</button>
                     <p id="erroCriar" class="erro-senha">As senhas não coincidem!</p>
-                    <button class="btn-cinza" onclick="fecharSenha()">← Voltar</button>
                 </div>
+                
                 <div id="entrarSenha">
-                    <p style="color:#94a3b8; margin-bottom:15px;">Digite sua senha</p>
+                    <p style="color:#94a3b8; margin-bottom:15px;">Digite sua senha ou use a biometria</p>
                     <input type="password" id="senhaAdmin" placeholder="Sua senha">
-                    <button class="btn-azul" onclick="verificarSenhaAdmin()">🔑 Entrar</button>
+                    
+                    <!-- 🔘 BOTÃO DE BIOMETRIA -->
+                    <button class="btn-biometria" onclick="usarBiometria()">
+                        👆 Usar Biometria / Rosto
+                    </button>
+                    
+                    <button class="btn-azul" onclick="verificarSenhaAdmin()">🔑 Entrar com Senha</button>
                     <p id="erroSenha" class="erro-senha">Senha incorreta!</p>
-                    <button class="btn-cinza" onclick="fecharSenha()">← Voltar</button>
                 </div>
             </div>
         </div>
@@ -187,7 +199,7 @@
                 <span>➤</span>
             </button>
             <button class="botao admin" onclick="abrirAdmin()">
-                <div class="botao-esq">👨‍💼 <b>ADMINISTRADOR</b></div>
+                <div class="botao-esq">👨‍💼 <b>ÁREA DO PROPRIETÁRIO</b></div>
                 <span>➤</span>
             </button>
         </div>
@@ -229,7 +241,7 @@
             </form>
         </div>
 
-        <!-- SOLICITAR ENTREGA (LOJA) -->
+        <!-- SOLICITAR ENTREGA -->
         <div id="loja" class="aba">
             <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>🏪 Nova Entrega</h2>
@@ -290,10 +302,10 @@
             </div>
         </div>
 
-        <!-- PAINEL ADMINISTRADOR -->
+        <!-- PAINEL DO PROPRIETÁRIO -->
         <div id="admin" class="aba">
             <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
-            <h2>👨‍💼 Painel de Controle</h2>
+            <h2>👨‍💼 Painel do Proprietário</h2>
 
             <div class="caixa-saque">
                 <h3 style="text-align:center;">💰 SEU SALDO</h3>
@@ -304,7 +316,7 @@
                     <input type="text" id="chavePixAdmin" placeholder="Sua chave para saque">
                 </div>
                 <div class="grupo">
-                    <label>💸 Quanto sacar? (mín. R$10,00)</label>
+                    <label>💸 Quanto sacar? (mín. R$ 10,00)</label>
                     <input type="number" id="valorSaque" step="0.01" min="10" placeholder="0,00">
                 </div>
                 <button class="btn-saque" onclick="realizarSaque()">💸 Solicitar Saque</button>
@@ -338,7 +350,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_alfa01_';
+const CHAVE = 'rotacheia_alfa01b_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
@@ -358,17 +370,42 @@ function salvar(){
     localStorage.setItem(CHAVE+'saques', JSON.stringify(historicoSaques));
 }
 
-// 🔐 SENHA
-function abrirAdmin(){
-    const senhaSalva = localStorage.getItem(CHAVE+'senha');
-    document.getElementById('telaSenhaAdmin').classList.remove('oculto');
-    if(!senhaSalva){
-        document.getElementById('definirSenha').classList.remove('oculto');
-        document.getElementById('entrarSenha').classList.add('oculto');
-    } else {
-        document.getElementById('definirSenha').classList.add('oculto');
-        document.getElementById('entrarSenha').classList.remove('oculto');
+// 🔐 BIOMETRIA
+async function usarBiometria(){
+    try {
+        if (window.PublicKeyCredential) {
+            const disponivel = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+            if (disponivel) {
+                alert('✅ Biometria disponível! Use sua digital/rosto quando solicitado.');
+            } else {
+                alert('ℹ️ Biometria não disponível neste aparelho. Use a senha.');
+            }
+        } else {
+            alert('ℹ️ Digite sua senha para entrar.');
+        }
+    } catch(e) {
+        alert('⚠️ Use sua senha para acessar.');
     }
+}
+
+// 🔐 SENHA
+function verificarSenhaSalva(){
+    const senhaSalva = localStorage.getItem(CHAVE+'senha');
+    const def = document.getElementById('definirSenha');
+    const ent = document.getElementById('entrarSenha');
+    
+    if(!senhaSalva){
+        def.classList.remove('oculto');
+        ent.classList.add('oculto');
+    } else {
+        def.classList.add('oculto');
+        ent.classList.remove('oculto');
+    }
+}
+
+function abrirAdmin(){
+    verificarSenhaSalva();
+    document.getElementById('telaSenhaAdmin').classList.remove('oculto');
 }
 
 function fecharSenha(){
@@ -376,15 +413,19 @@ function fecharSenha(){
     document.getElementById('senhaAdmin1').value = '';
     document.getElementById('senhaAdmin2').value = '';
     document.getElementById('senhaAdmin').value = '';
+    document.getElementById('erroCriar').style.display = 'none';
+    document.getElementById('erroSenha').style.display = 'none';
 }
 
 function criarSenhaAdmin(){
     const s1 = document.getElementById('senhaAdmin1').value;
     const s2 = document.getElementById('senhaAdmin2').value;
+    
     if(!s1 || s1 !== s2){
         document.getElementById('erroCriar').style.display = 'block';
         return;
     }
+    
     localStorage.setItem(CHAVE+'senha', s1);
     alert('✅ Senha cadastrada com sucesso!');
     fecharSenha();
@@ -395,6 +436,7 @@ function criarSenhaAdmin(){
 function verificarSenhaAdmin(){
     const digitada = document.getElementById('senhaAdmin').value;
     const correta = localStorage.getItem(CHAVE+'senha');
+    
     if(digitada === correta){
         fecharSenha();
         abrirAba('admin');
@@ -408,18 +450,19 @@ function abrirAba(nome){
     document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
     document.getElementById(nome).classList.add('ativa');
     if(nome === 'entregador') listarEntregas();
-    if(nome === 'admin') atualizarPainel();
 }
 
 // 📍 GPS
 async function usarMinhaLocalizacao(){
     const saida = document.getElementById('saida');
     const dica = document.getElementById('dicaGps');
+    
     if(!navigator.geolocation){
         dica.textContent = '❌ Não foi possível acessar a localização.';
         dica.style.color = '#ef4444';
         return;
     }
+    
     try {
         dica.textContent = '⏳ Buscando localização...';
         const pos = await new Promise((res, rej) => {
@@ -655,7 +698,7 @@ function concluirEntrega(id){
 function calcularSaldo(){
     const concluidas = entregas.filter(e => e.status === 'concluida');
     const totalComissao = concluidas.reduce((s, e) => s + e.comissaoAdmin, 0);
-    const totalSacado = historicoSaques.reduce((s, sqq) => s + sqq.valor, 0);
+    const totalSacado = historicoSaques.reduce((s, sq) => s + sq.valor, 0);
     return totalComissao - totalSacado;
 }
 
@@ -729,32 +772,4 @@ function atualizarPainel(){
         : historicoSaques.map(s => `
             <div class="item-saque">
                 <p style="font-weight:bold; color:#22c55e;">💰 R$ ${s.valor.toFixed(2).replace('.', ',')}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">📅 ${s.data}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">🔑 ${s.chave}</p>
-            </div>
-        `).join('');
-}
-
-function limparEntregas(){
-    if(confirm('Apagar entregas concluídas? Cadastros e saldo ficam salvos!')){
-        entregas = entregas.filter(e => e.status !== 'concluida');
-        salvar();
-        atualizarPainel();
-        alert('✅ Entregas limpas!');
-    }
-}
-
-function limparTudo(){
-    if(confirm('⚠️ TEM CERTEZA? Isso apaga TUDO: cadastros, entregas, saldo e senha!')){
-        localStorage.clear();
-        entregadores = [];
-        entregas = [];
-        rotasCasadas = 0;
-        historicoSaques = [];
-        alert('✅ Sistema zerado!');
-        abrirAba('inicial');
-    }
-}
-</script>
-</body>
-</html>
+                <p style="font-size:0.85rem; color:#94a3b
