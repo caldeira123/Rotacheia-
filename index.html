@@ -758,3 +758,8 @@ function atualizarPainel(){
         : historicoSaques.map(s => `
             <div class="item-saque">
                 <p style="font-weight:bold; color:#22c55e;">💰 R$ ${s.valor.toFixed(2).replace('.', ',')}</p>
+                <p style="font-size:0.85rem; color:#94a3b8;">🔑 ${s.chave}</p>
+                <p style="font-size:0.75rem; color:#64748b;">📅 ${s.data}</p>
+            </div>
+        `).join('');
+}
