@@ -7,9 +7,9 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
-    <!-- 📱 ÍCONE = MESMA FOTO DA CAPA (força atualização) -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFAFINAL">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFAFINAL">
+    <!-- 📱 ÍCONE = MESMA FOTO DA CAPA -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFAFINAL2">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFAFINAL2">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -19,7 +19,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* CAPA SEM CORTES — TELA DE ENTRADA */
         .capa-img {
             width: 100%;
             height: auto;
@@ -48,7 +47,7 @@
         .biometria { background: linear-gradient(90deg, #0d9488, #14b8a6); color: #fff; }
         .voltar { background: transparent; color: #cbd5e1; border: none; padding: 12px; font-size: 1rem; }
 
-        /* TELA DE ACESSO ADMINISTRADOR */
+        /* TELA DE ACESSO */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
@@ -67,8 +66,10 @@
         .caixa-senha input:focus { outline: none; border-color: #fbbf24; }
         .btn-azul { background: linear-gradient(90deg, #3b82f6, #2563eb); color: white; }
         .erro { color: #f87171; margin-top: 10px; display: none; font-size: 0.9rem; }
-        .sucesso { color: #4ade80; margin-top: 10px; display: none; font-size: 0.9rem; }
         .info { color: #94a3b8; font-size: 0.85rem; margin: 8px 0 16px; }
+        .oculto { display: none !important; }
+        .link-senha { color: #94a3b8; font-size: 0.9rem; margin-top: 10px; cursor: pointer; text-decoration: underline; }
+        .link-senha:hover { color: #fbbf24; }
 
         .aba { display: none; }
         .aba.ativa { display: block; }
@@ -83,47 +84,56 @@
 </head>
 <body>
 
-<!-- 🔐 TELA DE ACESSO DO ADMINISTRADOR -->
+<!-- 🔐 TELA DE ACESSO -->
 <div id="telaAdmin" class="tela-senha oculto">
     <div class="caixa-senha">
-        <h2 id="tituloAcesso">🔐 Área do Administrador</h2>
-        <p id="subtituloAcesso" class="info">Crie sua senha de acesso na primeira vez</p>
-
-        <!-- TELA DE CRIAÇÃO DE SENHA -->
-        <div id="telaCriarSenha">
+        <!-- TELA 1: CRIAR SENHA (SÓ 1ª VEZ) -->
+        <div id="telaCriar">
+            <h2>🔐 Crie sua senha</h2>
+            <p class="info">Use letras, números e caracteres especiais</p>
             <input type="password" id="novaSenha1" placeholder="Digite sua senha">
             <input type="password" id="novaSenha2" placeholder="Repita a senha">
-            <p class="info">Pode usar: letras maiúsculas/minúsculas, números e caracteres especiais (. ! ? , @)</p>
-            <button class="botao btn-azul" onclick="criarSenha()">✅ Salvar Senha</button>
+            <button class="botao btn-azul" onclick="salvarSenha()">✅ Salvar Senha</button>
             <p id="erroCriar" class="erro"></p>
         </div>
 
-        <!-- TELA DE ENTRADA COM SENHA JÁ CRIADA -->
-        <div id="telaEntrar" class="oculto">
-            <input type="password" id="senhaDigitada" placeholder="Digite sua senha...">
-            
-            <button id="btnBio" class="botao biometria oculto" onclick="usarBiometria()">
-                👆 Entrar com Biometria / Digital
-            </button>
-            
-            <button class="botao btn-azul" onclick="verificarSenha()">Entrar</button>
-            <button class="voltar" onclick="fecharAdmin()">← Voltar</button>
-            <p id="erroEntrar" class="erro">Senha incorreta!</p>
+        <!-- TELA 2: ATIVAR BIOMETRIA (SÓ DEPOIS DA SENHA) -->
+        <div id="telaAtivarBio" class="oculto">
+            <h2>✅ Senha criada!</h2>
+            <p class="info">Quer ativar sua digital para entrar mais rápido?</p>
+            <button class="botao biometria" onclick="ativarBio()">👆 Ativar Biometria</button>
+            <button class="botao" style="background:#475569;" onclick="entrarAgora()">Agora não</button>
         </div>
 
-        <!-- TELA DE ATIVAR BIOMETRIA -->
-        <div id="telaAtivarBio" class="oculto">
-            <p class="sucesso" style="display:block; font-size:1rem;">✅ Senha criada com sucesso!</p>
-            <p class="info">Quer ativar a biometria para entrar mais rápido?</p>
-            <button class="botao biometria" onclick="ativarBiometria()">👆 Ativar Biometria</button>
-            <button class="botao" style="background:#475569;" onclick="entrarDireto()">Agora não</button>
+        <!-- TELA 3: ENTRAR (TODAS AS VEZES SEGUINTES) -->
+        <div id="telaEntrar" class="oculto">
+            <h2>🔐 Área do Administrador</h2>
+            
+            <!-- BOTÃO PRINCIPAL: BIOMETRIA -->
+            <button id="btnBioPrincipal" class="botao biometria" onclick="entrarComBio()">
+                👆 Entrar com minha Digital
+            </button>
+            
+            <!-- OPÇÃO SECUNDÁRIA: SENHA -->
+            <p id="linkUsarSenha" class="link-senha" onclick="mostrarSenha()">
+                Usar senha em vez de digital →
+            </p>
+            
+            <div id="campoSenha" class="oculto" style="margin-top:15px;">
+                <input type="password" id="senhaDigitada" placeholder="Digite sua senha">
+                <button class="botao btn-azul" onclick="entrarComSenha()">Entrar</button>
+                <p class="link-senha" onclick="esconderSenha()">← Voltar para biometria</p>
+                <p id="erroSenha" class="erro">Senha incorreta!</p>
+            </div>
+            
+            <button class="voltar" onclick="fecharTela()">← Voltar</button>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <!-- 🖼️ CAPA DE ENTRADA -->
-    <img src="capa-rota-cheia.jpg?v=ALFAFINAL" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img" onerror="this.style.display='none'">
+    <!-- 🖼️ CAPA -->
+    <img src="capa-rota-cheia.jpg?v=ALFAFINAL2" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img" onerror="this.style.display='none'">
     
     <h1 class="titulo">🚛 Rota Cheia</h1>
     <p class="subtitulo">Nenhuma entrega volta vazia!</p>
@@ -132,10 +142,10 @@
     <div id="inicio" class="aba ativa">
         <button class="botao cadastro" onclick="mostrarAba('cadastroEntregador')">🏍️ Sou Entregador</button>
         <button class="botao loja" onclick="mostrarAba('cadastroLoja')">🏪 Sou Loja / Cliente</button>
-        <button class="botao admin" onclick="abrirAdmin()">🔐 Administrador</button>
+        <button class="botao admin" onclick="abrirAcesso()">🔐 Administrador</button>
     </div>
 
-    <!-- 🏍️ CADASTRO DE ENTREGADOR -->
+    <!-- 🏍️ CADASTRO ENTREGADOR -->
     <div id="cadastroEntregador" class="aba">
         <button class="voltar" onclick="mostrarAba('inicio')">← Voltar</button>
         <h2 style="margin:15px 0;">🏍️ Cadastro de Entregador</h2>
@@ -169,23 +179,15 @@
         <div id="resultadoRota" style="margin-top:15px;"></div>
     </div>
 
-    <!-- ⚙️ PAINEL DO ADMINISTRADOR -->
+    <!-- ⚙️ PAINEL ADMINISTRADOR -->
     <div id="painelAdmin" class="aba">
-        <button class="voltar" onclick="sairAdmin()">← Sair</button>
+        <button class="voltar" onclick="sairPainel()">← Sair</button>
         <h2 style="margin:15px 0;">⚙️ Painel do Administrador</h2>
         
         <div class="cartao">
             <p>Saldo da Plataforma:</p>
             <p class="saldo" id="saldoPlataforma">R$ 0,00</p>
             <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:10px;" onclick="sacarSaldo()">💰 Sacar para minha conta</button>
-        </div>
-
-        <div class="cartao" style="margin-top:20px;">
-            <h3 style="color:#94a3b8; margin-bottom:10px;">🔐 Segurança</h3>
-            <button class="botao biometria" onclick="gerenciarBiometria()">
-                👆 Gerenciar Biometria
-            </button>
-            <button class="botao btn-azul" onclick="alterarSenha()">🔑 Alterar Senha</button>
         </div>
 
         <h3 style="margin:20px 0 10px; color:#94a3b8;">🏍️ Entregadores Cadastrados:</h3>
@@ -195,59 +197,53 @@
 
 <script>
 // ==========================================
-// 🔐 SISTEMA DE SENHA E BIOMETRIA
+// 🔐 DADOS SALVOS
 // ==========================================
-
-// Carrega dados salvos
 let senhaSalva = localStorage.getItem('senhaAdmin');
 let bioAtivada = localStorage.getItem('bioAtivada') === 'sim';
 let saldoPlataforma = parseFloat(localStorage.getItem('saldoPlataforma') || '0');
 let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
 
-// Troca de telas
-function mostrarAba(nome) {
-    document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-    document.getElementById(nome).classList.add('ativa');
-    atualizarLista();
-    atualizarSaldo();
-}
+// ==========================================
+// 🔐 FLUXO DE ACESSO
+// ==========================================
 
-// Abre tela de acesso
-function abrirAdmin() {
-    // Reseta telas
-    document.getElementById('telaCriarSenha').classList.add('oculto');
-    document.getElementById('telaEntrar').classList.add('oculto');
+function abrirAcesso() {
+    // Reseta tudo
+    document.getElementById('telaCriar').classList.add('oculto');
     document.getElementById('telaAtivarBio').classList.add('oculto');
+    document.getElementById('telaEntrar').classList.add('oculto');
+    document.getElementById('campoSenha').classList.add('oculto');
+    document.getElementById('linkUsarSenha').classList.remove('oculto');
+    document.getElementById('erroSenha').style.display = 'none';
     document.getElementById('erroCriar').style.display = 'none';
-    document.getElementById('erroEntrar').style.display = 'none';
     document.getElementById('senhaDigitada').value = '';
     document.getElementById('novaSenha1').value = '';
     document.getElementById('novaSenha2').value = '';
 
     if (!senhaSalva) {
-        // PRIMEIRA VEZ — cria senha
-        document.getElementById('telaCriarSenha').classList.remove('oculto');
-        document.getElementById('subtituloAcesso').textContent = 'Crie sua senha de acesso';
+        // PRIMEIRA VEZ: criar senha
+        document.getElementById('telaCriar').classList.remove('oculto');
     } else {
-        // JÁ TEM SENHA — pede entrada
+        // JÁ TEM SENHA: tela de entrada
         document.getElementById('telaEntrar').classList.remove('oculto');
-        document.getElementById('subtituloAcesso').textContent = 'Digite sua senha';
-        if (bioAtivada) {
-            document.getElementById('btnBio').classList.remove('oculto');
-        } else {
-            document.getElementById('btnBio').classList.add('oculto');
+        // Esconde botão de biometria se não ativou
+        if (!bioAtivada) {
+            document.getElementById('btnBioPrincipal').classList.add('oculto');
+            document.getElementById('linkUsarSenha').classList.add('oculto');
+            document.getElementById('campoSenha').classList.remove('oculto');
         }
     }
     
     document.getElementById('telaAdmin').classList.remove('oculto');
 }
 
-function fecharAdmin() {
+function fecharTela() {
     document.getElementById('telaAdmin').classList.add('oculto');
 }
 
-// 1️⃣ CRIAR SENHA NA PRIMEIRA VEZ
-function criarSenha() {
+// PASSO 1: CRIAR SENHA
+function salvarSenha() {
     const s1 = document.getElementById('novaSenha1').value;
     const s2 = document.getElementById('novaSenha2').value;
     const erro = document.getElementById('erroCriar');
@@ -258,7 +254,7 @@ function criarSenha() {
         return;
     }
     if (s1 !== s2) {
-        erro.textContent = 'As senhas não coincidem!';
+        erro.textContent = 'As senhas não são iguais!';
         erro.style.display = 'block';
         return;
     }
@@ -266,104 +262,97 @@ function criarSenha() {
     // Salva a senha
     senhaSalva = s1;
     localStorage.setItem('senhaAdmin', senhaSalva);
-    
-    // Mostra opção de ativar biometria
-    document.getElementById('telaCriarSenha').classList.add('oculto');
+
+    // Vai para ativar biometria
+    document.getElementById('telaCriar').classList.add('oculto');
     document.getElementById('telaAtivarBio').classList.remove('oculto');
 }
 
-// 2️⃣ VERIFICAR SENHA PARA ENTRAR
-function verificarSenha() {
-    const digitada = document.getElementById('senhaDigitada').value;
-    if (digitada === senhaSalva) {
-        fecharAdmin();
-        mostrarAba('painelAdmin');
-    } else {
-        document.getElementById('erroEntrar').style.display = 'block';
-    }
-}
-
-// 3️⃣ BIOMETRIA
-async function ativarBiometria() {
+// PASSO 2: ATIVAR BIOMETRIA
+async function ativarBio() {
     if (window.PublicKeyCredential) {
         const disponivel = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
         if (disponivel) {
             bioAtivada = true;
             localStorage.setItem('bioAtivada', 'sim');
-            alert('✅ Biometria ativada! Da próxima vez pode entrar com sua digital.');
-            entrarDireto();
+            alert('✅ Biometria ativada! Da próxima vez é só colocar a digital.');
+            entrarAgora();
         } else {
             alert('⚠️ Seu celular não tem biometria configurada. Use a senha.');
-            entrarDireto();
+            entrarAgora();
         }
     } else {
         alert('⚠️ Biometria não suportada. Use a senha.');
-        entrarDireto();
+        entrarAgora();
     }
 }
 
-async function usarBiometria() {
-    if (!bioAtivada) return;
-    try {
-        const disponivel = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-        if (disponivel) {
-            fecharAdmin();
-            mostrarAba('painelAdmin');
-        } else {
-            alert('⚠️ Biometria indisponível. Use a senha.');
-        }
-    } catch (e) {
-        alert('⚠️ Confirme pela senha.');
-    }
-}
-
-function entrarDireto() {
-    fecharAdmin();
+function entrarAgora() {
+    fecharTela();
     mostrarAba('painelAdmin');
 }
 
-function gerenciarBiometria() {
+// PASSO 3: ENTRAR — BIOMETRIA PRIMEIRO
+async function entrarComBio() {
+    if (!bioAtivada) return;
+    
+    try {
+        const disponivel = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+        if (disponivel) {
+            // Simula verificação da digital do celular
+            fecharTela();
+            mostrarAba('painelAdmin');
+        } else {
+            alert('⚠️ Digital não reconhecida. Use a senha.');
+            mostrarSenha();
+        }
+    } catch (e) {
+        alert('⚠️ Confirme pela senha.');
+        mostrarSenha();
+    }
+}
+
+// MOSTRAR/ESCONDER CAMPO DE SENHA
+function mostrarSenha() {
+    document.getElementById('btnBioPrincipal').classList.add('oculto');
+    document.getElementById('linkUsarSenha').classList.add('oculto');
+    document.getElementById('campoSenha').classList.remove('oculto');
+}
+
+function esconderSenha() {
+    document.getElementById('campoSenha').classList.add('oculto');
+    document.getElementById('erroSenha').style.display = 'none';
     if (bioAtivada) {
-        if (confirm('Biometria está ATIVADA.\n\nQuer DESATIVAR?')) {
-            bioAtivada = false;
-            localStorage.setItem('bioAtivada', 'nao');
-            alert('✅ Biometria desativada.');
-        }
+        document.getElementById('btnBioPrincipal').classList.remove('oculto');
+        document.getElementById('linkUsarSenha').classList.remove('oculto');
+    }
+}
+
+// ENTRAR COM SENHA (PLANO B)
+function entrarComSenha() {
+    const digitada = document.getElementById('senhaDigitada').value;
+    if (digitada === senhaSalva) {
+        fecharTela();
+        mostrarAba('painelAdmin');
     } else {
-        if (confirm('Biometria está DESATIVADA.\n\nQuer ATIVAR agora?')) {
-            ativarBiometria();
-        }
+        document.getElementById('erroSenha').style.display = 'block';
     }
 }
 
-function alterarSenha() {
-    const senhaAtual = prompt('Digite sua senha atual:');
-    if (senhaAtual !== senhaSalva) {
-        alert('❌ Senha atual incorreta!');
-        return;
-    }
-    const nova = prompt('Digite a NOVA senha:');
-    if (!nova || nova.length < 6) {
-        alert('❌ Senha muito curta!');
-        return;
-    }
-    const confirma = prompt('Repita a nova senha:');
-    if (nova !== confirma) {
-        alert('❌ As senhas não coincidem!');
-        return;
-    }
-    senhaSalva = nova;
-    localStorage.setItem('senhaAdmin', senhaSalva);
-    alert('✅ Senha alterada com sucesso!');
+// ==========================================
+// 💰 DEMAIS FUNÇÕES
+// ==========================================
+
+function mostrarAba(nome) {
+    document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+    document.getElementById(nome).classList.add('ativa');
+    atualizarLista();
+    atualizarSaldo();
 }
 
-function sairAdmin() {
+function sairPainel() {
     mostrarAba('inicio');
 }
-
-// ==========================================
-// 💰 SISTEMA DE ENTREGAS E VALORES
-// ==========================================
 
 function salvarEntregador() {
     const novo = {
@@ -387,12 +376,10 @@ function calcularRota() {
     
     if (!origem || !destino) { alert('Preencha os endereços!'); return; }
 
-    // Valor da corrida — você pode ajustar a regra aqui
     const valorTotal = 15.00;
-    const suaParte = (valorTotal * 0.20).toFixed(2);  // 20% para você
-    const entregadorRecebe = (valorTotal * 0.80).toFixed(2); // 80% para o entregador
+    const suaParte = (valorTotal * 0.20).toFixed(2);
+    const entregadorRecebe = (valorTotal * 0.80).toFixed(2);
     
-    // Adiciona ao saldo
     saldoPlataforma += parseFloat(suaParte);
     localStorage.setItem('saldoPlataforma', saldoPlataforma.toString());
 
@@ -412,11 +399,11 @@ function calcularRota() {
 
 function sacarSaldo() {
     if (saldoPlataforma <= 0) {
-        alert('Sem saldo disponível para saque.');
+        alert('Sem saldo disponível.');
         return;
     }
     const valor = saldoPlataforma.toFixed(2);
-    alert(`💰 SOLICITAÇÃO DE SAQUE\n\nValor: R$ ${valor}\n\nSerá transferido para sua conta cadastrada.\n\nSaldo zerado!`);
+    alert(`💰 SAQUE\nValor: R$ ${valor}\nTransferência para sua conta.\nSaldo zerado!`);
     saldoPlataforma = 0;
     localStorage.setItem('saldoPlataforma', '0');
     atualizarSaldo();
@@ -429,11 +416,11 @@ function atualizarSaldo() {
 function atualizarLista() {
     const lista = document.getElementById('listaEntregadores');
     if (entregadores.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8;">Nenhum entregador cadastrado ainda.</p>';
+        lista.innerHTML = '<p style="color:#94a3b8;">Nenhum entregador cadastrado.</p>';
     } else {
         lista.innerHTML = entregadores.map((e, i) => `
             <div class="cartao">
-                <p style="font-weight:bold; font-size:1.05rem;">${i+1}. ${e.nome}</p>
+                <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
                 <p style="font-size:0.9rem; color:#94a3b8; margin-top:5px;">📱 ${e.fone} | 🚗 ${e.veiculo}</p>
                 <p style="font-size:0.9rem; color:#86efac; margin-top:5px;">📍 ${e.regiao} | 💳 ${e.pix}</p>
             </div>
@@ -441,7 +428,6 @@ function atualizarLista() {
     }
 }
 
-// Inicializa
 atualizarSaldo();
 </script>
 
