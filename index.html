@@ -7,10 +7,10 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
-    <!-- 📱 ÍCONE = MESMA CAPA NA TELA DO CELULAR -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=2.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=2.0">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=2.0">
+    <!-- 📱 CAPA = ÍCONE NA TELA DO CELULAR -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=3.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=3.0">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=3.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -39,7 +39,7 @@
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
-            z-index: 9999; padding: 20px;
+            z-index: 99999; padding: 20px;
         }
         .caixa-senha {
             background: linear-gradient(135deg, #1e293b, #334155);
@@ -148,7 +148,7 @@
     <div class="container">
         <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-        <!-- 🔐 TELA DE ACESSO DO ADMINISTRADOR -->
+        <!-- 🔐 TELA DE ACESSO — SOMENTE ADMINISTRADOR -->
         <div id="telaSenhaAdmin" class="tela-senha oculto">
             <div class="caixa-senha">
                 <h2>🔐 Área do Proprietário</h2>
@@ -163,14 +163,16 @@
                 </div>
                 
                 <div id="entrarSenha">
-                    <p style="color:#94a3b8; margin-bottom:15px;">Escolha: Senha OU Digital/Rosto</p>
+                    <p style="color:#94a3b8; margin-bottom:15px;">Escolha uma forma de entrar:</p>
                     
                     <!-- 👆 BIOMETRIA -->
                     <button class="btn-biometria" onclick="usarBiometria()">
-                        👆 Usar Biometria / Reconhecimento Facial
+                        👆 Entrar com Digital / Rosto
                     </button>
                     
-                    <input type="password" id="senhaAdmin" placeholder="Ou digite sua senha">
+                    <p style="color:#64748b; margin:8px 0;">——— ou ———</p>
+                    
+                    <input type="password" id="senhaAdmin" placeholder="Digite sua senha">
                     
                     <button class="btn-azul" onclick="verificarSenhaAdmin()">🔑 Entrar com Senha</button>
                     <p id="erroSenha" class="erro-senha">Senha incorreta!</p>
@@ -181,19 +183,19 @@
 
         <!-- TELA INICIAL -->
         <div id="inicial" class="aba ativa">
-            <button class="botao cadastro" onclick="abrirAba('cadastro')">
+            <button type="button" class="botao cadastro" onclick="abrirAba('cadastro')">
                 <div class="botao-esq">📝 <b>QUERO SER ENTREGADOR</b></div>
                 <span>➤</span>
             </button>
-            <button class="botao loja" onclick="abrirAba('loja')">
+            <button type="button" class="botao loja" onclick="abrirAba('loja')">
                 <div class="botao-esq">🏪 <b>SOLICITAR ENTREGA</b></div>
                 <span>➤</span>
             </button>
-            <button class="botao entregador" onclick="abrirAba('entregador')">
+            <button type="button" class="botao entregador" onclick="abrirAba('entregador')">
                 <div class="botao-esq">🏍️ <b>ÁREA DO ENTREGADOR</b></div>
                 <span>➤</span>
             </button>
-            <button class="botao admin" onclick="abrirAdmin()">
+            <button type="button" class="botao admin" onclick="abrirAdmin()">
                 <div class="botao-esq">👨‍💼 <b>PROPRIETÁRIO</b></div>
                 <span>➤</span>
             </button>
@@ -201,7 +203,7 @@
 
         <!-- 📝 CADASTRO DE ENTREGADOR -->
         <div id="cadastro" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <button type="button" class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>📝 Seja Entregador</h2>
             <div class="aviso-preco" style="background:linear-gradient(90deg, #4c1d95, #7c3aed); border-left-color:#a855f7;">
                 ✅ 80% para você | ✅ Sistema sem volta vazia!
@@ -238,7 +240,7 @@
 
         <!-- 🏪 SOLICITAR ENTREGA -->
         <div id="loja" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <button type="button" class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>🏪 Nova Entrega</h2>
             <div class="cidade-fixa">📍 Rio Grande / RS</div>
             <div class="aviso-preco"><strong>💵 R$ 5,00 arrancada + R$ 1,90/km</strong></div>
@@ -277,19 +279,19 @@
                 </div>
             </div>
 
-            <button class="btn-enviar" onclick="publicar()">✅ Publicar Entrega</button>
+            <button type="button" class="btn-enviar" onclick="publicar()">✅ Publicar Entrega</button>
             <div id="codigoGerado" class="oculto">
                 <div class="codigo-caixa">
                     <p style="color:#94a3b8;">🔐 Código de confirmação</p>
                     <div class="codigo-numeros" id="exibirCodigo">----</div>
                 </div>
-                <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei o código</button>
+                <button type="button" class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei o código</button>
             </div>
         </div>
 
         <!-- 🏍️ ÁREA DO ENTREGADOR -->
         <div id="entregador" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <button type="button" class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>🏍️ Entregas Disponíveis</h2>
             <p style="color:#fbbf24; text-align:center; margin:10px 0;">🔄 Nenhuma entrega volta vazia!</p>
             <div id="listaEntregas">
@@ -299,7 +301,7 @@
 
         <!-- 👨‍💼 PAINEL DO PROPRIETÁRIO -->
         <div id="admin" class="aba">
-            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <button type="button" class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
             <h2>👨‍💼 Painel do Proprietário</h2>
 
             <div class="caixa-saque">
@@ -314,7 +316,7 @@
                     <label>💸 Quanto sacar? (mín. R$ 10,00)</label>
                     <input type="number" id="valorSaque" step="0.01" min="10" placeholder="0,00">
                 </div>
-                <button class="btn-saque" onclick="realizarSaque()">💸 Solicitar Saque</button>
+                <button type="button" class="btn-saque" onclick="realizarSaque()">💸 Solicitar Saque</button>
                 <p id="msgSaque" style="margin-top:10px; text-align:center;"></p>
             </div>
 
@@ -336,8 +338,8 @@
             </div>
 
             <div style="margin-top:20px;">
-                <button class="btn-perigo" onclick="limparEntregas()">🗑️ Limpar entregas concluídas</button>
-                <button class="btn-perigo" onclick="limparTudo()" style="margin-top:8px;">⚠️ Zerar tudo</button>
+                <button type="button" class="btn-perigo" onclick="limparEntregas()">🗑️ Limpar entregas concluídas</button>
+                <button type="button" class="btn-perigo" onclick="limparTudo()" style="margin-top:8px;">⚠️ Zerar tudo</button>
             </div>
         </div>
 
@@ -365,18 +367,21 @@ function salvar(){
     localStorage.setItem(CHAVE+'saques', JSON.stringify(historicoSaques));
 }
 
-// 👆 BIOMETRIA
+// 👆 BIOMETRIA — SOMENTE ADMIN
 async function usarBiometria(){
     try {
         if (window.PublicKeyCredential) {
             const disponivel = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
             if (disponivel) {
-                alert('✅ Biometria disponível!\nUse sua digital ou rosto quando solicitado.');
+                alert('✅ Biometria disponível!\nUse sua digital ou rosto.');
+                fecharSenha();
+                abrirAba('admin');
+                atualizarPainel();
             } else {
-                alert('⚠️ Biometria não disponível neste aparelho.\nUse sua senha.');
+                alert('⚠️ Biometria não disponível.\nUse sua senha.');
             }
         } else {
-            alert('⚠️ Digite sua senha para entrar.');
+            alert('⚠️ Digite sua senha.');
         }
     } catch {
         alert('⚠️ Digite sua senha.');
@@ -412,7 +417,7 @@ function criarSenhaAdmin(){
         return;
     }
     localStorage.setItem(CHAVE+'senhaAdmin', s1);
-    alert('✅ Senha cadastrada com sucesso!\nGuarde bem!');
+    alert('✅ Senha cadastrada com sucesso!');
     fecharSenha();
     abrirAba('admin');
     atualizarPainel();
@@ -606,19 +611,19 @@ function listarEntregas(){
         
         let botoes = '';
         if(e.status === 'disponivel'){
-            botoes = `<button class="btn-confirmar" onclick="aceitarEntrega(${e.id})">✅ Aceitar Entrega</button>`;
+            botoes = `<button type="button" class="btn-confirmar" onclick="aceitarEntrega(${e.id})">✅ Aceitar Entrega</button>`;
             if(temCasada){
-                botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id}, ${e.casadaCom})">🔥 ACEITAR AMBAS ROTAS!</button>`;
+                botoes += `<button type="button" class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id}, ${e.casadaCom})">🔥 ACEITAR AMBAS ROTAS!</button>`;
             }
         } else {
             botoes = `
                 <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(e.saida)}&destination=${encodeURIComponent(e.destino)}" target="_blank" style="text-decoration:none;">
-                    <button class="btn-mapa">📍 Abrir Rota no Mapa</button>
+                    <button type="button" class="btn-mapa">📍 Abrir Rota no Mapa</button>
                 </a>
                 <div style="margin-top:12px;">
                     <p style="color:#60a5fa; font-weight:bold;">🔐 Digite o código de confirmação:</p>
                     <input type="text" id="codConfirmar${e.id}" class="input-codigo" maxlength="4" placeholder="____">
-                    <button class="btn-enviar" onclick="concluirEntrega(${e.id})">✓ Concluir Entrega</button>
+                    <button type="button" class="btn-enviar" onclick="concluirEntrega(${e.id})">✓ Concluir Entrega</button>
                     <p id="msg${e.id}"></p>
                 </div>
             `;
@@ -761,13 +766,4 @@ function atualizarPainel(){
 
 function limparEntregas(){
     if(confirm('🗑️ Apagar apenas entregas concluídas? Os cadastros ficam!')){
-        entregas = entregas.filter(e => e.status !== 'concluida');
-        rotasCasadas = entregas.filter(e => e.casadaCom).length;
-        salvar();
-        listarEntregas();
-        atualizarPainel();
-    }
-}
-
-function limparTudo(){
-    if(confirm('⚠️ ATENÇÃO! Isso apaga TUDO: cadastros, entregas, senha, saques
+        entregas = entregas.filter(e
