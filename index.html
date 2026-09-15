@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
+    <title>Rota Cheia</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
-    
-    <!-- 📱 ÍCONE = MESMA IMAGEM DA CAPA -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=7.2">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=7.2">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=7.2">
+
+    <!-- ==============================================
+         📱 ÍCONE = MESMA FOTO DA CAPA — VERSÃO FORÇADA
+         ============================================== -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=100">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=100">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=100">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -22,6 +24,7 @@
 
         .capa-img { width: 100%; height: auto; display: block; }
         .container { padding: 20px; max-width: 520px; margin: 0 auto; }
+        .titulo { text-align: center; color: #7c3aed; font-weight: bold; margin: 15px 0; font-size: 1.1rem; }
 
         .botao {
             width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
@@ -139,14 +142,14 @@
 
     <!-- 🖼️ CAPA DE ENTRADA -->
     <img 
-        src="capa-rota-cheia.jpg" 
+        src="capa-rota-cheia.jpg?v=100" 
         alt="Rota Cheia — Nenhuma entrega volta vazia" 
         class="capa-img"
         onerror="this.style.display='none'"
     >
     
     <div class="container">
-        <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
+        <p class="titulo">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
         <!-- 🔐 TELA DE ACESSO — SOMENTE ADMINISTRADOR -->
         <div id="telaSenhaAdmin" class="tela-senha oculto">
@@ -347,7 +350,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_oficial_v72_';
+const CHAVE = 'rotacheia_oficial_v100_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
@@ -757,4 +760,4 @@ function atualizarPainel(){
         ? '<p class="sem-saque">Nenhum saque realizado ainda.</p>'
         : historicoSaques.map(s => `
             <div class="item-saque">
-                <p style="font-weight:bold; color:#22c55e;">💰 R$ ${s.valor.toFixed(2).
+                <p style="font-weight:bold; color:#22c55e;">💰 R$
