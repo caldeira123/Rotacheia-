@@ -7,14 +7,10 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
-    <!-- ==============================================
-    📱 IMAGEM DE CAPA = ÍCONE DO APLICATIVO NA TELA
-    Coloque sua foto com o nome: capa-rota-cheia.jpg
-    ============================================== -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=1.1">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=1.1">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=1.1">
-    
+    <!-- 📱 ÍCONE = MESMA CAPA NA TELA DO CELULAR -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=2.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=2.0">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=2.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -24,13 +20,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
         body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA DE ENTRADA */
-        .capa-img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            background-color: #0f172a;
-        }
+        .capa-img { width: 100%; height: auto; display: block; }
         .container { padding: 20px; max-width: 520px; margin: 0 auto; }
 
         .botao {
@@ -46,7 +36,6 @@
         .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
         .botao-esq { display: flex; align-items: center; gap: 10px; }
 
-        /* 🔐 TELA DE ACESSO — SENHA + BIOMETRIA */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
@@ -159,10 +148,10 @@
     <div class="container">
         <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-        <!-- 🔐 TELA DE ACESSO DO PROPRIETÁRIO -->
+        <!-- 🔐 TELA DE ACESSO DO ADMINISTRADOR -->
         <div id="telaSenhaAdmin" class="tela-senha oculto">
             <div class="caixa-senha">
-                <h2>🔐 Acesso do Proprietário</h2>
+                <h2>🔐 Área do Proprietário</h2>
                 
                 <div id="definirSenha" class="oculto">
                     <p style="color:#94a3b8; margin-bottom:15px;">Crie sua senha exclusiva</p>
@@ -384,10 +373,10 @@ async function usarBiometria(){
             if (disponivel) {
                 alert('✅ Biometria disponível!\nUse sua digital ou rosto quando solicitado.');
             } else {
-                alert('⚠️ Use sua senha para entrar.');
+                alert('⚠️ Biometria não disponível neste aparelho.\nUse sua senha.');
             }
         } else {
-            alert('⚠️ Digite sua senha.');
+            alert('⚠️ Digite sua senha para entrar.');
         }
     } catch {
         alert('⚠️ Digite sua senha.');
@@ -423,7 +412,7 @@ function criarSenhaAdmin(){
         return;
     }
     localStorage.setItem(CHAVE+'senhaAdmin', s1);
-    alert('✅ Senha cadastrada! Guarde bem!');
+    alert('✅ Senha cadastrada com sucesso!\nGuarde bem!');
     fecharSenha();
     abrirAba('admin');
     atualizarPainel();
@@ -473,7 +462,7 @@ async function usarMinhaLocalizacao(){
 
 function escolherPag(tipo){
     document.querySelectorAll('.pag-opcao').forEach(p => p.classList.remove('selecionado'));
-    document.getElementById('pag'+tipo.charAt(0).toUpperCase()+tipo.slice(1)).classList.add('selecionado');
+    document.getElementById('pag' + tipo.charAt(0).toUpperCase() + tipo.slice(1)).classList.add('selecionado');
     escolhaPag = tipo;
 }
 
@@ -771,6 +760,14 @@ function atualizarPainel(){
 }
 
 function limparEntregas(){
-    if(confirm('🗑️ Apagar apenas entregas concluídas? Cadastros ficam!')){
+    if(confirm('🗑️ Apagar apenas entregas concluídas? Os cadastros ficam!')){
         entregas = entregas.filter(e => e.status !== 'concluida');
-        rotasCas
+        rotasCasadas = entregas.filter(e => e.casadaCom).length;
+        salvar();
+        listarEntregas();
+        atualizarPainel();
+    }
+}
+
+function limparTudo(){
+    if(confirm('⚠️ ATENÇÃO! Isso apaga TUDO: cadastros, entregas, senha, saques
