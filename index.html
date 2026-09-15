@@ -7,10 +7,10 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
-    <!-- 📱 ÍCONE = MESMA IMAGEM DA CAPA (versão nova sem cache) -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=6.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=6.0">
-    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=6.0">
+    <!-- 📱 ÍCONE = MESMA IMAGEM DA CAPA -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=7.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=7.0">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=7.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -347,7 +347,7 @@
     </div>
 
 <script>
-const CHAVE = 'rotacheia_principal_v6_';
+const CHAVE = 'rotacheia_oficial_v7_';
 const TAXA_ARRANCADA = 5.00;
 const TAXA_POR_KM = 1.90;
 const COMISSAO_ADMIN = 0.20;
@@ -378,7 +378,7 @@ async function usarBiometria(){
                 abrirAba('admin');
                 atualizarPainel();
             } else {
-                alert('⚠️ Biometria configurada pelo sistema.\nUse sua senha.');
+                alert('⚠️ Use sua senha cadastrada.');
             }
         } else {
             alert('⚠️ Digite sua senha.');
@@ -758,11 +758,3 @@ function atualizarPainel(){
         : historicoSaques.map(s => `
             <div class="item-saque">
                 <p style="font-weight:bold; color:#22c55e;">💰 R$ ${s.valor.toFixed(2).replace('.', ',')}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">🔑 ${s.chave}</p>
-                <p style="font-size:0.75rem; color:#64748b;">📅 ${s.data}</p>
-            </div>
-        `).join('');
-}
-
-function limparEntregas(){
-    if(confirm('Apagar apenas entregas concluídas? Cadastros ficam!')){
