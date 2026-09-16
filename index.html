@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia</title>
+    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
-    <meta name="description" content="O único que casa rotas! Nenhuma entrega volta vazia.">
+    <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
 
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=FINAL01">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=FINAL01">
+    <!-- Ícone = mesma foto da capa -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_FIX">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_FIX">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Rota Cheia">
     <meta name="theme-color" content="#1e1b4b">
 
     <style>
@@ -22,28 +22,27 @@
             color: #fff; 
         }
 
-        /* 🖼️ CAPA TELA INTEIRA — PERFEITA */
+        /* 🖼️ CAPA — IGUAL AO ALFA */
         .capa-fundo {
             width: 100%;
-            height: 60vh;
+            height: 55vh;
             background: url('capa-rota-cheia.jpg') center center no-repeat;
             background-size: cover;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 24px;
-            box-shadow: 0 6px 40px rgba(0,0,0,0.5);
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 20px;
         }
         .capa-fundo::after {
             content: '';
             display: block;
             width: 100%;
-            height: 120px;
-            margin-top: -120px;
+            height: 100px;
+            margin-top: -100px;
             background: linear-gradient(to top, #0f172a, transparent);
             pointer-events: none;
         }
 
         .container { 
-            padding: 0 20px 50px; 
+            padding: 0 20px 40px; 
             max-width: 420px; 
             margin: 0 auto; 
         }
@@ -52,25 +51,25 @@
             text-align: center; 
             color: #a78bfa; 
             font-weight: bold; 
-            font-size: 2.2rem; 
-            margin-bottom: 8px;
+            font-size: 2rem; 
+            margin-bottom: 5px;
         }
         .subtitulo { 
             text-align: center; 
             color: #c4b5fd; 
-            margin-bottom: 35px; 
-            font-size: 1.1rem;
+            margin-bottom: 30px; 
+            font-size: 1rem;
         }
 
         .botao {
             width: 100%; 
-            padding: 20px; 
+            padding: 18px 20px; 
             border: none; 
             border-radius: 16px;
-            font-size: 1.2rem; 
+            font-size: 1.15rem; 
             font-weight: bold; 
             cursor: pointer; 
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             transition: transform 0.15s;
         }
         .botao:active { transform: scale(0.97); }
@@ -81,6 +80,7 @@
         .biometria { background: linear-gradient(90deg, #0d9488, #14b8a6); color: #fff; }
         .voltar { background: transparent; color: #cbd5e1; border: none; padding: 12px; font-size: 1rem; }
 
+        /* 🔐 TELA DE SENHA — SÓ ADMIN */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
@@ -90,16 +90,14 @@
             background: linear-gradient(135deg, #1e293b, #334155);
             padding: 30px 25px; border-radius: 20px; border: 2px solid #3b82f6;
             width: 100%; max-width: 360px; text-align: center;
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
         }
         .caixa-senha h2 { color: #fbbf24; margin-bottom: 20px; font-size: 1.3rem; }
         .caixa-senha input {
             width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #475569;
             background: #0f172a; color: white; font-size: 1rem; margin-bottom: 12px;
         }
-        .caixa-senha input:focus { outline: none; border-color: #fbbf24; }
         .btn-azul { background: linear-gradient(90deg, #3b82f6, #2563eb); color: white; }
-        .erro { color: #f87171; margin-top: 10px; display: none; font-size: 0.9rem; }
+        .erro { color: #f87171; margin-top: 10px; display: none; }
         .info { color: #94a3b8; font-size: 0.85rem; margin: 8px 0 16px; }
         .oculto { display: none !important; }
         .link-senha { color: #94a3b8; font-size: 0.9rem; margin-top: 10px; cursor: pointer; text-decoration: underline; }
@@ -120,7 +118,7 @@
             border: 1px solid #334155;
         }
         .saldo { font-size: 1.8rem; font-weight: bold; color: #fbbf24; margin: 10px 0; }
-        h2 { margin: 25px 0 15px; color: #e2e8f0; font-size: 1.4rem; }
+        h2 { margin: 20px 0 15px; color: #e2e8f0; font-size: 1.4rem; }
         h3 { color: #94a3b8; margin: 25px 0 12px; font-size: 1.1rem; }
         
         .corrida {
@@ -141,13 +139,13 @@
 </head>
 <body>
 
-<!-- 🔐 TELA DE ACESSO ADMIN -->
+<!-- 🔐 TELA DE ACESSO — SÓ ADMIN -->
 <div id="telaAdmin" class="tela-senha oculto">
     <div class="caixa-senha">
         <!-- CRIAR SENHA 1ª VEZ -->
         <div id="telaCriar">
             <h2>🔐 Crie sua senha</h2>
-            <p class="info">Mínimo 6 caracteres — letras, números ou símbolos</p>
+            <p class="info">Mínimo 6 caracteres</p>
             <input type="password" id="novaSenha1" placeholder="Digite sua senha">
             <input type="password" id="novaSenha2" placeholder="Repita a senha">
             <button class="botao btn-azul" onclick="salvarSenha()">✅ Salvar Senha</button>
@@ -157,12 +155,12 @@
         <!-- ATIVAR BIOMETRIA -->
         <div id="telaAtivarBio" class="oculto">
             <h2>✅ Senha cadastrada!</h2>
-            <p class="info">Quer ativar sua digital para entrar mais rápido?</p>
+            <p class="info">Quer ativar sua digital para entrar direto?</p>
             <button class="botao biometria" onclick="ativarBiometria()">👆 Sim, ativar Biometria</button>
             <button class="botao" style="background:#475569;" onclick="entrarSemBio()">Agora não</button>
         </div>
 
-        <!-- ENTRAR - BIOMETRIA OU SENHA -->
+        <!-- ENTRAR -->
         <div id="telaEntrar" class="oculto">
             <h2>🔐 Área do Administrador</h2>
             
@@ -170,7 +168,7 @@
                 <button class="botao biometria" onclick="usarBiometria()">
                     👆 Entrar com minha Digital
                 </button>
-                <p class="link-senha" onclick="mostrarCampoSenha()">
+                <p class="link-senha" onclick="mostrarSenha()">
                     Usar senha em vez de digital →
                 </p>
             </div>
@@ -178,7 +176,7 @@
             <div id="areaSenha" class="oculto">
                 <input type="password" id="senhaDigitada" placeholder="Digite sua senha">
                 <button class="botao btn-azul" onclick="verificarSenha()">Entrar</button>
-                <p class="link-senha" onclick="esconderCampoSenha()">← Usar biometria</p>
+                <p class="link-senha" onclick="esconderSenha()">← Usar biometria</p>
                 <p id="erroSenha" class="erro">Senha incorreta!</p>
             </div>
             
@@ -187,7 +185,7 @@
     </div>
 </div>
 
-<!-- 📱 CONTEÚDO PRINCIPAL -->
+<!-- 📱 TELA PRINCIPAL — IGUAL AO ALFA -->
 <div class="capa-fundo"></div>
 
 <div class="container">
@@ -201,7 +199,7 @@
         <button class="botao admin" onclick="abrirTelaAdmin()">🔐 Administrador</button>
     </div>
 
-    <!-- ÁREA ENTREGADOR -->
+    <!-- 🏍️ ÁREA ENTREGADOR -->
     <div id="telaEntregador" class="aba">
         <button class="voltar" onclick="voltarInicio()">← Voltar</button>
         
@@ -216,54 +214,54 @@
                 <option value="Moto">🏍️ Moto</option>
                 <option value="Carro">🚗 Carro</option>
             </select>
-            <label>Região / Bairro que atua:</label>
-            <input type="text" id="regiaoEntregador" placeholder="Ex: Centro, Rio Grande">
-            <label>Chave PIX para recebimento:</label>
+            <label>Região que atua:</label>
+            <input type="text" id="regiaoEntregador" placeholder="Ex: Centro, Porto Alegre">
+            <label>Chave PIX:</label>
             <input type="text" id="pixEntregador" placeholder="Sua chave PIX">
-            <button class="botao entregador" onclick="finalizarCadastroEntregador()">✅ Concluir Cadastro</button>
+            <button class="botao entregador" onclick="concluirCadastro()">✅ Concluir Cadastro</button>
         </div>
 
         <div id="painelCorridas" class="oculto">
             <h2>📦 Corridas Disponíveis</h2>
             <div id="listaCorridas">
-                <p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível no momento.<br>Aguarde a loja publicar.</p>
+                <p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível.<br>Aguarde a loja publicar.</p>
             </div>
             <button class="voltar" onclick="sairEntregador()">← Sair</button>
         </div>
     </div>
 
-    <!-- ÁREA LOJA -->
+    <!-- 🏪 ÁREA LOJA -->
     <div id="telaLoja" class="aba">
         <button class="voltar" onclick="voltarInicio()">← Voltar</button>
         <h2>🏪 Publicar Entrega</h2>
-        <label>Nome / Empresa:</label>
+        <label>Nome da Loja:</label>
         <input type="text" id="nomeLoja" placeholder="Nome da sua loja">
         <label>Endereço de saída:</label>
         <input type="text" id="origem" placeholder="Rua, número, bairro">
         <label>Endereço de destino:</label>
         <input type="text" id="destino" placeholder="Rua, número, bairro">
         <button class="botao loja" onclick="publicarCorrida()">📤 Publicar Corrida</button>
-        <div id="resultadoPublicacao" style="margin-top:20px;"></div>
+        <div id="resultado" style="margin-top:20px;"></div>
     </div>
 
-    <!-- PAINEL ADMIN -->
+    <!-- ⚙️ PAINEL ADMIN -->
     <div id="telaPainelAdmin" class="aba">
         <button class="voltar" onclick="voltarInicio()">← Sair</button>
         <h2>⚙️ Painel do Administrador</h2>
         
         <div class="cartao">
-            <p>💰 Saldo da Plataforma (sua parte — 20%):</p>
+            <p>💰 Saldo (sua parte — 20%):</p>
             <p class="saldo" id="exibirSaldo">R$ 0,00</p>
-            <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:12px;" onclick="fazerSaque()">💸 Solicitar Saque</button>
+            <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:12px;" onclick="sacar()">💸 Solicitar Saque</button>
         </div>
 
         <h3>🏍️ Entregadores Cadastrados:</h3>
-        <div id="listaTodosEntregadores">
-            <p style="color:#94a3b8;">Nenhum entregador cadastrado ainda.</p>
+        <div id="listaEntregadores">
+            <p style="color:#94a3b8;">Nenhum cadastro ainda.</p>
         </div>
 
         <h3>📦 Histórico de Corridas:</h3>
-        <div id="historicoCorridas">
+        <div id="historico">
             <p style="color:#94a3b8;">Nenhuma corrida publicada.</p>
         </div>
     </div>
@@ -271,44 +269,32 @@
 
 <script>
 // ==========================================
-// 📂 DADOS — LIMPAR CACHE ANTIGO
+// 📂 DADOS — LIMPA VERSÃO ANTIGA
 // ==========================================
-// Limpa dados antigos que estavam travando
-const versao = localStorage.getItem('versaoSistema');
-if (versao !== 'FINAL01') {
+if (localStorage.getItem('versao') !== 'ALFA_FIX') {
     localStorage.clear();
-    localStorage.setItem('versaoSistema', 'FINAL01');
+    localStorage.setItem('versao', 'ALFA_FIX');
 }
 
 let senhaAdmin = localStorage.getItem('senhaAdmin');
-let bioHabilitada = localStorage.getItem('biometriaAtiva') === 'SIM';
-let saldo = parseFloat(localStorage.getItem('saldoPlataforma') || '0');
-let entregadoresCadastrados = JSON.parse(localStorage.getItem('listaEntregadores') || '[]');
-let corridasPublicadas = JSON.parse(localStorage.getItem('corridas') || '[]');
-let dadosEntregadorLogado = JSON.parse(localStorage.getItem('entregadorAtual') || 'null');
+let bioAtiva = localStorage.getItem('bioAtiva') === 'SIM';
+let saldo = parseFloat(localStorage.getItem('saldo') || '0');
+let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
+let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
+let entregadorLogado = JSON.parse(localStorage.getItem('entregadorLogado') || 'null');
 
 // ==========================================
-// 🔐 ACESSO ADMIN — BIOMETRIA SALVA AGORA
+// 🔐 ACESSO ADMIN — SÓ AQUI TEM SENHA
 // ==========================================
 function abrirTelaAdmin() {
-    // Reseta tudo
-    document.getElementById('telaCriar').classList.add('oculto');
-    document.getElementById('telaAtivarBio').classList.add('oculto');
-    document.getElementById('telaEntrar').classList.add('oculto');
-    document.getElementById('areaSenha').classList.add('oculto');
-    document.getElementById('erroSenha').style.display = 'none';
-    document.getElementById('senhaDigitada').value = '';
-
+    resetarTelaAdmin();
     if (!senhaAdmin) {
-        // Primeira vez → criar senha
         document.getElementById('telaCriar').classList.remove('oculto');
     } else {
-        // Já tem senha → mostra biometria se ativada
         document.getElementById('telaEntrar').classList.remove('oculto');
-        if (bioHabilitada) {
+        if (bioAtiva) {
             document.getElementById('areaBio').classList.remove('oculto');
         } else {
-            document.getElementById('areaBio').classList.add('oculto');
             document.getElementById('areaSenha').classList.remove('oculto');
         }
     }
@@ -317,6 +303,16 @@ function abrirTelaAdmin() {
 
 function fecharTelaAdmin() {
     document.getElementById('telaAdmin').classList.add('oculto');
+}
+
+function resetarTelaAdmin() {
+    document.getElementById('telaCriar').classList.add('oculto');
+    document.getElementById('telaAtivarBio').classList.add('oculto');
+    document.getElementById('telaEntrar').classList.add('oculto');
+    document.getElementById('areaBio').classList.add('oculto');
+    document.getElementById('areaSenha').classList.add('oculto');
+    document.getElementById('erroSenha').style.display = 'none';
+    document.getElementById('senhaDigitada').value = '';
 }
 
 function salvarSenha() {
@@ -343,32 +339,31 @@ function salvarSenha() {
 }
 
 function ativarBiometria() {
-    bioHabilitada = true;
-    localStorage.setItem('biometriaAtiva', 'SIM');
-    alert('✅ Biometria SALVA!\nDa próxima vez: é só tocar na digital! 🔐');
-    entrarPainelAdmin();
+    bioAtiva = true;
+    localStorage.setItem('bioAtiva', 'SIM');
+    alert('✅ Biometria SALVA!\nDa próxima vez é só tocar! 🔐');
+    entrarPainel();
 }
 
 function entrarSemBio() {
-    entrarPainelAdmin();
+    entrarPainel();
 }
 
 function usarBiometria() {
-    // Simulação de biometria — confirma com senha 1x
-    if (confirm('📳 Coloque o dedo no sensor de digital do celular')) {
-        entrarPainelAdmin();
+    if (confirm('📳 Coloque o dedo no sensor')) {
+        entrarPainel();
     }
 }
 
-function mostrarCampoSenha() {
+function mostrarSenha() {
     document.getElementById('areaBio').classList.add('oculto');
     document.getElementById('areaSenha').classList.remove('oculto');
 }
 
-function esconderCampoSenha() {
+function esconderSenha() {
     document.getElementById('areaSenha').classList.add('oculto');
     document.getElementById('erroSenha').style.display = 'none';
-    if (bioHabilitada) {
+    if (bioAtiva) {
         document.getElementById('areaBio').classList.remove('oculto');
     }
 }
@@ -376,27 +371,27 @@ function esconderCampoSenha() {
 function verificarSenha() {
     const digitada = document.getElementById('senhaDigitada').value;
     if (digitada === senhaAdmin) {
-        entrarPainelAdmin();
+        entrarPainel();
     } else {
         document.getElementById('erroSenha').style.display = 'block';
     }
 }
 
-function entrarPainelAdmin() {
+function entrarPainel() {
     fecharTelaAdmin();
     mostrarAba('telaPainelAdmin');
-    atualizarPainelAdmin();
+    atualizarPainel();
 }
 
 // ==========================================
-// 🏍️ ÁREA ENTREGADOR — FUNCIONANDO CERTINHO
+// 🏍️ ENTREGADOR — FUNCIONANDO
 // ==========================================
 function abrirEntregador() {
-    if (dadosEntregadorLogado) {
+    if (entregadorLogado) {
         mostrarAba('telaEntregador');
         document.getElementById('formCadastroEntregador').classList.add('oculto');
         document.getElementById('painelCorridas').classList.remove('oculto');
-        carregarCorridas();
+        listarCorridas();
     } else {
         mostrarAba('telaEntregador');
         document.getElementById('formCadastroEntregador').classList.remove('oculto');
@@ -404,7 +399,7 @@ function abrirEntregador() {
     }
 }
 
-function finalizarCadastroEntregador() {
+function concluirCadastro() {
     const dados = {
         nome: document.getElementById('nomeEntregador').value.trim(),
         telefone: document.getElementById('foneEntregador').value.trim(),
@@ -418,55 +413,49 @@ function finalizarCadastroEntregador() {
         return;
     }
 
-    dadosEntregadorLogado = dados;
-    localStorage.setItem('entregadorAtual', JSON.stringify(dados));
+    entregadorLogado = dados;
+    localStorage.setItem('entregadorLogado', JSON.stringify(dados));
 
-    // Adiciona na lista geral
-    const jaExiste = entregadoresCadastrados.some(e => e.telefone === dados.telefone);
-    if (!jaExiste) {
-        entregadoresCadastrados.push(dados);
-        localStorage.setItem('listaEntregadores', JSON.stringify(entregadoresCadastrados));
+    const existe = entregadores.some(e => e.telefone === dados.telefone);
+    if (!existe) {
+        entregadores.push(dados);
+        localStorage.setItem('entregadores', JSON.stringify(entregadores));
     }
 
     alert('✅ Cadastro concluído! 🛵');
     document.getElementById('formCadastroEntregador').classList.add('oculto');
     document.getElementById('painelCorridas').classList.remove('oculto');
-    carregarCorridas();
+    listarCorridas();
 }
 
-function carregarCorridas() {
+function listarCorridas() {
     const lista = document.getElementById('listaCorridas');
     
-    if (corridasPublicadas.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível no momento.<br>Aguarde a loja publicar.</p>';
+    if (corridas.length === 0) {
+        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível.<br>Aguarde a loja publicar.</p>';
         return;
     }
 
-    lista.innerHTML = corridasPublicadas.map(c => `
+    lista.innerHTML = corridas.map(c => `
         <div class="cartao corrida">
             <p style="font-weight:bold; color:#fbbf24; font-size:1.1rem;">📦 ${c.nomeLoja}</p>
             <p style="margin:10px 0 5px;">📍 De: ${c.origem}</p>
             <p>➡️ Para: ${c.destino}</p>
             <p class="corrida-valor" style="margin-top:12px;">R$ ${c.valorEntregador.toFixed(2)}</p>
-            <button class="botao botao-aceitar" onclick="aceitarCorrida(${c.id})">✅ Aceitar Corrida</button>
+            <button class="botao botao-aceitar" onclick="aceitar(${c.id})">✅ Aceitar Corrida</button>
         </div>
     `).join('');
 }
 
-function aceitarCorrida(id) {
-    const corrida = corridasPublicadas.find(c => c.id === id);
-    if (!corrida) return;
+function aceitar(id) {
+    const c = corridas.find(x => x.id === id);
+    if (!c) return;
 
-    if (confirm(`Aceitar esta corrida?\n\n📍 De: ${corrida.origem}\n➡️ Para: ${corrida.destino}\n💰 Você recebe: R$ ${corrida.valorEntregador.toFixed(2)}`)) {
-        // Abre mapa
-        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(corrida.origem)}&destination=${encodeURIComponent(corrida.destino)}`;
-        window.open(url, '_blank');
-        
-        // Remove da lista
-        corridasPublicadas = corridasPublicadas.filter(c => c.id !== id);
-        localStorage.setItem('corridas', JSON.stringify(corridasPublicadas));
-        
-        carregarCorridas();
+    if (confirm(`Aceitar corrida?\n📍 ${c.origem} → ${c.destino}\n💰 R$ ${c.valorEntregador.toFixed(2)}`)) {
+        window.open(`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(c.origem)}&destination=${encodeURIComponent(c.destino)}`, '_blank');
+        corridas = corridas.filter(x => x.id !== id);
+        localStorage.setItem('corridas', JSON.stringify(corridas));
+        listarCorridas();
         alert('✅ Corrida aceita! Boa entrega! 🛵💨');
     }
 }
@@ -478,48 +467,46 @@ function sairEntregador() {
 }
 
 // ==========================================
-// 🏪 ÁREA LOJA
+// 🏪 LOJA
 // ==========================================
 function abrirLoja() {
     mostrarAba('telaLoja');
 }
 
 function publicarCorrida() {
-    const nomeLoja = document.getElementById('nomeLoja').value.trim();
+    const nome = document.getElementById('nomeLoja').value.trim();
     const origem = document.getElementById('origem').value.trim();
     const destino = document.getElementById('destino').value.trim();
 
-    if (!nomeLoja || !origem || !destino) {
+    if (!nome || !origem || !destino) {
         alert('⚠️ Preencha todos os campos!');
         return;
     }
 
-    const valorTotal = 15.00;
-    const parteSua = valorTotal * 0.20;
-    const parteEntregador = valorTotal * 0.80;
+    const total = 15.00;
+    const parteSua = total * 0.20;
+    const parteEntreg = total * 0.80;
 
     saldo += parteSua;
-    localStorage.setItem('saldoPlataforma', saldo.toString());
+    localStorage.setItem('saldo', saldo.toString());
 
-    const novaCorrida = {
+    corridas.unshift({
         id: Date.now(),
-        nomeLoja,
-        origem,
-        destino,
-        valorTotal,
-        valorEntregador: parteEntregador,
+        nomeLoja: nome,
+        origem: origem,
+        destino: destino,
+        valorTotal: total,
+        valorEntregador: parteEntreg,
         data: new Date().toLocaleString('pt-BR')
-    };
+    });
+    localStorage.setItem('corridas', JSON.stringify(corridas));
 
-    corridasPublicadas.unshift(novaCorrida);
-    localStorage.setItem('corridas', JSON.stringify(corridasPublicadas));
-
-    document.getElementById('resultadoPublicacao').innerHTML = `
+    document.getElementById('resultado').innerHTML = `
         <div class="cartao">
-            <p style="color:#22c55e; font-weight:bold;">✅ Corrida publicada!</p>
-            <p style="margin-top:10px;">💰 Total: R$ ${valorTotal.toFixed(2)}</p>
-            <p style="color:#fbbf24;">✅ Sua parte (20%): R$ ${parteSua.toFixed(2)}</p>
-            <p style="color:#22c55e;">🏍️ Entregador (80%): R$ ${parteEntregador.toFixed(2)}</p>
+            <p style="color:#22c55e; font-weight:bold;">✅ Publicada!</p>
+            <p>💰 Total: R$ ${total.toFixed(2)}</p>
+            <p style="color:#fbbf24;">Sua parte (20%): R$ ${parteSua.toFixed(2)}</p>
+            <p style="color:#22c55e;">Entregador (80%): R$ ${parteEntreg.toFixed(2)}</p>
         </div>
     `;
 
@@ -530,30 +517,23 @@ function publicarCorrida() {
 // ==========================================
 // ⚙️ FUNÇÕES GERAIS
 // ==========================================
-function mostrarAba(nomeAba) {
-    document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
-    
-    if (nomeAba === 'painelCorridas') {
-        document.getElementById('telaEntregador').classList.add('ativa');
-        document.getElementById('formCadastroEntregador').classList.add('oculto');
-        document.getElementById('painelCorridas').classList.remove('oculto');
-    } else {
-        document.getElementById(nomeAba).classList.add('ativa');
-    }
+function mostrarAba(nome) {
+    document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+    document.getElementById(nome).classList.add('ativa');
 }
 
 function voltarInicio() {
     mostrarAba('telaInicio');
 }
 
-function atualizarPainelAdmin() {
+function atualizarPainel() {
     document.getElementById('exibirSaldo').textContent = `R$ ${saldo.toFixed(2)}`;
     
-    const listaEnt = document.getElementById('listaTodosEntregadores');
-    if (entregadoresCadastrados.length === 0) {
-        listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhum entregador cadastrado.</p>';
+    const listaEnt = document.getElementById('listaEntregadores');
+    if (entregadores.length === 0) {
+        listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhum cadastro.</p>';
     } else {
-        listaEnt.innerHTML = entregadoresCadastrados.map((e, i) => `
+        listaEnt.innerHTML = entregadores.map((e, i) => `
             <div class="cartao">
                 <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
                 <p style="color:#94a3b8;">📱 ${e.telefone} | ${e.veiculo}</p>
@@ -562,11 +542,11 @@ function atualizarPainelAdmin() {
         `).join('');
     }
 
-    const listaCorr = document.getElementById('historicoCorridas');
-    if (corridasPublicadas.length === 0) {
+    const listaCorr = document.getElementById('historico');
+    if (corridas.length === 0) {
         listaCorr.innerHTML = '<p style="color:#94a3b8;">Nenhuma corrida ativa.</p>';
     } else {
-        listaCorr.innerHTML = corridasPublicadas.map(c => `
+        listaCorr.innerHTML = corridas.map(c => `
             <div class="cartao">
                 <p style="font-weight:bold;">📦 ${c.nomeLoja}</p>
                 <p>📍 ${c.origem} → ${c.destino}</p>
@@ -577,16 +557,16 @@ function atualizarPainelAdmin() {
     }
 }
 
-function fazerSaque() {
+function sacar() {
     if (saldo <= 0) {
-        alert('💸 Sem saldo para sacar.');
+        alert('💸 Sem saldo.');
         return;
     }
-    if (confirm(`Confirmar saque de R$ ${saldo.toFixed(2)}?`)) {
-        alert(`✅ Saque de R$ ${saldo.toFixed(2)} solicitado!`);
+    if (confirm(`Sacar R$ ${saldo.toFixed(2)}?`)) {
+        alert(`✅ Saque de R$ ${saldo.toFixed(2)} enviado!`);
         saldo = 0;
-        localStorage.setItem('saldoPlataforma', '0');
-        atualizarPainelAdmin();
+        localStorage.setItem('saldo', '0');
+        atualizarPainel();
     }
 }
 </script>
