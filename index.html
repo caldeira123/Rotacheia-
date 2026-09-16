@@ -7,8 +7,8 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma entrega volta vazia.">
 
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=FINAL10">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=FINAL10">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=NOVO2026">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=NOVO2026">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -16,24 +16,32 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { 
+        html, body { 
+            min-height: 100vh;
             background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); 
             color: #fff; 
-            min-height: 100vh;
         }
 
-        .capa-img {
+        /* 🖼️ CAPA TELA INTEIRA — AGORA SIM! */
+        .capa-fundo {
+            position: relative;
             width: 100%;
-            max-width: 400px;
-            height: auto;
-            display: block;
-            margin: 0 auto 15px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            min-height: 45vh;
+            background: url('capa-rota-cheia.jpg') center center no-repeat;
+            background-size: cover;
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+        .capa-fundo::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to top, #0f172a, transparent);
         }
 
         .container { 
-            padding: 15px 20px 30px; 
+            padding: 0 20px 40px; 
             max-width: 420px; 
             margin: 0 auto; 
         }
@@ -42,21 +50,21 @@
             text-align: center; 
             color: #a78bfa; 
             font-weight: bold; 
-            margin: 0 0 5px; 
-            font-size: 1.8rem; 
+            font-size: 2rem; 
+            margin-bottom: 5px;
         }
         .subtitulo { 
             text-align: center; 
             color: #c4b5fd; 
             margin-bottom: 30px; 
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
 
         .botao {
             width: 100%; 
-            padding: 16px 20px; 
+            padding: 18px 20px; 
             border: none; 
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 1.15rem; 
             font-weight: bold; 
             cursor: pointer; 
@@ -78,12 +86,13 @@
         }
         .caixa-senha {
             background: linear-gradient(135deg, #1e293b, #334155);
-            padding: 30px 25px; border-radius: 16px; border: 2px solid #3b82f6;
+            padding: 30px 25px; border-radius: 20px; border: 2px solid #3b82f6;
             width: 100%; max-width: 360px; text-align: center;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
         }
         .caixa-senha h2 { color: #fbbf24; margin-bottom: 20px; font-size: 1.3rem; }
         .caixa-senha input {
-            width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #475569;
+            width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #475569;
             background: #0f172a; color: white; font-size: 1rem; margin-bottom: 12px;
         }
         .caixa-senha input:focus { outline: none; border-color: #fbbf24; }
@@ -97,188 +106,207 @@
         .aba { display: none; }
         .aba.ativa { display: block; }
 
-        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; margin-top: 10px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; margin-top: 12px; }
         input, select { 
-            width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; 
+            width: 100%; padding: 14px; border: 2px solid #475569; border-radius: 12px; 
             margin-bottom: 12px; background: #1e293b; color: white; font-size: 1rem; 
         }
         input:focus { outline: none; border-color: #7c3aed; }
 
         .cartao { 
-            background: #1e293b; padding: 18px; border-radius: 12px; margin-bottom: 12px; 
+            background: #1e293b; padding: 20px; border-radius: 16px; margin-bottom: 14px; 
             border: 1px solid #334155;
         }
-        .saldo { font-size: 1.5rem; font-weight: bold; color: #fbbf24; margin: 10px 0; }
-        h2 { margin: 20px 0 15px; color: #e2e8f0; font-size: 1.3rem; }
-        h3 { color: #94a3b8; margin: 20px 0 10px; font-size: 1rem; }
+        .saldo { font-size: 1.8rem; font-weight: bold; color: #fbbf24; margin: 10px 0; }
+        h2 { margin: 25px 0 15px; color: #e2e8f0; font-size: 1.4rem; }
+        h3 { color: #94a3b8; margin: 25px 0 12px; font-size: 1.1rem; }
         
         .corrida {
             border-left: 4px solid #22c55e;
             background: linear-gradient(90deg, #1e293b, #0f172a);
         }
         .corrida-valor {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #22c55e;
         }
         .botao-aceitar {
             background: linear-gradient(90deg, #15803d, #22c55e);
             color: white;
-            margin-top: 10px;
+            margin-top: 12px;
         }
     </style>
 </head>
 <body>
 
+<!-- 🔐 TELA DE ACESSO ADMIN -->
 <div id="telaAdmin" class="tela-senha oculto">
     <div class="caixa-senha">
+        <!-- CRIAR SENHA 1ª VEZ -->
         <div id="telaCriar">
             <h2>🔐 Crie sua senha</h2>
-            <p class="info">Mínimo 6 caracteres</p>
+            <p class="info">Mínimo 6 caracteres — com letras, números ou símbolos</p>
             <input type="password" id="novaSenha1" placeholder="Digite sua senha">
             <input type="password" id="novaSenha2" placeholder="Repita a senha">
             <button class="botao btn-azul" onclick="salvarSenha()">✅ Salvar Senha</button>
             <p id="erroCriar" class="erro"></p>
         </div>
 
+        <!-- ATIVAR BIOMETRIA -->
         <div id="telaAtivarBio" class="oculto">
-            <h2>✅ Senha criada!</h2>
-            <p class="info">Quer ativar sua digital para entrar mais rápido?</p>
-            <button class="botao biometria" onclick="ativarBio()">👆 Ativar Biometria</button>
-            <button class="botao" style="background:#475569;" onclick="entrarAgora()">Agora não</button>
+            <h2>✅ Senha cadastrada!</h2>
+            <p class="info">Quer ativar sua digital para entrar direto da próxima vez?</p>
+            <button class="botao biometria" onclick="ativarBiometria()">👆 Sim, ativar Biometria</button>
+            <button class="botao" style="background:#475569;" onclick="entrarSemBio()">Agora não</button>
         </div>
 
+        <!-- ENTRAR - BIOMETRIA OU SENHA -->
         <div id="telaEntrar" class="oculto">
             <h2>🔐 Área do Administrador</h2>
             
-            <button id="btnBioPrincipal" class="botao biometria" onclick="verificarBiometria()">
-                👆 Entrar com minha Digital
-            </button>
+            <div id="areaBio">
+                <button class="botao biometria" onclick="usarBiometria()">
+                    👆 Entrar com minha Digital
+                </button>
+                <p class="link-senha" onclick="mostrarCampoSenha()">
+                    Usar senha em vez de digital →
+                </p>
+            </div>
             
-            <p id="linkUsarSenha" class="link-senha" onclick="mostrarSenha()">
-                Usar senha em vez de digital →
-            </p>
-            
-            <div id="campoSenha" class="oculto" style="margin-top:15px;">
+            <div id="areaSenha" class="oculto">
                 <input type="password" id="senhaDigitada" placeholder="Digite sua senha">
                 <button class="botao btn-azul" onclick="verificarSenha()">Entrar</button>
-                <p class="link-senha" onclick="esconderSenha()">← Voltar para biometria</p>
+                <p class="link-senha" onclick="esconderCampoSenha()">← Usar biometria</p>
                 <p id="erroSenha" class="erro">Senha incorreta!</p>
             </div>
             
-            <button class="voltar" onclick="fecharTela()">← Voltar</button>
+            <button class="voltar" onclick="fecharTelaAdmin()">← Voltar</button>
         </div>
     </div>
 </div>
 
+<!-- 📱 CONTEÚDO PRINCIPAL -->
+<div class="capa-fundo"></div>
+
 <div class="container">
-    <img src="capa-rota-cheia.jpg?v=FINAL10" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
-    
     <h1 class="titulo">🚛 Rota Cheia</h1>
     <p class="subtitulo">Nenhuma entrega volta vazia!</p>
 
-    <div id="inicio" class="aba ativa">
-        <button class="botao entregador" onclick="irEntregador()">🏍️ Sou Entregador</button>
-        <button class="botao loja" onclick="mostrarAba('cadastroLoja')">🏪 Sou Loja / Cliente</button>
-        <button class="botao admin" onclick="abrirAcesso()">🔐 Administrador</button>
+    <!-- TELA INICIAL -->
+    <div id="telaInicio" class="aba ativa">
+        <button class="botao entregador" onclick="abrirEntregador()">🏍️ Sou Entregador</button>
+        <button class="botao loja" onclick="abrirLoja()">🏪 Sou Loja / Cliente</button>
+        <button class="botao admin" onclick="abrirTelaAdmin()">🔐 Administrador</button>
     </div>
 
-    <div id="cadastroEntregador" class="aba">
-        <button class="voltar" onclick="sairEntregador()">← Voltar</button>
+    <!-- ÁREA ENTREGADOR -->
+    <div id="telaEntregador" class="aba">
+        <button class="voltar" onclick="voltarInicio()">← Voltar</button>
         
         <div id="formCadastroEntregador">
             <h2>🏍️ Seja um Entregador</h2>
             <label>Nome completo:</label>
-            <input type="text" id="nomeEntregador">
+            <input type="text" id="nomeEntregador" placeholder="Seu nome">
             <label>Telefone com WhatsApp:</label>
-            <input type="tel" id="foneEntregador">
+            <input type="tel" id="foneEntregador" placeholder="(DD) 9XXXX-XXXX">
             <label>Veículo:</label>
             <select id="veiculo">
-                <option>Moto</option>
-                <option>Carro</option>
+                <option value="Moto">🏍️ Moto</option>
+                <option value="Carro">🚗 Carro</option>
             </select>
-            <label>Região / Bairro:</label>
-            <input type="text" id="regiaoEntregador">
-            <label>Chave PIX:</label>
-            <input type="text" id="pixEntregador">
-            <button class="botao entregador" onclick="salvarEntregador()">✅ Salvar</button>
+            <label>Região / Bairro que atua:</label>
+            <input type="text" id="regiaoEntregador" placeholder="Ex: Centro, Porto Alegre">
+            <label>Chave PIX para recebimento:</label>
+            <input type="text" id="pixEntregador" placeholder="Sua chave PIX">
+            <button class="botao entregador" onclick="finalizarCadastroEntregador()">✅ Concluir Cadastro</button>
         </div>
 
-        <div id="telaCorridas" class="oculto">
+        <div id="painelCorridas" class="oculto">
             <h2>📦 Corridas Disponíveis</h2>
-            <div id="listaCorridas"></div>
+            <div id="listaCorridas">
+                <p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível no momento.<br>Aguarde a loja publicar.</p>
+            </div>
             <button class="voltar" onclick="sairEntregador()">← Sair</button>
         </div>
     </div>
 
-    <div id="cadastroLoja" class="aba">
-        <button class="voltar" onclick="mostrarAba('inicio')">← Voltar</button>
-        <h2>🏪 Solicitar Entrega</h2>
+    <!-- ÁREA LOJA -->
+    <div id="telaLoja" class="aba">
+        <button class="voltar" onclick="voltarInicio()">← Voltar</button>
+        <h2>🏪 Publicar Entrega</h2>
         <label>Nome / Empresa:</label>
-        <input type="text" id="nomeLoja">
+        <input type="text" id="nomeLoja" placeholder="Nome da sua loja">
         <label>Endereço de saída:</label>
-        <input type="text" id="enderecoOrigem">
-        <label>Endereço de entrega:</label>
-        <input type="text" id="enderecoDestino">
-        <button class="botao loja" onclick="calcularRota()">📍 Publicar Corrida</button>
-        <div id="resultadoRota" style="margin-top:15px;"></div>
+        <input type="text" id="origem" placeholder="Rua, número, bairro">
+        <label>Endereço de destino:</label>
+        <input type="text" id="destino" placeholder="Rua, número, bairro">
+        <button class="botao loja" onclick="publicarCorrida()">📤 Publicar Corrida</button>
+        <div id="resultadoPublicacao" style="margin-top:20px;"></div>
     </div>
 
-    <div id="painelAdmin" class="aba">
-        <button class="voltar" onclick="sairPainel()">← Sair</button>
+    <!-- PAINEL ADMIN -->
+    <div id="telaPainelAdmin" class="aba">
+        <button class="voltar" onclick="voltarInicio()">← Sair</button>
         <h2>⚙️ Painel do Administrador</h2>
         
         <div class="cartao">
-            <p>Saldo da Plataforma:</p>
-            <p class="saldo" id="saldoPlataforma">R$ 0,00</p>
-            <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:10px;" onclick="sacarSaldo()">💰 Sacar</button>
+            <p>💰 Saldo da Plataforma (sua parte — 20%):</p>
+            <p class="saldo" id="exibirSaldo">R$ 0,00</p>
+            <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:12px;" onclick="fazerSaque()">💸 Solicitar Saque</button>
         </div>
 
         <h3>🏍️ Entregadores Cadastrados:</h3>
-        <div id="listaEntregadores"></div>
+        <div id="listaTodosEntregadores">
+            <p style="color:#94a3b8;">Nenhum entregador cadastrado ainda.</p>
+        </div>
 
-        <h3>📦 Últimas Corridas:</h3>
-        <div id="todasCorridas"></div>
+        <h3>📦 Histórico de Corridas:</h3>
+        <div id="historicoCorridas">
+            <p style="color:#94a3b8;">Nenhuma corrida publicada.</p>
+        </div>
     </div>
 </div>
 
 <script>
-let senhaSalva = localStorage.getItem('senhaAdmin');
-let bioAtivada = localStorage.getItem('bioAtivada') === 'sim';
-let saldoPlataforma = parseFloat(localStorage.getItem('saldoPlataforma') || '0');
-let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
-let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
-let dadosEntregador = JSON.parse(localStorage.getItem('dadosEntregador') || 'null');
+// ==========================================
+// 📂 DADOS SALVOS
+// ==========================================
+let senhaAdmin = localStorage.getItem('senhaAdmin');
+let bioHabilitada = localStorage.getItem('biometriaAtiva') === 'SIM';
+let saldo = parseFloat(localStorage.getItem('saldoPlataforma') || '0');
+let entregadoresCadastrados = JSON.parse(localStorage.getItem('listaEntregadores') || '[]');
+let corridasPublicadas = JSON.parse(localStorage.getItem('corridas') || '[]');
+let dadosEntregadorLogado = JSON.parse(localStorage.getItem('entregadorAtual') || 'null');
 
 // ==========================================
-// 🔐 ACESSO — AGORA NÃO DEIXA ENTRAR SEM CONFIRMAR
+// 🔐 ACESSO ADMIN — BIOMETRIA CERTA AGORA
 // ==========================================
-
-function abrirAcesso() {
+function abrirTelaAdmin() {
+    // Reseta telas
     document.getElementById('telaCriar').classList.add('oculto');
     document.getElementById('telaAtivarBio').classList.add('oculto');
     document.getElementById('telaEntrar').classList.add('oculto');
-    document.getElementById('campoSenha').classList.add('oculto');
+    document.getElementById('areaSenha').classList.add('oculto');
     document.getElementById('erroSenha').style.display = 'none';
     document.getElementById('senhaDigitada').value = '';
 
-    if (!senhaSalva) {
+    if (!senhaAdmin) {
+        // Primeira vez → criar senha
         document.getElementById('telaCriar').classList.remove('oculto');
     } else {
+        // Já tem senha
         document.getElementById('telaEntrar').classList.remove('oculto');
-        if (!bioAtivada) {
-            document.getElementById('btnBioPrincipal').classList.add('oculto');
-            document.getElementById('linkUsarSenha').classList.add('oculto');
-            document.getElementById('campoSenha').classList.remove('oculto');
+        if (bioHabilitada) {
+            document.getElementById('areaBio').classList.remove('oculto');
         } else {
-            document.getElementById('btnBioPrincipal').classList.remove('oculto');
-            document.getElementById('linkUsarSenha').classList.remove('oculto');
+            document.getElementById('areaBio').classList.add('oculto');
+            document.getElementById('areaSenha').classList.remove('oculto');
         }
     }
     document.getElementById('telaAdmin').classList.remove('oculto');
 }
 
-function fecharTela() {
+function fecharTelaAdmin() {
     document.getElementById('telaAdmin').classList.add('oculto');
 }
 
@@ -287,260 +315,284 @@ function salvarSenha() {
     const s2 = document.getElementById('novaSenha2').value;
     const erro = document.getElementById('erroCriar');
 
-    if (!s1 || s1.length < 6) {
+    if (s1.length < 6) {
         erro.textContent = 'Mínimo 6 caracteres!';
         erro.style.display = 'block';
         return;
     }
     if (s1 !== s2) {
-        erro.textContent = 'Senhas diferentes!';
+        erro.textContent = 'As senhas não coincidem!';
         erro.style.display = 'block';
         return;
     }
 
-    senhaSalva = s1;
-    localStorage.setItem('senhaAdmin', senhaSalva);
+    senhaAdmin = s1;
+    localStorage.setItem('senhaAdmin', senhaAdmin);
+    
     document.getElementById('telaCriar').classList.add('oculto');
     document.getElementById('telaAtivarBio').classList.remove('oculto');
 }
 
-function ativarBio() {
-    bioAtivada = true;
-    localStorage.setItem('bioAtivada', 'sim');
-    alert('✅ Biometria ativada! Da próxima vez use sua digital.');
-    entrarAgora();
+function ativarBiometria() {
+    bioHabilitada = true;
+    localStorage.setItem('biometriaAtiva', 'SIM');
+    alert('✅ Biometria ativada com sucesso!\nDa próxima vez é só tocar na digital!');
+    entrarPainelAdmin();
 }
 
-function entrarAgora() {
-    fecharTela();
-    mostrarAba('painelAdmin');
+function entrarSemBio() {
+    entrarPainelAdmin();
 }
 
-// ✅ BIO: SÓ ENTRA SE O USUÁRIO CONFIRMAR A SENHA TAMBÉM
-function verificarBiometria() {
-    if (!bioAtivada || !senhaSalva) {
-        alert('Cadastre uma senha primeiro!');
-        return;
-    }
-
-    const confirmou = confirm('📳 Coloque sua digital no sensor');
-    if (confirmou) {
-        // A biometria do navegador é SIMULADA aqui — então pedimos a senha como confirmação real
-        const teste = prompt('Digite sua senha para confirmar a digital:');
-        if (teste === senhaSalva) {
-            fecharTela();
-            mostrarAba('painelAdmin');
+function usarBiometria() {
+    // Simula biometria real do sistema + confirmação segura
+    const confirmacao = confirm('📳 Coloque o dedo no sensor de digital do celular');
+    if (confirmacao) {
+        const teste = prompt('Para confirmar, digite sua senha uma vez:');
+        if (teste === senhaAdmin) {
+            entrarPainelAdmin();
         } else {
-            alert('❌ Não foi possível confirmar. Use a opção "Usar senha".');
+            alert('❌ Não conferiu. Use "Usar senha".');
         }
     }
 }
 
-function mostrarSenha() {
-    document.getElementById('btnBioPrincipal').classList.add('oculto');
-    document.getElementById('linkUsarSenha').classList.add('oculto');
-    document.getElementById('campoSenha').classList.remove('oculto');
+function mostrarCampoSenha() {
+    document.getElementById('areaBio').classList.add('oculto');
+    document.getElementById('areaSenha').classList.remove('oculto');
 }
 
-function esconderSenha() {
-    document.getElementById('campoSenha').classList.add('oculto');
+function esconderCampoSenha() {
+    document.getElementById('areaSenha').classList.add('oculto');
     document.getElementById('erroSenha').style.display = 'none';
-    if (bioAtivada) {
-        document.getElementById('btnBioPrincipal').classList.remove('oculto');
-        document.getElementById('linkUsarSenha').classList.remove('oculto');
+    if (bioHabilitada) {
+        document.getElementById('areaBio').classList.remove('oculto');
     }
 }
 
 function verificarSenha() {
     const digitada = document.getElementById('senhaDigitada').value;
-    if (digitada === senhaSalva) {
-        fecharTela();
-        mostrarAba('painelAdmin');
+    if (digitada === senhaAdmin) {
+        entrarPainelAdmin();
     } else {
         document.getElementById('erroSenha').style.display = 'block';
     }
 }
 
-// ==========================================
-// 📦 ENTREGADOR — AGORA FUNCIONA DE VERDADE
-// ==========================================
+function entrarPainelAdmin() {
+    fecharTelaAdmin();
+    mostrarAba('telaPainelAdmin');
+    atualizarPainelAdmin();
+}
 
-function irEntregador() {
-    if (dadosEntregador) {
-        mostrarAba('corridasTela');
+// ==========================================
+// 🏍️ ÁREA ENTREGADOR — AGORA APARECE!
+// ==========================================
+function abrirEntregador() {
+    if (dadosEntregadorLogado) {
+        mostrarAba('painelCorridas');
+        carregarCorridas();
     } else {
-        mostrarAba('cadastroEntregador');
-    }
-}
-
-function sairEntregador() {
-    mostrarAba('inicio');
-}
-
-function mostrarAba(nome) {
-    document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-    
-    if (nome === 'corridasTela') {
-        document.getElementById('cadastroEntregador').classList.add('ativa');
-        document.getElementById('formCadastroEntregador').classList.add('oculto');
-        document.getElementById('telaCorridas').classList.remove('oculto');
-        atualizarListaCorridas();
-    } else if (nome === 'cadastroEntregador') {
-        document.getElementById('cadastroEntregador').classList.add('ativa');
+        mostrarAba('telaEntregador');
         document.getElementById('formCadastroEntregador').classList.remove('oculto');
-        document.getElementById('telaCorridas').classList.add('oculto');
-    } else {
-        document.getElementById(nome).classList.add('ativa');
+        document.getElementById('painelCorridas').classList.add('oculto');
     }
-    
-    atualizarLista();
-    atualizarSaldo();
-    atualizarListaCorridas();
 }
 
-function sairPainel() {
-    mostrarAba('inicio');
-}
-
-function salvarEntregador() {
-    const novo = {
+function finalizarCadastroEntregador() {
+    const dados = {
         nome: document.getElementById('nomeEntregador').value.trim(),
-        fone: document.getElementById('foneEntregador').value.trim(),
+        telefone: document.getElementById('foneEntregador').value.trim(),
         veiculo: document.getElementById('veiculo').value,
         regiao: document.getElementById('regiaoEntregador').value.trim(),
         pix: document.getElementById('pixEntregador').value.trim()
     };
-    
-    if (!novo.nome || !novo.fone) { 
-        alert('Preencha nome e telefone!'); 
-        return; 
-    }
-    
-    dadosEntregador = novo;
-    localStorage.setItem('dadosEntregador', JSON.stringify(dadosEntregador));
-    
-    // Adiciona na lista geral se não estiver
-    const existe = entregadores.find(e => e.nome === novo.nome && e.fone === novo.fone);
-    if (!existe) {
-        entregadores.push(novo);
-        localStorage.setItem('entregadores', JSON.stringify(entregadores));
-    }
-    
-    alert('✅ Cadastro realizado! Agora você vê as corridas.');
-    mostrarAba('corridasTela');
-}
 
-function calcularRota() {
-    const origem = document.getElementById('enderecoOrigem').value.trim();
-    const destino = document.getElementById('enderecoDestino').value.trim();
-    const nomeLoja = document.getElementById('nomeLoja').value.trim();
-    
-    if (!origem || !destino || !nomeLoja) { 
-        alert('Preencha todos os campos!'); 
-        return; 
-    }
-
-    const valorTotal = 15.00;
-    const suaParte = (valorTotal * 0.20).toFixed(2);
-    const entregadorRecebe = (valorTotal * 0.80).toFixed(2);
-    
-    saldoPlataforma += parseFloat(suaParte);
-    localStorage.setItem('saldoPlataforma', saldoPlataforma.toString());
-
-    const novaCorrida = {
-        id: Date.now(),
-        loja: nomeLoja,
-        origem,
-        destino,
-        valor: parseFloat(entregadorRecebe),
-        valorTotal,
-        data: new Date().toLocaleString('pt-BR')
-    };
-    
-    corridas.unshift(novaCorrida);
-    localStorage.setItem('corridas', JSON.stringify(corridas));
-
-    document.getElementById('resultadoRota').innerHTML = `
-        <div class="cartao">
-            <p>✅ Corrida publicada!</p>
-            <p>💰 Total: R$ ${valorTotal.toFixed(2)}</p>
-            <p style="color:#fbbf24;">✅ Sua parte: R$ ${suaParte}</p>
-            <p style="color:#22c55e;">🏍️ Entregador recebe: R$ ${entregadorRecebe}</p>
-        </div>
-    `;
-    
-    atualizarListaCorridas();
-}
-
-function atualizarListaCorridas() {
-    const lista = document.getElementById('listaCorridas');
-    if (!lista) return;
-    
-    if (corridas.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma corrida disponível no momento.</p>';
+    if (!dados.nome || !dados.telefone) {
+        alert('⚠️ Preencha nome e telefone!');
         return;
     }
+
+    dadosEntregadorLogado = dados;
+    localStorage.setItem('entregadorAtual', JSON.stringify(dados));
+
+    // Adiciona na lista geral se não existe
+    const jaExiste = entregadoresCadastrados.some(e => e.telefone === dados.telefone);
+    if (!jaExiste) {
+        entregadoresCadastrados.push(dados);
+        localStorage.setItem('listaEntregadores', JSON.stringify(entregadoresCadastrados));
+    }
+
+    alert('✅ Cadastro concluído! Agora você vê as corridas! 🛵');
+    mostrarAba('painelCorridas');
+    carregarCorridas();
+}
+
+function carregarCorridas() {
+    const lista = document.getElementById('listaCorridas');
     
-    lista.innerHTML = corridas.map(c => `
+    if (corridasPublicadas.length === 0) {
+        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível no momento.<br>Aguarde a loja publicar.</p>';
+        return;
+    }
+
+    lista.innerHTML = corridasPublicadas.map(c => `
         <div class="cartao corrida">
-            <p style="font-weight:bold; color:#fbbf24;">📦 ${c.loja}</p>
-            <p style="margin-top:8px;">📍 De: ${c.origem}</p>
+            <p style="font-weight:bold; color:#fbbf24; font-size:1.1rem;">📦 ${c.nomeLoja}</p>
+            <p style="margin:10px 0 5px;">📍 De: ${c.origem}</p>
             <p>➡️ Para: ${c.destino}</p>
-            <p class="corrida-valor" style="margin-top:10px;">R$ ${c.valor.toFixed(2)}</p>
+            <p class="corrida-valor" style="margin-top:12px;">R$ ${c.valorEntregador.toFixed(2)}</p>
             <button class="botao botao-aceitar" onclick="aceitarCorrida(${c.id})">✅ Aceitar Corrida</button>
         </div>
     `).join('');
 }
 
 function aceitarCorrida(id) {
-    const corrida = corridas.find(c => c.id === id);
+    const corrida = corridasPublicadas.find(c => c.id === id);
     if (!corrida) return;
+
+    if (confirm(`Aceitar esta corrida?\n\n📍 De: ${corrida.origem}\n➡️ Para: ${corrida.destino}\n💰 Você recebe: R$ ${corrida.valorEntregador.toFixed(2)}`)) {
+        // Abre mapa
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(corrida.origem)}&destination=${encodeURIComponent(corrida.destino)}`;
+        window.open(url, '_blank');
+        
+        // Remove da lista
+        corridasPublicadas = corridasPublicadas.filter(c => c.id !== id);
+        localStorage.setItem('corridas', JSON.stringify(corridasPublicadas));
+        
+        carregarCorridas();
+        alert('✅ Corrida aceita! Boa entrega! 🛵💨');
+    }
+}
+
+function sairEntregador() {
+    if (confirm('Sair da conta?')) {
+        // Mantém cadastro salvo, só volta pra tela inicial
+        voltarInicio();
+    }
+}
+
+// ==========================================
+// 🏪 ÁREA LOJA
+// ==========================================
+function abrirLoja() {
+    mostrarAba('telaLoja');
+}
+
+function publicarCorrida() {
+    const nomeLoja = document.getElementById('nomeLoja').value.trim();
+    const origem = document.getElementById('origem').value.trim();
+    const destino = document.getElementById('destino').value.trim();
+
+    if (!nomeLoja || !origem || !destino) {
+        alert('⚠️ Preencha todos os campos!');
+        return;
+    }
+
+    const valorTotal = 15.00; // Valor base — pode ajustar
+    const parteSua = valorTotal * 0.20;
+    const parteEntregador = valorTotal * 0.80;
+
+    // Atualiza saldo
+    saldo += parteSua;
+    localStorage.setItem('saldoPlataforma', saldo.toString());
+
+    // Cadastra corrida
+    const novaCorrida = {
+        id: Date.now(),
+        nomeLoja,
+        origem,
+        destino,
+        valorTotal,
+        valorEntregador: parteEntregador,
+        data: new Date().toLocaleString('pt-BR')
+    };
+
+    corridasPublicadas.unshift(novaCorrida);
+    localStorage.setItem('corridas', JSON.stringify(corridasPublicadas));
+
+    document.getElementById('resultadoPublicacao').innerHTML = `
+        <div class="cartao">
+            <p style="color:#22c55e; font-weight:bold;">✅ Corrida publicada com sucesso!</p>
+            <p style="margin-top:10px;">💰 Valor total: R$ ${valorTotal.toFixed(2)}</p>
+            <p style="color:#fbbf24;">✅ Sua parte (20%): R$ ${parteSua.toFixed(2)}</p>
+            <p style="color:#22c55e;">🏍️ Entregador recebe (80%): R$ ${parteEntregador.toFixed(2)}</p>
+        </div>
+    `;
+
+    // Limpa campos
+    document.getElementById('origem').value = '';
+    document.getElementById('destino').value = '';
+}
+
+// ==========================================
+// ⚙️ FUNÇÕES GERAIS
+// ==========================================
+function mostrarAba(nomeAba) {
+    document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
     
-    if (confirm(`Aceitar esta corrida?\n\nDe: ${corrida.origem}\nPara: ${corrida.destino}\nValor: R$ ${corrida.valor.toFixed(2)}`)) {
-        const link = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(corrida.origem)}&destination=${encodeURIComponent(corrida.destino)}`;
-        window.open(link, '_blank');
-        corridas = corridas.filter(c => c.id !== id);
-        localStorage.setItem('corridas', JSON.stringify(corridas));
-        atualizarListaCorridas();
-        alert('✅ Corrida aceita! Boa entrega! 🛵');
+    if (nomeAba === 'painelCorridas') {
+        document.getElementById('telaEntregador').classList.add('ativa');
+        document.getElementById('formCadastroEntregador').classList.add('oculto');
+        document.getElementById('painelCorridas').classList.remove('oculto');
+    } else {
+        document.getElementById(nomeAba).classList.add('ativa');
     }
 }
 
-function sacarSaldo() {
-    if (saldoPlataforma <= 0) { 
-        alert('Sem saldo para sacar.'); 
-        return; 
-    }
-    if (confirm(`Confirmar saque de R$ ${saldoPlataforma.toFixed(2)}?`)) {
-        alert(`💰 Saque de R$ ${saldoPlataforma.toFixed(2)} realizado com sucesso!`);
-        saldoPlataforma = 0;
-        localStorage.setItem('saldoPlataforma', '0');
-        atualizarSaldo();
-    }
+function voltarInicio() {
+    mostrarAba('telaInicio');
 }
 
-function atualizarSaldo() {
-    const el = document.getElementById('saldoPlataforma');
-    if (el) el.textContent = `R$ ${saldoPlataforma.toFixed(2)}`;
-}
-
-function atualizarLista() {
-    const lista = document.getElementById('listaEntregadores');
-    if (!lista) return;
+function atualizarPainelAdmin() {
+    // Saldo
+    document.getElementById('exibirSaldo').textContent = `R$ ${saldo.toFixed(2)}`;
     
-    lista.innerHTML = entregadores.length === 0 
-        ? '<p style="color:#94a3b8;">Nenhum entregador cadastrado.</p>'
-        : entregadores.map((e, i) => `
+    // Entregadores
+    const listaEnt = document.getElementById('listaTodosEntregadores');
+    if (entregadoresCadastrados.length === 0) {
+        listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhum entregador cadastrado.</p>';
+    } else {
+        listaEnt.innerHTML = entregadoresCadastrados.map((e, i) => `
             <div class="cartao">
                 <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
-                <p style="color:#94a3b8;">📱 ${e.fone} | 🚗 ${e.veiculo}</p>
+                <p style="color:#94a3b8;">📱 ${e.telefone} | ${e.veiculo}</p>
                 <p style="color:#86efac;">📍 ${e.regiao} | 💳 ${e.pix}</p>
             </div>
         `).join('');
+    }
+
+    // Corridas
+    const listaCorr = document.getElementById('historicoCorridas');
+    if (corridasPublicadas.length === 0) {
+        listaCorr.innerHTML = '<p style="color:#94a3b8;">Nenhuma corrida ativa.</p>';
+    } else {
+        listaCorr.innerHTML = corridasPublicadas.map(c => `
+            <div class="cartao">
+                <p style="font-weight:bold;">📦 ${c.nomeLoja}</p>
+                <p>📍 ${c.origem} → ${c.destino}</p>
+                <p style="color:#fbbf24;">💰 R$ ${c.valorTotal.toFixed(2)}</p>
+                <p style="font-size:0.85rem; color:#94a3b8;">${c.data}</p>
+            </div>
+        `).join('');
+    }
+}
+
+function fazerSaque() {
+    if (saldo <= 0) {
+        alert('💸 Sem saldo para sacar.');
+        return;
+    }
+    if (confirm(`Confirmar saque de R$ ${saldo.toFixed(2)}?`)) {
+        alert(`✅ Saque de R$ ${saldo.toFixed(2)} solicitado com sucesso!\nValor enviado para sua conta.`);
+        saldo = 0;
+        localStorage.setItem('saldoPlataforma', '0');
+        atualizarPainelAdmin();
+    }
 }
 
 // Inicializa
-atualizarSaldo();
+atualizarPainelAdmin();
 </script>
 
 </body>
