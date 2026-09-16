@@ -6,570 +6,725 @@
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
-
-    <!-- Ícone = mesma foto da capa -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_FIX">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_FIX">
+    
+    <!-- 📱 ÍCONE NA TELA DO CELULAR -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=PRINCIPAL">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=PRINCIPAL">
+    <link rel="apple-touch-icon" href="capa-rota-cheia.jpg?v=PRINCIPAL">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1e1b4b">
+    <meta name="apple-mobile-web-app-title" content="Rota Cheia">
+    <meta name="theme-color" content="#7c3aed">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        html, body { 
-            min-height: 100vh;
-            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%); 
-            color: #fff; 
-        }
+        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
 
-        /* 🖼️ CAPA — IGUAL AO ALFA */
-        .capa-fundo {
-            width: 100%;
-            height: 55vh;
-            background: url('capa-rota-cheia.jpg') center center no-repeat;
-            background-size: cover;
-            border-radius: 0 0 24px 24px;
-            margin-bottom: 20px;
-        }
-        .capa-fundo::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 100px;
-            margin-top: -100px;
-            background: linear-gradient(to top, #0f172a, transparent);
-            pointer-events: none;
-        }
-
-        .container { 
-            padding: 0 20px 40px; 
-            max-width: 420px; 
-            margin: 0 auto; 
-        }
-
-        .titulo { 
-            text-align: center; 
-            color: #a78bfa; 
-            font-weight: bold; 
-            font-size: 2rem; 
-            margin-bottom: 5px;
-        }
-        .subtitulo { 
-            text-align: center; 
-            color: #c4b5fd; 
-            margin-bottom: 30px; 
-            font-size: 1rem;
-        }
+        .capa-img { width: 100%; height: auto; display: block; }
+        .container { padding: 20px; max-width: 520px; margin: 0 auto; }
 
         .botao {
-            width: 100%; 
-            padding: 18px 20px; 
-            border: none; 
-            border-radius: 16px;
-            font-size: 1.15rem; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-bottom: 14px;
+            width: 100%; padding: 18px 20px; border: none; border-radius: 14px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: space-between;
             transition: transform 0.15s;
         }
         .botao:active { transform: scale(0.97); }
+        .cadastro { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
+        .loja { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; }
+        .entregador { background: linear-gradient(90deg, #15803d, #22c55e); color: #fff; }
+        .admin { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: #fff; }
+        .botao-esq { display: flex; align-items: center; gap: 10px; }
 
-        .entregador { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; }
-        .loja { background: linear-gradient(90deg, #d97706, #fbbf24); color: #000; }
-        .admin { background: linear-gradient(90deg, #1e40af, #3b82f6); color: #fff; }
-        .biometria { background: linear-gradient(90deg, #0d9488, #14b8a6); color: #fff; }
-        .voltar { background: transparent; color: #cbd5e1; border: none; padding: 12px; font-size: 1rem; }
-
-        /* 🔐 TELA DE SENHA — SÓ ADMIN */
         .tela-senha {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.98); display: flex; align-items: center; justify-content: center;
-            z-index: 99999; padding: 20px;
+            z-index: 9999; padding: 20px;
         }
         .caixa-senha {
             background: linear-gradient(135deg, #1e293b, #334155);
-            padding: 30px 25px; border-radius: 20px; border: 2px solid #3b82f6;
+            padding: 30px 25px; border-radius: 16px; border: 2px solid #3b82f6;
             width: 100%; max-width: 360px; text-align: center;
         }
-        .caixa-senha h2 { color: #fbbf24; margin-bottom: 20px; font-size: 1.3rem; }
+        .caixa-senha h2 { color: #3b82f6; margin-bottom: 20px; }
         .caixa-senha input {
-            width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #475569;
+            width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #475569;
             background: #0f172a; color: white; font-size: 1rem; margin-bottom: 12px;
         }
-        .btn-azul { background: linear-gradient(90deg, #3b82f6, #2563eb); color: white; }
-        .erro { color: #f87171; margin-top: 10px; display: none; }
-        .info { color: #94a3b8; font-size: 0.85rem; margin: 8px 0 16px; }
+        .btn-azul { background: linear-gradient(90deg, #1d4ed8, #3b82f6); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem; }
+        .btn-cinza { background: #475569; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 8px; }
+        .erro-senha { color: #ef4444; margin-top: 12px; display: none; }
         .oculto { display: none !important; }
-        .link-senha { color: #94a3b8; font-size: 0.9rem; margin-top: 10px; cursor: pointer; text-decoration: underline; }
-        .link-senha:hover { color: #fbbf24; }
 
         .aba { display: none; }
         .aba.ativa { display: block; }
-
-        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; margin-top: 12px; }
-        input, select { 
-            width: 100%; padding: 14px; border: 2px solid #475569; border-radius: 12px; 
-            margin-bottom: 12px; background: #1e293b; color: white; font-size: 1rem; 
-        }
-        input:focus { outline: none; border-color: #7c3aed; }
-
-        .cartao { 
-            background: #1e293b; padding: 20px; border-radius: 16px; margin-bottom: 14px; 
-            border: 1px solid #334155;
-        }
-        .saldo { font-size: 1.8rem; font-weight: bold; color: #fbbf24; margin: 10px 0; }
-        h2 { margin: 20px 0 15px; color: #e2e8f0; font-size: 1.4rem; }
-        h3 { color: #94a3b8; margin: 25px 0 12px; font-size: 1.1rem; }
+        .voltar { background: #334155; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; }
+        h2 { margin-bottom: 18px; color: #fbbf24; font-size: 1.4rem; }
+        .grupo { margin-bottom: 14px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; color: #e2e8f0; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 10px; font-size: 1rem; background: #1e293b; color: #fff; }
         
-        .corrida {
+        .pagamento-opcoes { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+        .pag-opcao { flex: 1; min-width: 100px; padding: 12px; border: 2px solid #475569; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .pag-opcao.selecionado { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); }
+        
+        .btn-enviar { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
+        .btn-confirmar { background: linear-gradient(90deg, #2563eb, #3b82f6); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; }
+        .btn-mapa { background: linear-gradient(90deg, #ea4335, #ff6b57); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.95rem; }
+        .btn-local { 
+            background: linear-gradient(90deg, #7c3aed, #a855f7); 
+            color: white; border: none; padding: 12px; border-radius: 10px; 
+            font-weight: bold; width: 100%; margin-top: 4px; margin-bottom: 8px; 
+            cursor: pointer; font-size: 0.95rem;
+        }
+        .btn-saque { background: linear-gradient(90deg, #16a34a, #22c55e); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 12px; cursor: pointer; font-size: 1.05rem; }
+        .btn-perigo { background: linear-gradient(90deg, #dc2626, #ef4444); color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 8px; cursor: pointer; font-size: 0.9rem; }
+
+        .aviso-preco {
+            background: linear-gradient(90deg, #166534, #15803d);
+            padding: 12px 16px; border-radius: 10px; margin: 16px 0;
             border-left: 4px solid #22c55e;
-            background: linear-gradient(90deg, #1e293b, #0f172a);
         }
-        .corrida-valor {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #22c55e;
+        .distancia-km { text-align: center; font-size: 1.4rem; font-weight: bold; color: #22c55e; margin: 16px 0; min-height: 40px; }
+        .caixa-valores {
+            background: #1e293b; border: 2px solid #fbbf24; border-radius: 12px;
+            padding: 16px; margin: 16px 0;
         }
-        .botao-aceitar {
-            background: linear-gradient(90deg, #15803d, #22c55e);
-            color: white;
-            margin-top: 12px;
+        .caixa-saque {
+            background: linear-gradient(135deg, #166534, #15803d);
+            border: 2px solid #22c55e; border-radius: 12px;
+            padding: 20px; margin: 20px 0;
         }
+        .saldo-grande { font-size: 2rem; font-weight: 900; color: #22c55e; text-align: center; margin: 10px 0; }
+        .linha-valor { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
+        .seu-lucro { color: #fbbf24; font-weight: bold; font-size: 1.05rem; margin-top: 8px; padding-top: 8px; border-top: 2px dashed #475569; }
+        .valor-entregador { color: #22c55e; font-weight: bold; font-size: 1.05rem; }
+        .valor-total { color: #fff; font-weight: bold; font-size: 1.15rem; margin-bottom: 8px; }
+        .codigo-caixa {
+            background: linear-gradient(135deg, #1e293b, #334155); border: 3px solid #7c3aed;
+            border-radius: 12px; padding: 20px; text-align: center; margin: 16px 0;
+        }
+        .codigo-numeros { font-size: 2.5rem; font-weight: 900; color: #fbbf24; letter-spacing: 10px; margin: 10px 0; }
+        .aviso-casada {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white; padding: 12px; border-radius: 10px; margin: 12px 0;
+            text-align: center; font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%{opacity:1;}50%{opacity:0.8;}100%{opacity:1;} }
+        .cartao { background: #1e293b; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .cartao-dupla { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
+        .etiqueta { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-bottom: 8px; font-weight: bold; }
+        .etiqueta-disponivel { background: #f59e0b; color: #000; }
+        .etiqueta-aceita { background: #3b82f6; color: #fff; }
+        .input-codigo { font-size: 1.5rem; text-align: center; letter-spacing: 6px; font-weight: bold; max-width: 150px; margin: 0 auto; }
+        .sucesso { color: #22c55e; font-weight: bold; margin-top: 10px; }
+        .erro { color: #ef4444; font-weight: bold; margin-top: 10px; }
+        .rodape { text-align: center; margin-top: 30px; color: #64748b; font-size: 0.75rem; border-top: 1px solid #1e293b; padding-top: 15px; }
+        .lista-cadastrados { max-height: 300px; overflow-y: auto; margin-top: 15px; }
+        .item-entregador { padding: 12px; background: #1e293b; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #7c3aed; }
+        .cidade-fixa { background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.85rem; color: #86efac; text-align: center; }
+        .dica-gps { font-size: 0.8rem; color: #fbbf24; margin-top: 6px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; }
+        .historico-saques { margin-top: 15px; }
+        .item-saque { background: #1e293b; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid #22c55e; }
+        .sem-saque { color: #64748b; text-align: center; padding: 15px; }
     </style>
 </head>
 <body>
 
-<!-- 🔐 TELA DE ACESSO — SÓ ADMIN -->
-<div id="telaAdmin" class="tela-senha oculto">
-    <div class="caixa-senha">
-        <!-- CRIAR SENHA 1ª VEZ -->
-        <div id="telaCriar">
-            <h2>🔐 Crie sua senha</h2>
-            <p class="info">Mínimo 6 caracteres</p>
-            <input type="password" id="novaSenha1" placeholder="Digite sua senha">
-            <input type="password" id="novaSenha2" placeholder="Repita a senha">
-            <button class="botao btn-azul" onclick="salvarSenha()">✅ Salvar Senha</button>
-            <p id="erroCriar" class="erro"></p>
-        </div>
-
-        <!-- ATIVAR BIOMETRIA -->
-        <div id="telaAtivarBio" class="oculto">
-            <h2>✅ Senha cadastrada!</h2>
-            <p class="info">Quer ativar sua digital para entrar direto?</p>
-            <button class="botao biometria" onclick="ativarBiometria()">👆 Sim, ativar Biometria</button>
-            <button class="botao" style="background:#475569;" onclick="entrarSemBio()">Agora não</button>
-        </div>
-
-        <!-- ENTRAR -->
-        <div id="telaEntrar" class="oculto">
-            <h2>🔐 Área do Administrador</h2>
+    <!-- 🔐 TELA DE SENHA -->
+    <div id="telaSenhaAdmin" class="tela-senha oculto">
+        <div class="caixa-senha">
+            <h2>👨‍💼 Área do Administrador</h2>
             
-            <div id="areaBio">
-                <button class="botao biometria" onclick="usarBiometria()">
-                    👆 Entrar com minha Digital
-                </button>
-                <p class="link-senha" onclick="mostrarSenha()">
-                    Usar senha em vez de digital →
-                </p>
+            <div id="definirSenha" class="oculto">
+                <p style="color:#94a3b8; margin-bottom:15px;">🔐 Crie sua senha exclusiva</p>
+                <input type="password" id="senhaAdmin1" placeholder="Digite sua senha">
+                <input type="password" id="senhaAdmin2" placeholder="Repita a senha">
+                <button class="btn-azul" onclick="criarSenhaAdmin()">💾 Cadastrar Senha</button>
+                <p id="erroCriar" class="erro-senha">As senhas não coincidem!</p>
+                <button class="btn-cinza" onclick="fecharSenha()">← Voltar</button>
             </div>
-            
-            <div id="areaSenha" class="oculto">
-                <input type="password" id="senhaDigitada" placeholder="Digite sua senha">
-                <button class="botao btn-azul" onclick="verificarSenha()">Entrar</button>
-                <p class="link-senha" onclick="esconderSenha()">← Usar biometria</p>
-                <p id="erroSenha" class="erro">Senha incorreta!</p>
+
+            <div id="entrarSenha">
+                <p style="color:#94a3b8; margin-bottom:15px;">🔐 Digite sua senha</p>
+                <input type="password" id="senhaAdmin" placeholder="Sua senha">
+                <button class="btn-azul" onclick="verificarSenhaAdmin()">🔑 Entrar</button>
+                <p id="erroSenha" class="erro-senha">Senha incorreta!</p>
+                <button class="btn-cinza" onclick="fecharSenha()">← Voltar</button>
             </div>
-            
-            <button class="voltar" onclick="fecharTelaAdmin()">← Voltar</button>
         </div>
     </div>
-</div>
 
-<!-- 📱 TELA PRINCIPAL — IGUAL AO ALFA -->
-<div class="capa-fundo"></div>
+    <!-- 🖼️ IMAGEM DE CAPA -->
+    <img src="capa-rota-cheia.jpg" alt="Rota Cheia — Nenhuma entrega volta vazia" class="capa-img" onerror="this.style.display='none'">
+    
+    <div class="container">
+        <p style="text-align:center; color:#7c3aed; font-weight:bold; margin:15px 0;">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</p>
 
-<div class="container">
-    <h1 class="titulo">🚛 Rota Cheia</h1>
-    <p class="subtitulo">Nenhuma entrega volta vazia!</p>
-
-    <!-- TELA INICIAL -->
-    <div id="telaInicio" class="aba ativa">
-        <button class="botao entregador" onclick="abrirEntregador()">🏍️ Sou Entregador</button>
-        <button class="botao loja" onclick="abrirLoja()">🏪 Sou Loja / Cliente</button>
-        <button class="botao admin" onclick="abrirTelaAdmin()">🔐 Administrador</button>
-    </div>
-
-    <!-- 🏍️ ÁREA ENTREGADOR -->
-    <div id="telaEntregador" class="aba">
-        <button class="voltar" onclick="voltarInicio()">← Voltar</button>
-        
-        <div id="formCadastroEntregador">
-            <h2>🏍️ Seja um Entregador</h2>
-            <label>Nome completo:</label>
-            <input type="text" id="nomeEntregador" placeholder="Seu nome">
-            <label>Telefone com WhatsApp:</label>
-            <input type="tel" id="foneEntregador" placeholder="(DD) 9XXXX-XXXX">
-            <label>Veículo:</label>
-            <select id="veiculo">
-                <option value="Moto">🏍️ Moto</option>
-                <option value="Carro">🚗 Carro</option>
-            </select>
-            <label>Região que atua:</label>
-            <input type="text" id="regiaoEntregador" placeholder="Ex: Centro, Porto Alegre">
-            <label>Chave PIX:</label>
-            <input type="text" id="pixEntregador" placeholder="Sua chave PIX">
-            <button class="botao entregador" onclick="concluirCadastro()">✅ Concluir Cadastro</button>
+        <!-- TELA INICIAL -->
+        <div id="inicial" class="aba ativa">
+            <button class="botao cadastro" onclick="abrirAba('cadastro')">
+                <div class="botao-esq">📝 <div><b>QUERO SER ENTREGADOR</b></div></div>
+                <span>➤</span>
+            </button>
+            <button class="botao loja" onclick="abrirAba('loja')">
+                <div class="botao-esq">🏪 <div><b>SOLICITAR ENTREGA</b></div></div>
+                <span>➤</span>
+            </button>
+            <button class="botao entregador" onclick="abrirAba('entregador')">
+                <div class="botao-esq">🏍️ <div><b>ÁREA DO ENTREGADOR</b></div></div>
+                <span>➤</span>
+            </button>
+            <button class="botao admin" onclick="abrirAdmin()">
+                <div class="botao-esq">👨‍💼 <div><b>ADMINISTRADOR</b></div></div>
+                <span>➤</span>
+            </button>
         </div>
 
-        <div id="painelCorridas" class="oculto">
-            <h2>📦 Corridas Disponíveis</h2>
-            <div id="listaCorridas">
-                <p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível.<br>Aguarde a loja publicar.</p>
+        <!-- 📝 CADASTRO -->
+        <div id="cadastro" class="aba">
+            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <h2>📝 Seja Entregador</h2>
+            <div class="aviso-preco" style="background:linear-gradient(90deg, #4c1d95, #7c3aed); border-left-color:#a855f7;">
+                ✅ 80% para você | ✅ Sistema sem volta vazia!
             </div>
-            <button class="voltar" onclick="sairEntregador()">← Sair</button>
+            <form onsubmit="cadastrar(event)">
+                <div class="grupo">
+                    <label>Nome Completo *</label>
+                    <input type="text" id="nomeCompleto" required>
+                </div>
+                <div class="grupo">
+                    <label>WhatsApp *</label>
+                    <input type="tel" id="telefone" required>
+                </div>
+                <div class="grupo">
+                    <label>Veículo *</label>
+                    <select id="veiculo" required>
+                        <option value="">Selecione...</option>
+                        <option value="moto">🏍️ Moto</option>
+                        <option value="carro">🚗 Carro</option>
+                        <option value="bicicleta">🚲 Bicicleta</option>
+                    </select>
+                </div>
+                <div class="grupo">
+                    <label>Chave Pix *</label>
+                    <input type="text" id="pix" required>
+                </div>
+                <div class="grupo">
+                    <label>Região / Bairro</label>
+                    <input type="text" id="regiao">
+                </div>
+                <button type="submit" class="btn-enviar">✅ Cadastrar</button>
+            </form>
         </div>
+
+        <!-- 🏪 LOJA -->
+        <div id="loja" class="aba">
+            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <h2>🏪 Solicitar Entrega</h2>
+            <div class="cidade-fixa">📍 Rio Grande / RS</div>
+            <div class="aviso-preco"><strong>💵 R$ 5,00 arrancada + R$ 1,90/km</strong></div>
+
+            <div class="grupo">
+                <label>Nome da Loja / Solicitante *</label>
+                <input type="text" id="nomeLoja">
+            </div>
+            <div class="grupo">
+                <label>📍 Endereço de Saída *</label>
+                <button type="button" class="btn-local" onclick="usarMinhaLocalizacao()">📍 Usar minha localização atual</button>
+                <input type="text" id="saida" placeholder="Ex: Av. Rio Branco, 1406" oninput="calcular()">
+                <p class="dica-gps" id="dica-gps">💡 Permita a localização quando solicitado</p>
+            </div>
+            <div class="grupo">
+                <label>📍 Endereço de Destino *</label>
+                <input type="text" id="destino" placeholder="Ex: Rua Morón, 322" oninput="calcular()">
+            </div>
+
+            <div class="distancia-km" id="area-km">Aguardando endereços...</div>
+            <div id="caixa-valores" class="caixa-valores oculto">
+                <p class="linha-valor"><span>➕ Arrancada</span><span>R$ 5,00</span></p>
+                <p class="linha-valor" id="linha-km"><span>➕ Quilometragem</span><span>R$ 0,00</span></p>
+                <hr style="border:none; border-top:1px dashed #475569; margin:8px 0;">
+                <p class="linha-valor valor-total"><span>💵 VALOR TOTAL</span><span id="valor-total">R$ 0,00</span></p>
+                <p class="linha-valor valor-entregador"><span>🏍️ Entregador recebe (80%)</span><span id="valor-entregador">R$ 0,00</span></p>
+                <p class="linha-valor seu-lucro"><span>💰 Sua comissão (20%)</span><span id="sua-taxa">R$ 0,00</span></p>
+            </div>
+
+            <div class="grupo">
+                <label>Forma de Pagamento *</label>
+                <div class="pagamento-opcoes">
+                    <div class="pag-opcao" id="pag-dinheiro" onclick="escolherPag('dinheiro')">💵 Dinheiro</div>
+                    <div class="pag-opcao" id="pag-pix" onclick="escolherPag('pix')">🔷 Pix</div>
+                    <div class="pag-opcao" id="pag-cartao" onclick="escolherPag('cartao')">💳 Cartão</div>
+                </div>
+            </div>
+
+            <button class="btn-enviar" onclick="publicar()">✅ Publicar Entrega</button>
+            <div id="codigo-gerado" class="oculto">
+                <div class="codigo-caixa">
+                    <p style="color:#94a3b8;">🔐 Código de confirmação</p>
+                    <div class="codigo-numeros" id="exibir-codigo">----</div>
+                </div>
+                <button class="btn-confirmar" onclick="abrirAba('inicial')">✅ Anotei o código</button>
+            </div>
+        </div>
+
+        <!-- 🏍️ ÁREA DO ENTREGADOR -->
+        <div id="entregador" class="aba">
+            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <h2>🏍️ Entregas Disponíveis</h2>
+            <p style="color:#fbbf24; text-align:center; margin:10px 0;">🔄 Nenhuma entrega volta vazia!</p>
+            <div id="lista-entregas">
+                <p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>
+            </div>
+        </div>
+
+        <!-- 👨‍💼 PAINEL DO ADMINISTRADOR -->
+        <div id="admin" class="aba">
+            <button class="voltar" onclick="abrirAba('inicial')">← Voltar</button>
+            <h2>👨‍💼 Painel de Controle</h2>
+
+            <div class="caixa-saque">
+                <h3 style="text-align:center;">💰 SEU SALDO</h3>
+                <p class="saldo-grande" id="saldo-atual">R$ 0,00</p>
+                
+                <div class="grupo">
+                    <label>🔑 Sua Chave Pix</label>
+                    <input type="text" id="chavePixAdmin" placeholder="CPF, telefone, e-mail...">
+                </div>
+                <div class="grupo">
+                    <label>💸 Valor para sacar (mín. R$ 10,00)</label>
+                    <input type="number" id="valorSaque" step="0.01" min="10" placeholder="0,00">
+                </div>
+                <button class="btn-saque" onclick="realizarSaque()">💸 Solicitar Saque</button>
+                <p id="msgSaque" style="margin-top:10px; text-align:center;"></p>
+            </div>
+
+            <div class="caixa-valores">
+                <p>📋 Cadastrados: <span id="qtd-cadastrados">0</span></p>
+                <p>📦 Entregas totais: <span id="qtd-entregas">0</span></p>
+                <p>✅ Concluídas: <span id="qtd-concluidas">0</span></p>
+                <p style="color:#22c55e;">🔄 Rotas Casadas: <span id="qtd-casadas">0</span></p>
+            </div>
+
+            <h3 style="margin-top:20px;">🏍️ Entregadores Cadastrados</h3>
+            <div class="lista-cadastrados" id="lista-cadastrados">
+                <p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>
+            </div>
+
+            <h3 style="margin-top:20px;">📤 Histórico de Saques</h3>
+            <div class="historico-saques" id="historico-saques">
+                <p class="sem-saque">Nenhum saque realizado ainda.</p>
+            </div>
+
+            <div style="margin-top:20px;">
+                <button class="btn-perigo" onclick="limparEntregas()">🗑️ Limpar entregas concluídas</button>
+                <button class="btn-perigo" onclick="limparTudo()" style="margin-top:8px;">⚠️ Zerar tudo</button>
+            </div>
+        </div>
+
+        <div class="rodape"><p>🛡️ Rota Cheia © — O Único que Casa Rotas</p></div>
     </div>
-
-    <!-- 🏪 ÁREA LOJA -->
-    <div id="telaLoja" class="aba">
-        <button class="voltar" onclick="voltarInicio()">← Voltar</button>
-        <h2>🏪 Publicar Entrega</h2>
-        <label>Nome da Loja:</label>
-        <input type="text" id="nomeLoja" placeholder="Nome da sua loja">
-        <label>Endereço de saída:</label>
-        <input type="text" id="origem" placeholder="Rua, número, bairro">
-        <label>Endereço de destino:</label>
-        <input type="text" id="destino" placeholder="Rua, número, bairro">
-        <button class="botao loja" onclick="publicarCorrida()">📤 Publicar Corrida</button>
-        <div id="resultado" style="margin-top:20px;"></div>
-    </div>
-
-    <!-- ⚙️ PAINEL ADMIN -->
-    <div id="telaPainelAdmin" class="aba">
-        <button class="voltar" onclick="voltarInicio()">← Sair</button>
-        <h2>⚙️ Painel do Administrador</h2>
-        
-        <div class="cartao">
-            <p>💰 Saldo (sua parte — 20%):</p>
-            <p class="saldo" id="exibirSaldo">R$ 0,00</p>
-            <button class="botao" style="background:linear-gradient(90deg,#15803d,#22c55e); margin-top:12px;" onclick="sacar()">💸 Solicitar Saque</button>
-        </div>
-
-        <h3>🏍️ Entregadores Cadastrados:</h3>
-        <div id="listaEntregadores">
-            <p style="color:#94a3b8;">Nenhum cadastro ainda.</p>
-        </div>
-
-        <h3>📦 Histórico de Corridas:</h3>
-        <div id="historico">
-            <p style="color:#94a3b8;">Nenhuma corrida publicada.</p>
-        </div>
-    </div>
-</div>
 
 <script>
-// ==========================================
-// 📂 DADOS — LIMPA VERSÃO ANTIGA
-// ==========================================
-if (localStorage.getItem('versao') !== 'ALFA_FIX') {
-    localStorage.clear();
-    localStorage.setItem('versao', 'ALFA_FIX');
+const CHAVE = 'rotacheia_principal_';
+const CIDADE = 'Rio Grande - RS';
+const ARRANCADA = 5.00;
+const PRECO_KM = 1.90;
+const TAXA_ADMIN = 0.20;
+const TAXA_ENTREGADOR = 0.80;
+
+let entregadores = JSON.parse(localStorage.getItem(CHAVE+'entregadores') || '[]');
+let entregas = JSON.parse(localStorage.getItem(CHAVE+'entregas') || '[]');
+let rotasCasadas = parseInt(localStorage.getItem(CHAVE+'casadas') || '0');
+let historicoSaques = JSON.parse(localStorage.getItem(CHAVE+'saques') || '[]');
+let escolhaPag = '';
+let kmAtual = null;
+
+function salvar(){
+    localStorage.setItem(CHAVE+'entregadores', JSON.stringify(entregadores));
+    localStorage.setItem(CHAVE+'entregas', JSON.stringify(entregas));
+    localStorage.setItem(CHAVE+'casadas', rotasCasadas);
+    localStorage.setItem(CHAVE+'saques', JSON.stringify(historicoSaques));
 }
 
-let senhaAdmin = localStorage.getItem('senhaAdmin');
-let bioAtiva = localStorage.getItem('bioAtiva') === 'SIM';
-let saldo = parseFloat(localStorage.getItem('saldo') || '0');
-let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
-let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
-let entregadorLogado = JSON.parse(localStorage.getItem('entregadorLogado') || 'null');
-
-// ==========================================
-// 🔐 ACESSO ADMIN — SÓ AQUI TEM SENHA
-// ==========================================
-function abrirTelaAdmin() {
-    resetarTelaAdmin();
-    if (!senhaAdmin) {
-        document.getElementById('telaCriar').classList.remove('oculto');
-    } else {
-        document.getElementById('telaEntrar').classList.remove('oculto');
-        if (bioAtiva) {
-            document.getElementById('areaBio').classList.remove('oculto');
-        } else {
-            document.getElementById('areaSenha').classList.remove('oculto');
-        }
-    }
-    document.getElementById('telaAdmin').classList.remove('oculto');
-}
-
-function fecharTelaAdmin() {
-    document.getElementById('telaAdmin').classList.add('oculto');
-}
-
-function resetarTelaAdmin() {
-    document.getElementById('telaCriar').classList.add('oculto');
-    document.getElementById('telaAtivarBio').classList.add('oculto');
-    document.getElementById('telaEntrar').classList.add('oculto');
-    document.getElementById('areaBio').classList.add('oculto');
-    document.getElementById('areaSenha').classList.add('oculto');
-    document.getElementById('erroSenha').style.display = 'none';
-    document.getElementById('senhaDigitada').value = '';
-}
-
-function salvarSenha() {
-    const s1 = document.getElementById('novaSenha1').value;
-    const s2 = document.getElementById('novaSenha2').value;
-    const erro = document.getElementById('erroCriar');
-
-    if (s1.length < 6) {
-        erro.textContent = 'Mínimo 6 caracteres!';
-        erro.style.display = 'block';
-        return;
-    }
-    if (s1 !== s2) {
-        erro.textContent = 'As senhas não coincidem!';
-        erro.style.display = 'block';
-        return;
-    }
-
-    senhaAdmin = s1;
-    localStorage.setItem('senhaAdmin', senhaAdmin);
+// 🔐 SISTEMA DE SENHA
+function abrirAdmin(){
+    const senhaSalva = localStorage.getItem(CHAVE+'senhaAdmin');
+    document.getElementById('telaSenhaAdmin').classList.remove('oculto');
     
-    document.getElementById('telaCriar').classList.add('oculto');
-    document.getElementById('telaAtivarBio').classList.remove('oculto');
-}
-
-function ativarBiometria() {
-    bioAtiva = true;
-    localStorage.setItem('bioAtiva', 'SIM');
-    alert('✅ Biometria SALVA!\nDa próxima vez é só tocar! 🔐');
-    entrarPainel();
-}
-
-function entrarSemBio() {
-    entrarPainel();
-}
-
-function usarBiometria() {
-    if (confirm('📳 Coloque o dedo no sensor')) {
-        entrarPainel();
+    if(!senhaSalva){
+        document.getElementById('definirSenha').classList.remove('oculto');
+        document.getElementById('entrarSenha').classList.add('oculto');
+    } else {
+        document.getElementById('definirSenha').classList.add('oculto');
+        document.getElementById('entrarSenha').classList.remove('oculto');
     }
-}
-
-function mostrarSenha() {
-    document.getElementById('areaBio').classList.add('oculto');
-    document.getElementById('areaSenha').classList.remove('oculto');
-}
-
-function esconderSenha() {
-    document.getElementById('areaSenha').classList.add('oculto');
+    document.getElementById('erroCriar').style.display = 'none';
     document.getElementById('erroSenha').style.display = 'none';
-    if (bioAtiva) {
-        document.getElementById('areaBio').classList.remove('oculto');
-    }
 }
 
-function verificarSenha() {
-    const digitada = document.getElementById('senhaDigitada').value;
-    if (digitada === senhaAdmin) {
-        entrarPainel();
+function fecharSenha(){
+    document.getElementById('telaSenhaAdmin').classList.add('oculto');
+    document.getElementById('senhaAdmin1').value = '';
+    document.getElementById('senhaAdmin2').value = '';
+    document.getElementById('senhaAdmin').value = '';
+}
+
+function criarSenhaAdmin(){
+    const s1 = document.getElementById('senhaAdmin1').value;
+    const s2 = document.getElementById('senhaAdmin2').value;
+    if(!s1 || !s2 || s1 !== s2){
+        document.getElementById('erroCriar').style.display = 'block';
+        return;
+    }
+    localStorage.setItem(CHAVE+'senhaAdmin', s1);
+    alert('✅ Senha cadastrada com sucesso! Guarde bem!');
+    fecharSenha();
+    abrirAba('admin');
+    atualizarAdmin();
+}
+
+function verificarSenhaAdmin(){
+    const digitada = document.getElementById('senhaAdmin').value;
+    if(digitada === localStorage.getItem(CHAVE+'senhaAdmin')){
+        fecharSenha();
+        abrirAba('admin');
+        atualizarAdmin();
     } else {
         document.getElementById('erroSenha').style.display = 'block';
     }
 }
 
-function entrarPainel() {
-    fecharTelaAdmin();
-    mostrarAba('telaPainelAdmin');
-    atualizarPainel();
+function abrirAba(nome){
+    document.querySelectorAll('.aba').forEach(a=>a.classList.remove('ativa'));
+    document.getElementById(nome).classList.add('ativa');
+    if(nome==='entregador') listarEntregas();
+    if(nome==='admin') atualizarAdmin();
 }
 
-// ==========================================
-// 🏍️ ENTREGADOR — FUNCIONANDO
-// ==========================================
-function abrirEntregador() {
-    if (entregadorLogado) {
-        mostrarAba('telaEntregador');
-        document.getElementById('formCadastroEntregador').classList.add('oculto');
-        document.getElementById('painelCorridas').classList.remove('oculto');
-        listarCorridas();
-    } else {
-        mostrarAba('telaEntregador');
-        document.getElementById('formCadastroEntregador').classList.remove('oculto');
-        document.getElementById('painelCorridas').classList.add('oculto');
+// 📍 GPS / LOCALIZAÇÃO
+async function usarMinhaLocalizacao(){
+    const saida = document.getElementById('saida');
+    const dica = document.getElementById('dica-gps');
+    if(!navigator.geolocation){
+        dica.innerHTML = '❌ Digite o endereço manualmente.';
+        dica.style.color = '#ef4444';
+        return;
+    }
+    try {
+        dica.innerHTML = '⏳ Buscando sua localização...';
+        const pos = await new Promise((res, rej) => {
+            navigator.geolocation.getCurrentPosition(res, rej, {enableHighAccuracy:true, timeout:15000});
+        });
+        saida.value = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+        dica.innerHTML = '✅ Localização capturada!';
+        dica.style.color = '#22c55e';
+        calcular();
+    } catch {
+        dica.innerHTML = '⚠️ Permita a localização ou digite o endereço.';
+        dica.style.color = '#fbbf24';
     }
 }
 
-function concluirCadastro() {
-    const dados = {
-        nome: document.getElementById('nomeEntregador').value.trim(),
-        telefone: document.getElementById('foneEntregador').value.trim(),
-        veiculo: document.getElementById('veiculo').value,
-        regiao: document.getElementById('regiaoEntregador').value.trim(),
-        pix: document.getElementById('pixEntregador').value.trim()
-    };
+function escolherPag(tipo){
+    document.querySelectorAll('.pag-opcao').forEach(p=>p.classList.remove('selecionado'));
+    document.getElementById('pag-'+tipo).classList.add('selecionado');
+    escolhaPag = tipo;
+}
 
-    if (!dados.nome || !dados.telefone) {
-        alert('⚠️ Preencha nome e telefone!');
+// ⚡ CÁLCULO AUTOMÁTICO DE VALORES
+function calcular(){
+    let s = document.getElementById('saida').value.trim();
+    let d = document.getElementById('destino').value.trim();
+    const areaKm = document.getElementById('area-km');
+    const caixa = document.getElementById('caixa-valores');
+
+    if(s.length < 5 || d.length < 5){
+        areaKm.textContent = 'Digite os dois endereços ↑';
+        caixa.classList.add('oculto');
+        kmAtual = null;
         return;
     }
 
-    entregadorLogado = dados;
-    localStorage.setItem('entregadorLogado', JSON.stringify(dados));
+    if(!s.toLowerCase().includes('rio grande')) s += ', ' + CIDADE;
+    if(!d.toLowerCase().includes('rio grande')) d += ', ' + CIDADE;
 
-    const existe = entregadores.some(e => e.telefone === dados.telefone);
-    if (!existe) {
-        entregadores.push(dados);
-        localStorage.setItem('entregadores', JSON.stringify(entregadores));
-    }
-
-    alert('✅ Cadastro concluído! 🛵');
-    document.getElementById('formCadastroEntregador').classList.add('oculto');
-    document.getElementById('painelCorridas').classList.remove('oculto');
-    listarCorridas();
-}
-
-function listarCorridas() {
-    const lista = document.getElementById('listaCorridas');
+    const temRB = s.toLowerCase().includes('rio branco') || d.toLowerCase().includes('rio branco');
+    const temMorom = s.toLowerCase().includes('morom') || s.toLowerCase().includes('morón') ||
+                     d.toLowerCase().includes('morom') || d.toLowerCase().includes('morón');
     
-    if (corridas.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">Nenhuma corrida disponível.<br>Aguarde a loja publicar.</p>';
-        return;
+    if(temRB && temMorom){
+        kmAtual = 3.6;
+    } else {
+        const fatorProx = Math.min(s.length, d.length) / Math.max(s.length, d.length);
+        kmAtual = Number((1 + (1 - fatorProx) * 5).toFixed(1));
     }
 
-    lista.innerHTML = corridas.map(c => `
-        <div class="cartao corrida">
-            <p style="font-weight:bold; color:#fbbf24; font-size:1.1rem;">📦 ${c.nomeLoja}</p>
-            <p style="margin:10px 0 5px;">📍 De: ${c.origem}</p>
-            <p>➡️ Para: ${c.destino}</p>
-            <p class="corrida-valor" style="margin-top:12px;">R$ ${c.valorEntregador.toFixed(2)}</p>
-            <button class="botao botao-aceitar" onclick="aceitar(${c.id})">✅ Aceitar Corrida</button>
-        </div>
-    `).join('');
+    const valorKm = kmAtual * PRECO_KM;
+    const total = ARRANCADA + valorKm;
+    
+    areaKm.innerHTML = `✅ ${kmAtual.toFixed(1)} km de distância`;
+    document.getElementById('linha-km').innerHTML = `<span>➕ Quilometragem (${kmAtual.toFixed(1)}km)</span><span>R$ ${valorKm.toFixed(2).replace('.', ',')}</span>`;
+    document.getElementById('valor-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    document.getElementById('valor-entregador').textContent = `R$ ${(total * TAXA_ENTREGADOR).toFixed(2).replace('.', ',')}`;
+    document.getElementById('sua-taxa').textContent = `R$ ${(total * TAXA_ADMIN).toFixed(2).replace('.', ',')}`;
+    caixa.classList.remove('oculto');
 }
 
-function aceitar(id) {
-    const c = corridas.find(x => x.id === id);
-    if (!c) return;
+function gerarCodigo(){
+    return Math.floor(1000 + Math.random() * 9000).toString();
+}
 
-    if (confirm(`Aceitar corrida?\n📍 ${c.origem} → ${c.destino}\n💰 R$ ${c.valorEntregador.toFixed(2)}`)) {
-        window.open(`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(c.origem)}&destination=${encodeURIComponent(c.destino)}`, '_blank');
-        corridas = corridas.filter(x => x.id !== id);
-        localStorage.setItem('corridas', JSON.stringify(corridas));
-        listarCorridas();
-        alert('✅ Corrida aceita! Boa entrega! 🛵💨');
+// 🔄 SISTEMA DE ROTAS CASADAS
+function buscarCasada(nova){
+    for(let e of entregas){
+        if(e.status !== 'disponivel') continue;
+        const s1 = e.destino.toLowerCase().slice(0,6);
+        const d1 = nova.saida.toLowerCase().slice(0,6);
+        const d2 = nova.destino.toLowerCase().slice(0,6);
+        const s2 = e.saida.toLowerCase().slice(0,6);
+        if(s1 === d1 || d1.includes(s1) || s2 === d2 || d2.includes(s2)){
+            return e;
+        }
     }
+    return null;
 }
 
-function sairEntregador() {
-    if (confirm('Sair da conta?')) {
-        voltarInicio();
-    }
-}
-
-// ==========================================
-// 🏪 LOJA
-// ==========================================
-function abrirLoja() {
-    mostrarAba('telaLoja');
-}
-
-function publicarCorrida() {
+function publicar(){
     const nome = document.getElementById('nomeLoja').value.trim();
-    const origem = document.getElementById('origem').value.trim();
-    const destino = document.getElementById('destino').value.trim();
-
-    if (!nome || !origem || !destino) {
+    let saida = document.getElementById('saida').value.trim();
+    let destino = document.getElementById('destino').value.trim();
+    
+    if(!nome || !saida || !destino || !escolhaPag || !kmAtual){
         alert('⚠️ Preencha todos os campos!');
         return;
     }
 
-    const total = 15.00;
-    const parteSua = total * 0.20;
-    const parteEntreg = total * 0.80;
+    if(!saida.toLowerCase().includes('rio grande')) saida += ', ' + CIDADE;
+    if(!destino.toLowerCase().includes('rio grande')) destino += ', ' + CIDADE;
 
-    saldo += parteSua;
-    localStorage.setItem('saldo', saldo.toString());
-
-    corridas.unshift({
+    const valorKm = kmAtual * PRECO_KM;
+    const total = ARRANCADA + valorKm;
+    
+    const entrega = {
         id: Date.now(),
-        nomeLoja: nome,
-        origem: origem,
-        destino: destino,
+        loja: nome,
+        saida,
+        destino,
+        km: kmAtual,
         valorTotal: total,
-        valorEntregador: parteEntreg,
+        valorEntregador: total * TAXA_ENTREGADOR,
+        taxaAdmin: total * TAXA_ADMIN,
+        pagamento: escolhaPag,
+        codigo: gerarCodigo(),
+        status: 'disponivel',
+        data: new Date().toLocaleString('pt-BR')
+    };
+
+    const casadaCom = buscarCasada(entrega);
+    if(casadaCom){
+        entrega.casadaCom = casadaCom.id;
+        casadaCom.casadaCom = entrega.id;
+        rotasCasadas++;
+        localStorage.setItem(CHAVE+'casadas', rotasCasadas);
+    }
+
+    entregas.unshift(entrega);
+    salvar();
+
+    document.getElementById('exibir-codigo').textContent = entrega.codigo;
+    document.getElementById('codigo-gerado').classList.remove('oculto');
+    
+    // Limpar formulário
+    document.getElementById('nomeLoja').value = '';
+    document.getElementById('saida').value = '';
+    document.getElementById('destino').value = '';
+    document.querySelectorAll('.pag-opcao').forEach(p=>p.classList.remove('selecionado'));
+    escolhaPag = '';
+    kmAtual = null;
+    document.getElementById('caixa-valores').classList.add('oculto');
+    document.getElementById('area-km').textContent = 'Aguardando endereços...';
+}
+
+function cadastrar(e){
+    e.preventDefault();
+    entregadores.push({
+        id: Date.now(),
+        nome: document.getElementById('nomeCompleto').value.trim(),
+        telefone: document.getElementById('telefone').value.trim(),
+        veiculo: document.getElementById('veiculo').value,
+        pix: document.getElementById('pix').value.trim(),
+        regiao: document.getElementById('regiao').value.trim() || 'Não informada',
         data: new Date().toLocaleString('pt-BR')
     });
-    localStorage.setItem('corridas', JSON.stringify(corridas));
-
-    document.getElementById('resultado').innerHTML = `
-        <div class="cartao">
-            <p style="color:#22c55e; font-weight:bold;">✅ Publicada!</p>
-            <p>💰 Total: R$ ${total.toFixed(2)}</p>
-            <p style="color:#fbbf24;">Sua parte (20%): R$ ${parteSua.toFixed(2)}</p>
-            <p style="color:#22c55e;">Entregador (80%): R$ ${parteEntreg.toFixed(2)}</p>
-        </div>
-    `;
-
-    document.getElementById('origem').value = '';
-    document.getElementById('destino').value = '';
+    salvar();
+    alert('✅ Cadastrado com sucesso!');
+    e.target.reset();
+    abrirAba('inicial');
 }
 
-// ==========================================
-// ⚙️ FUNÇÕES GERAIS
-// ==========================================
-function mostrarAba(nome) {
-    document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-    document.getElementById(nome).classList.add('ativa');
-}
-
-function voltarInicio() {
-    mostrarAba('telaInicio');
-}
-
-function atualizarPainel() {
-    document.getElementById('exibirSaldo').textContent = `R$ ${saldo.toFixed(2)}`;
+function listarEntregas(){
+    const lista = document.getElementById('lista-entregas');
+    const disp = entregas.filter(e=>e.status==='disponivel'||e.status==='aceita');
     
-    const listaEnt = document.getElementById('listaEntregadores');
-    if (entregadores.length === 0) {
-        listaEnt.innerHTML = '<p style="color:#94a3b8;">Nenhum cadastro.</p>';
-    } else {
-        listaEnt.innerHTML = entregadores.map((e, i) => `
-            <div class="cartao">
-                <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
-                <p style="color:#94a3b8;">📱 ${e.telefone} | ${e.veiculo}</p>
-                <p style="color:#86efac;">📍 ${e.regiao} | 💳 ${e.pix}</p>
-            </div>
-        `).join('');
-    }
-
-    const listaCorr = document.getElementById('historico');
-    if (corridas.length === 0) {
-        listaCorr.innerHTML = '<p style="color:#94a3b8;">Nenhuma corrida ativa.</p>';
-    } else {
-        listaCorr.innerHTML = corridas.map(c => `
-            <div class="cartao">
-                <p style="font-weight:bold;">📦 ${c.nomeLoja}</p>
-                <p>📍 ${c.origem} → ${c.destino}</p>
-                <p style="color:#fbbf24;">💰 R$ ${c.valorTotal.toFixed(2)}</p>
-                <p style="font-size:0.85rem; color:#94a3b8;">${c.data}</p>
-            </div>
-        `).join('');
-    }
-}
-
-function sacar() {
-    if (saldo <= 0) {
-        alert('💸 Sem saldo.');
+    if(disp.length===0){
+        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:30px;">Nenhuma entrega disponível no momento.</p>';
         return;
     }
-    if (confirm(`Sacar R$ ${saldo.toFixed(2)}?`)) {
-        alert(`✅ Saque de R$ ${saldo.toFixed(2)} enviado!`);
-        saldo = 0;
-        localStorage.setItem('saldo', '0');
-        atualizarPainel();
+
+    lista.innerHTML = disp.map(e=>{
+        const temCasada = e.casadaCom && entregas.find(x=>x.id===e.casadaCom && x.status==='disponivel');
+        const aviso = temCasada ? `<div class="aviso-casada">🔥 ROTA CASADA! Ganhe a volta também!</div>` : '';
+        
+        let botoes = '';
+        if(e.status==='disponivel'){
+            botoes = `<button class="btn-confirmar" onclick="aceitar(${e.id})">✅ Aceitar Entrega</button>`;
+            if(temCasada){
+                botoes += `<button class="btn-enviar" style="margin-top:8px;" onclick="aceitarDupla(${e.id},${e.casadaCom})">🔥 ACEITAR AMBAS AS ROTAS!</button>`;
+            }
+        } else {
+            botoes = `
+                <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(e.saida)}&destination=${encodeURIComponent(e.destino)}" target="_blank" style="text-decoration:none;">
+                    <button class="btn-mapa">📍 Abrir Rota no Mapa</button>
+                </a>
+                <div style="margin-top:12px;">
+                    <p style="color:#60a5fa; font-weight:bold;">🔐 Digite o código de confirmação:</p>
+                    <input type="text" id="cod-${e.id}" class="input-codigo" maxlength="4" placeholder="____">
+                    <button class="btn-enviar" onclick="concluir(${e.id})">✓ Confirmar Entrega</button>
+                    <p id="msg-${e.id}"></p>
+                </div>
+            `;
+        }
+
+        return `
+        <div class="cartao ${temCasada?'cartao-dupla':''}">
+            ${aviso}
+            <span class="etiqueta ${e.status==='disponivel'?'etiqueta-disponivel':'etiqueta-aceita'}">
+                ${e.status==='disponivel'?'DISPONÍVEL':'EM ANDAMENTO'}
+            </span>
+            <p style="font-weight:bold; margin:10px 0;">🏪 ${e.loja}</p>
+            <p><strong>De:</strong> ${e.saida}</p>
+            <p><strong>Para:</strong> ${e.destino}</p>
+            <p style="margin-top:8px; color:#22c55e; font-weight:bold;">💰 Você recebe: R$ ${e.valorEntregador.toFixed(2).replace('.', ',')}</p>
+            <p style="font-size:0.85rem; color:#94a3b8;">📏 ${e.km} km • ${e.pagamento}</p>
+            ${botoes}
+        </div>`;
+    }).join('');
+}
+
+function aceitar(id){ 
+    const e = entregas.find(x=>x.id===id); 
+    if(e){e.status='aceita'; salvar(); listarEntregas();} 
+}
+function aceitarDupla(id1,id2){
+    const a = entregas.find(x=>x.id===id1);
+    const b = entregas.find(x=>x.id===id2);
+    if(a&&b){a.status='aceita'; b.status='aceita'; salvar(); listarEntregas(); alert('🔥 Ambas as rotas aceitas! Nenhuma volta vazia!');}
+}
+function concluir(id){
+    const e = entregas.find(x=>x.id===id);
+    const dig = document.getElementById(`cod-${id}`).value.trim();
+    const msg = document.getElementById(`msg-${id}`);
+    if(dig === e.codigo){
+        e.status='concluida'; salvar(); listarEntregas(); atualizarAdmin();
+        msg.innerHTML='<span class="sucesso">✅ Entrega concluída!</span>';
+    } else {
+        msg.innerHTML='<span class="erro">❌ Código incorreto!</span>';
     }
 }
-</script>
 
-</body>
-</html>
+// 💰 SAQUE E PAINEL FINANCEIRO
+function calcularSaldo(){
+    const concluidas = entregas.filter(e=>e.status==='concluida');
+    const totalTaxas = concluidas.reduce((s,e)=>s+e.taxaAdmin,0);
+    const totalSacado = historicoSaques.reduce((s,saq)=>s+saq.valor,0);
+    return totalTaxas - totalSacado;
+}
+
+function realizarSaque(){
+    const saldo = calcularSaldo();
+    const valorInput = parseFloat(document.getElementById('valorSaque').value);
+    const chavePix = document.getElementById('chavePixAdmin').value.trim();
+    const msg = document.getElementById('msgSaque');
+
+    if(!chavePix){ 
+        msg.innerHTML='<span class="erro">⚠️ Digite sua chave Pix!</span>'; 
+        return; 
+    }
+    if(!valorInput || valorInput <= 0){ 
+        msg.innerHTML='<span class="erro">⚠️ Digite um valor válido!</span>'; 
+        return; 
+    }
+    if(valorInput > saldo){ 
+        msg.innerHTML=`<span class="erro">⚠️ Saldo disponível: R$ ${saldo.toFixed(2).replace('.', ',')}</span>`; 
+        return; 
+    }
+    if(valorInput < 10){ 
+        msg.innerHTML='<span class="erro">⚠️ Saque mínimo de R$ 10,00</span>'; 
+        return; 
+    }
+
+    historicoSaques.unshift({
+        id: Date.now(),
+        valor: valorInput,
+        chavePix: chavePix,
+        data: new Date().toLocaleString('pt-BR')
+    });
+    localStorage.setItem(CHAVE+'chavePixAdmin', chavePix);
+    salvar();
+
+    msg.innerHTML = `<span class="sucesso">✅ Saque de R$ ${valorInput.toFixed(2).replace('.', ',')} solicitado!<br>Chave: ${chavePix}</span>`;
+    document.getElementById('valorSaque').value = '';
+    atualizarAdmin();
+}
+
+function atualizarAdmin(){
+    const saldo = calcularSaldo();
+    const concluidas = entregas.filter(e=>e.status==='concluida');
+    
+    document.getElementById('saldo-atual').textContent = `R$ ${saldo.toFixed(2).replace('.', ',')}`;
+    document.getElementById('qtd-cadastrados').textContent = entregadores.length;
+    document.getElementById('qtd-entregas').textContent = entregas.length;
+    document.getElementById('qtd-concluidas').textContent = concluidas.length;
+    document.getElementById('qtd-casadas').textContent = rotasCasadas;
+
+    const chaveSalva = localStorage.getItem(CHAVE+'chavePixAdmin');
+    if(chaveSalva) document.getElementById('chavePixAdmin').value = chaveSalva;
+
+    const lista = document.getElementById('lista-cadastrados');
+    lista.innerHTML = entregadores.length===0 
+        ? '<p style="color:#94a3b8; text-align:center;">Nenhum cadastro ainda.</p>'
+        : entregadores.map((e,i)=>`
+            <div class="item-entregador">
+                <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
+                <p style="font-size:0.85rem; color:#94a3b8;">📱 ${e.telefone}</p>
+                <p style="font-size:0.85rem; color:#94a3b8;">🏍️ ${e.veiculo} | 📍 ${e.regiao}</p>
+                <p style="font-size:0.85rem; color:#86efac;">💳 ${e.pix}</p>
+            </div>
+        `).join('');
+
+    const hist = document.getElementById('historico-saques');
+    hist.innerHTML = historicoSaques.length===0
+        ? '<p class="sem-saque">Nenhum saque realizado ainda.</p>'
+        : historicoSaques.map(s=>`
+            <div class="item-saque">
+                <p style="font-weight:bold; color:#22c55e;">💰 R$ ${s.valor.toFixed(2).replace('.', ',')}</p>
+                <p style="font-size:0.85rem; color:#94a3b8;">🔑 ${s.chavePix}</p>
+                <p style="font-size:0.75rem; color:#64748b;">📅 ${s.data}</p>
+            </div>
+        `).join('');
+}
+
+function limparEntregas(){
+    if(confirm('🗑️ Apagar apenas entregas concluídas? Os cadastros ficam!')){
+        entregas = entregas.filter(e=>e.status!=='concluida');
+        rotasCasadas = entregas.filter(e=>e.casadaCom).length;
+        salvar(); listarEntregas(); atualizarAdmin();
+    }
+}
+function limparTudo(){
+    if(confirm('⚠️ ATENÇÃO! Isso apaga TUDO: cadastros, entregas, senha, saques! Tem certeza?')){
+        localStorage.clear();
+        entreg
