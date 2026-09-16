@@ -7,8 +7,8 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma entrega volta vazia.">
 
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFAFINAL5">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFAFINAL5">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=FINAL10">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=FINAL10">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
@@ -126,7 +126,6 @@
             color: white;
             margin-top: 10px;
         }
-        .carregando { color: #fbbf24; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -144,7 +143,7 @@
 
         <div id="telaAtivarBio" class="oculto">
             <h2>✅ Senha criada!</h2>
-            <p class="info">Quer ativar sua digital?</p>
+            <p class="info">Quer ativar sua digital para entrar mais rápido?</p>
             <button class="botao biometria" onclick="ativarBio()">👆 Ativar Biometria</button>
             <button class="botao" style="background:#475569;" onclick="entrarAgora()">Agora não</button>
         </div>
@@ -173,19 +172,19 @@
 </div>
 
 <div class="container">
-    <img src="capa-rota-cheia.jpg?v=ALFAFINAL5" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
+    <img src="capa-rota-cheia.jpg?v=FINAL10" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
     
     <h1 class="titulo">🚛 Rota Cheia</h1>
     <p class="subtitulo">Nenhuma entrega volta vazia!</p>
 
     <div id="inicio" class="aba ativa">
-        <button class="botao entregador" onclick="mostrarAba('cadastroEntregador')">🏍️ Sou Entregador</button>
+        <button class="botao entregador" onclick="irEntregador()">🏍️ Sou Entregador</button>
         <button class="botao loja" onclick="mostrarAba('cadastroLoja')">🏪 Sou Loja / Cliente</button>
         <button class="botao admin" onclick="abrirAcesso()">🔐 Administrador</button>
     </div>
 
     <div id="cadastroEntregador" class="aba">
-        <button class="voltar" onclick="mostrarAba('inicio')">← Voltar</button>
+        <button class="voltar" onclick="sairEntregador()">← Voltar</button>
         
         <div id="formCadastroEntregador">
             <h2>🏍️ Seja um Entregador</h2>
@@ -208,6 +207,7 @@
         <div id="telaCorridas" class="oculto">
             <h2>📦 Corridas Disponíveis</h2>
             <div id="listaCorridas"></div>
+            <button class="voltar" onclick="sairEntregador()">← Sair</button>
         </div>
     </div>
 
@@ -236,6 +236,9 @@
 
         <h3>🏍️ Entregadores Cadastrados:</h3>
         <div id="listaEntregadores"></div>
+
+        <h3>📦 Últimas Corridas:</h3>
+        <div id="todasCorridas"></div>
     </div>
 </div>
 
@@ -245,10 +248,10 @@ let bioAtivada = localStorage.getItem('bioAtivada') === 'sim';
 let saldoPlataforma = parseFloat(localStorage.getItem('saldoPlataforma') || '0');
 let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
 let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
-let entregadorLogado = localStorage.getItem('entregadorLogado') || '';
+let dadosEntregador = JSON.parse(localStorage.getItem('dadosEntregador') || 'null');
 
 // ==========================================
-// 🔐 ACESSO — AGORA BLOQUEIA DE VERDADE
+// 🔐 ACESSO — AGORA NÃO DEIXA ENTRAR SEM CONFIRMAR
 // ==========================================
 
 function abrirAcesso() {
@@ -313,18 +316,23 @@ function entrarAgora() {
     mostrarAba('painelAdmin');
 }
 
-// ✅ AGORA NÃO DEIXA ENTRAR SEM CONFIRMAR
+// ✅ BIO: SÓ ENTRA SE O USUÁRIO CONFIRMAR A SENHA TAMBÉM
 function verificarBiometria() {
-    if (!bioAtivada) return;
+    if (!bioAtivada || !senhaSalva) {
+        alert('Cadastre uma senha primeiro!');
+        return;
+    }
 
     const confirmou = confirm('📳 Coloque sua digital no sensor');
     if (confirmou) {
-        // Só entra se o usuário confirmar a digital
-        fecharTela();
-        mostrarAba('painelAdmin');
-    } else {
-        alert('❌ Digital não reconhecida. Use a senha.');
-        mostrarSenha();
+        // A biometria do navegador é SIMULADA aqui — então pedimos a senha como confirmação real
+        const teste = prompt('Digite sua senha para confirmar a digital:');
+        if (teste === senhaSalva) {
+            fecharTela();
+            mostrarAba('painelAdmin');
+        } else {
+            alert('❌ Não foi possível confirmar. Use a opção "Usar senha".');
+        }
     }
 }
 
@@ -354,21 +362,40 @@ function verificarSenha() {
 }
 
 // ==========================================
-// 📦 CORRIDAS
+// 📦 ENTREGADOR — AGORA FUNCIONA DE VERDADE
 // ==========================================
+
+function irEntregador() {
+    if (dadosEntregador) {
+        mostrarAba('corridasTela');
+    } else {
+        mostrarAba('cadastroEntregador');
+    }
+}
+
+function sairEntregador() {
+    mostrarAba('inicio');
+}
 
 function mostrarAba(nome) {
     document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-    document.getElementById(nome).classList.add('ativa');
     
-    if (nome === 'cadastroEntregador' && entregadorLogado) {
+    if (nome === 'corridasTela') {
+        document.getElementById('cadastroEntregador').classList.add('ativa');
         document.getElementById('formCadastroEntregador').classList.add('oculto');
         document.getElementById('telaCorridas').classList.remove('oculto');
         atualizarListaCorridas();
+    } else if (nome === 'cadastroEntregador') {
+        document.getElementById('cadastroEntregador').classList.add('ativa');
+        document.getElementById('formCadastroEntregador').classList.remove('oculto');
+        document.getElementById('telaCorridas').classList.add('oculto');
+    } else {
+        document.getElementById(nome).classList.add('ativa');
     }
     
     atualizarLista();
     atualizarSaldo();
+    atualizarListaCorridas();
 }
 
 function sairPainel() {
@@ -377,29 +404,41 @@ function sairPainel() {
 
 function salvarEntregador() {
     const novo = {
-        nome: document.getElementById('nomeEntregador').value,
-        fone: document.getElementById('foneEntregador').value,
+        nome: document.getElementById('nomeEntregador').value.trim(),
+        fone: document.getElementById('foneEntregador').value.trim(),
         veiculo: document.getElementById('veiculo').value,
-        regiao: document.getElementById('regiaoEntregador').value,
-        pix: document.getElementById('pixEntregador').value
+        regiao: document.getElementById('regiaoEntregador').value.trim(),
+        pix: document.getElementById('pixEntregador').value.trim()
     };
-    if (!novo.nome || !novo.fone) { alert('Preencha nome e telefone!'); return; }
     
-    entregadores.push(novo);
-    localStorage.setItem('entregadores', JSON.stringify(entregadores));
-    entregadorLogado = novo.nome;
-    localStorage.setItem('entregadorLogado', entregadorLogado);
+    if (!novo.nome || !novo.fone) { 
+        alert('Preencha nome e telefone!'); 
+        return; 
+    }
     
-    alert('✅ Cadastro realizado!');
-    mostrarAba('cadastroEntregador');
+    dadosEntregador = novo;
+    localStorage.setItem('dadosEntregador', JSON.stringify(dadosEntregador));
+    
+    // Adiciona na lista geral se não estiver
+    const existe = entregadores.find(e => e.nome === novo.nome && e.fone === novo.fone);
+    if (!existe) {
+        entregadores.push(novo);
+        localStorage.setItem('entregadores', JSON.stringify(entregadores));
+    }
+    
+    alert('✅ Cadastro realizado! Agora você vê as corridas.');
+    mostrarAba('corridasTela');
 }
 
 function calcularRota() {
-    const origem = document.getElementById('enderecoOrigem').value;
-    const destino = document.getElementById('enderecoDestino').value;
-    const nomeLoja = document.getElementById('nomeLoja').value;
+    const origem = document.getElementById('enderecoOrigem').value.trim();
+    const destino = document.getElementById('enderecoDestino').value.trim();
+    const nomeLoja = document.getElementById('nomeLoja').value.trim();
     
-    if (!origem || !destino || !nomeLoja) { alert('Preencha todos os campos!'); return; }
+    if (!origem || !destino || !nomeLoja) { 
+        alert('Preencha todos os campos!'); 
+        return; 
+    }
 
     const valorTotal = 15.00;
     const suaParte = (valorTotal * 0.20).toFixed(2);
@@ -408,7 +447,7 @@ function calcularRota() {
     saldoPlataforma += parseFloat(suaParte);
     localStorage.setItem('saldoPlataforma', saldoPlataforma.toString());
 
-    corridas.unshift({
+    const novaCorrida = {
         id: Date.now(),
         loja: nomeLoja,
         origem,
@@ -416,7 +455,9 @@ function calcularRota() {
         valor: parseFloat(entregadorRecebe),
         valorTotal,
         data: new Date().toLocaleString('pt-BR')
-    });
+    };
+    
+    corridas.unshift(novaCorrida);
     localStorage.setItem('corridas', JSON.stringify(corridas));
 
     document.getElementById('resultadoRota').innerHTML = `
@@ -424,15 +465,19 @@ function calcularRota() {
             <p>✅ Corrida publicada!</p>
             <p>💰 Total: R$ ${valorTotal.toFixed(2)}</p>
             <p style="color:#fbbf24;">✅ Sua parte: R$ ${suaParte}</p>
-            <p style="color:#22c55e;">🏍️ Entregador: R$ ${entregadorRecebe}</p>
+            <p style="color:#22c55e;">🏍️ Entregador recebe: R$ ${entregadorRecebe}</p>
         </div>
     `;
+    
+    atualizarListaCorridas();
 }
 
 function atualizarListaCorridas() {
     const lista = document.getElementById('listaCorridas');
+    if (!lista) return;
+    
     if (corridas.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma corrida disponível.</p>';
+        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Nenhuma corrida disponível no momento.</p>';
         return;
     }
     
@@ -451,29 +496,38 @@ function aceitarCorrida(id) {
     const corrida = corridas.find(c => c.id === id);
     if (!corrida) return;
     
-    if (confirm(`Aceitar?\nDe: ${corrida.origem}\nPara: ${corrida.destino}\nValor: R$ ${corrida.valor.toFixed(2)}`)) {
+    if (confirm(`Aceitar esta corrida?\n\nDe: ${corrida.origem}\nPara: ${corrida.destino}\nValor: R$ ${corrida.valor.toFixed(2)}`)) {
         const link = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(corrida.origem)}&destination=${encodeURIComponent(corrida.destino)}`;
         window.open(link, '_blank');
         corridas = corridas.filter(c => c.id !== id);
         localStorage.setItem('corridas', JSON.stringify(corridas));
         atualizarListaCorridas();
+        alert('✅ Corrida aceita! Boa entrega! 🛵');
     }
 }
 
 function sacarSaldo() {
-    if (saldoPlataforma <= 0) { alert('Sem saldo.'); return; }
-    alert(`💰 Saque de R$ ${saldoPlataforma.toFixed(2)} realizado!`);
-    saldoPlataforma = 0;
-    localStorage.setItem('saldoPlataforma', '0');
-    atualizarSaldo();
+    if (saldoPlataforma <= 0) { 
+        alert('Sem saldo para sacar.'); 
+        return; 
+    }
+    if (confirm(`Confirmar saque de R$ ${saldoPlataforma.toFixed(2)}?`)) {
+        alert(`💰 Saque de R$ ${saldoPlataforma.toFixed(2)} realizado com sucesso!`);
+        saldoPlataforma = 0;
+        localStorage.setItem('saldoPlataforma', '0');
+        atualizarSaldo();
+    }
 }
 
 function atualizarSaldo() {
-    document.getElementById('saldoPlataforma').textContent = `R$ ${saldoPlataforma.toFixed(2)}`;
+    const el = document.getElementById('saldoPlataforma');
+    if (el) el.textContent = `R$ ${saldoPlataforma.toFixed(2)}`;
 }
 
 function atualizarLista() {
     const lista = document.getElementById('listaEntregadores');
+    if (!lista) return;
+    
     lista.innerHTML = entregadores.length === 0 
         ? '<p style="color:#94a3b8;">Nenhum entregador cadastrado.</p>'
         : entregadores.map((e, i) => `
@@ -485,6 +539,7 @@ function atualizarLista() {
         `).join('');
 }
 
+// Inicializa
 atualizarSaldo();
 </script>
 
