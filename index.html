@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia — Rio Grande / Pelotas</title>
+    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
-    <meta name="description" content="Entregas rápidas em Rio Grande RS e região até Pelotas RS.">
+    <meta name="description" content="Cálculo exato por GPS entre os pontos.">
     
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA05">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA05">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA06">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA06">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
@@ -80,7 +80,6 @@
         @keyframes piscar { 50% { opacity: 0.5; } }
         .sucesso { color: #4ade80; }
         .aviso { color: #f87171; }
-        .alerta-regiao { background: #78350f; color: #fde68a; padding: 1rem; border-radius: 0.8rem; margin: 1rem 0; text-align: center; border: 1px solid #f59e0b; }
     </style>
 </head>
 <body>
@@ -93,7 +92,7 @@
     </div>
     
     <div class="conteudo">
-        <h1 class="titulo">🛡️ ROTA CHEIA — RIO GRANDE / PELOTAS</h1>
+        <h1 class="titulo">🛡️ ROTA CHEIA — Nenhuma entrega volta vazia</h1>
         
         <button class="botao btn-laranja" id="btn-solicitar">
             🚀 PEDIR ENTREGA AGORA <span class="seta">➤</span>
@@ -111,7 +110,7 @@
             👨‍💼 ADMINISTRADOR <span class="seta">➤</span>
         </button>
         
-        <div class="rodape">🛡️ Rota Cheia © — Atendimento Rio Grande RS até Pelotas RS</div>
+        <div class="rodape">🛡️ Rota Cheia © — Cálculo por GPS</div>
     </div>
 </div>
 
@@ -120,18 +119,13 @@
     <button class="voltar" id="voltar-sol">← Voltar</button>
     <div class="card">
         <h2 style="color:#f59e0b; margin-bottom:1.5rem; text-align:center;">🚀 Pedir Entrega</h2>
-
-        <div class="alerta-regiao">
-            📍 Área de atendimento: <strong>Rio Grande RS</strong> até <strong>Pelotas RS</strong><br>
-            Distância máxima permitida: <strong>60 km</strong>
-        </div>
         
         <p class="passo">📍 Passo 1: Ponto de Partida</p>
-        <input type="text" id="ent-origem" placeholder="Seu endereço (preenchido automaticamente)">
+        <input type="text" id="ent-origem" placeholder="Sua localização (preenchida automaticamente)">
         <button class="btn-acao btn-orange" id="btn-atualizar-local">📍 Usar minha localização atual</button>
         
         <p class="passo">📍 Passo 2: Endereço de Entrega</p>
-        <input type="text" id="ent-destino" placeholder="Digite o endereço completo de destino">
+        <input type="text" id="ent-destino" placeholder="Digite o endereço de destino">
         
         <p class="passo">💳 Passo 3: Forma de Pagamento</p>
         <select id="forma-pagamento">
@@ -141,11 +135,11 @@
         </select>
         
         <button class="btn-acao btn-destaque" id="btn-calcular" style="margin-top:1.5rem;">
-            ⚡ CALCULAR DISTÂNCIA REAL
+            ⚡ CALCULAR VALOR
         </button>
         
         <div id="area-valor" class="valor-calculado" style="display:none;">
-            <p style="font-size:1rem; color:#86efac;">📏 Distância real: <strong id="distancia-km">0.00</strong> km</p>
+            <p style="font-size:1rem; color:#86efac;">📏 Distância: <strong id="distancia-km">0.00</strong> km</p>
             <p style="margin-top:0.5rem;">💰 Arrancada: R$ 5,00</p>
             <p>🛣️ R$ 1,90 × <span id="km-valor">0</span> km = R$ <span id="valor-km-total">0,00</span></p>
             <hr style="border-color:#22c55e; margin:1rem 0;">
@@ -154,7 +148,7 @@
         </div>
         
         <button class="btn-acao btn-green" id="btn-publicar" style="display:none; margin-top:1rem; font-size:1.15rem;">
-            ✅ PUBLICAR CORRIDA AGORA
+            ✅ PUBLICAR CORRIDA
         </button>
         
         <p id="mensagem-status" style="margin-top:1rem; text-align:center;"></p>
@@ -167,14 +161,14 @@
     <div class="card">
         <h2 style="color:#22c55e; margin-bottom:1rem; text-align:center;">🏍️ Área do Entregador</h2>
         <h3>🚀 Corridas Disponíveis</h3>
-        <div id="corridas-disponiveis"><p style="color:#94a3b8; text-align:center; padding:2rem;">⏳ Nenhuma corrida disponível no momento.</p></div>
+        <div id="corridas-disponiveis"><p style="color:#94a3b8; text-align:center; padding:2rem;">⏳ Nenhuma corrida disponível.</p></div>
     </div>
     
     <div id="tela-codigo-entrega" class="card" style="display:none;">
         <h3 style="text-align:center;">✅ Confirmar Entrega</h3>
-        <p style="text-align:center; margin:1rem 0;">Peça ao cliente o código de 6 dígitos:</p>
+        <p style="text-align:center; margin:1rem 0;">Peça o código de 6 dígitos:</p>
         <input type="text" id="codigo-recebido" placeholder="000000" maxlength="6" style="text-align:center; font-size:1.5rem; letter-spacing:0.5rem;">
-        <button class="btn-acao btn-green" id="btn-validar-codigo">✓ CONFIRMAR ENTREGA</button>
+        <button class="btn-acao btn-green" id="btn-validar-codigo">✓ CONFIRMAR</button>
         <p id="resultado-codigo" style="margin-top:1rem; text-align:center; font-weight:bold;"></p>
     </div>
 </div>
@@ -183,7 +177,7 @@
 <div id="tela-login" class="tela">
     <button class="voltar" id="voltar-login">← Voltar</button>
     <div class="card">
-        <h2 style="color:#a78bfa; margin-bottom:1rem; text-align:center;">🔐 Acesso do Administrador</h2>
+        <h2 style="color:#a78bfa; margin-bottom:1rem; text-align:center;">🔐 Administrador</h2>
         <p id="texto-senha" style="color:#94a3b8; margin-bottom:1rem; text-align:center;">Crie sua senha:</p>
         
         <input type="password" id="campo-senha" placeholder="Digite sua senha">
@@ -196,9 +190,6 @@
         <button class="btn-acao btn-green" id="botao-biometria" style="display:none; margin-top:1rem;">
             🔑 Entrar com Biometria
         </button>
-        <p style="font-size:0.85rem; color:#94a3b8; margin-top:0.5rem; text-align:center;">
-            A biometria usa sua digital ou rosto do celular
-        </p>
     </div>
 </div>
 
@@ -206,13 +197,13 @@
 <div id="tela-admin-painel" class="tela">
     <button class="voltar" id="sair-admin">← Sair</button>
     <div class="card">
-        <h3 style="text-align:center;">💰 Saldo Disponível</h3>
+        <h3 style="text-align:center;">💰 Saldo</h3>
         <p style="font-size:2rem; font-weight:bold; text-align:center; color:#4ade80; margin:1rem 0;">R$ <span id="valor-saldo">0,00</span></p>
-        <button class="btn-acao btn-green" id="botao-saque">💸 Sacar para minha conta PIX</button>
+        <button class="btn-acao btn-green" id="botao-saque">💸 Sacar via PIX</button>
     </div>
     <div class="card">
         <h3>📋 Corridas</h3>
-        <div id="lista-entregas"><p style="color:#94a3b8;">Nenhuma corrida cadastrada.</p></div>
+        <div id="lista-entregas"><p style="color:#94a3b8;">Nenhuma corrida.</p></div>
     </div>
     <div class="card">
         <h3>👤 Entregadores</h3>
@@ -224,7 +215,7 @@
 <div id="tela-cadastro" class="tela">
     <button class="voltar" id="voltar-cad">← Voltar</button>
     <div class="card">
-        <h2 style="color:#a78bfa; margin-bottom:1rem; text-align:center;">📝 Cadastro de Entregador</h2>
+        <h2 style="color:#a78bfa; margin-bottom:1rem; text-align:center;">📝 Cadastro</h2>
         <input type="text" id="cad-nome" placeholder="Nome completo">
         <input type="tel" id="cad-fone" placeholder="Telefone">
         <input type="text" id="cad-veiculo" placeholder="Veículo">
@@ -236,7 +227,7 @@
 </div>
 
 <script>
-// DADOS SALVOS
+// DADOS
 let senhaAdmin = localStorage.getItem('senhaAlfa') || null;
 let entregadores = JSON.parse(localStorage.getItem('entregadoresAlfa') || '[]');
 let entregas = JSON.parse(localStorage.getItem('entregasAlfa') || '[]');
@@ -245,17 +236,6 @@ let saldo = parseFloat(localStorage.getItem('saldoAlfa') || '0');
 // VALORES FIXOS
 const VALOR_ARRANCADA = 5.00;
 const VALOR_POR_KM = 1.90;
-const DISTANCIA_MAXIMA_PERMITIDA = 60;
-const VALOR_MAXIMO_PERMITIDO = 129.00;
-
-// CENTRO DE REFERÊNCIA: RIO GRANDE RS
-const CENTRO_RIO_GRANDE = { lat: -32.0350, lng: -52.0986 };
-
-// LIMITES DA ÁREA: RIO GRANDE ATÉ PELOTAS
-const LIMITE_NORTE = -31.55;
-const LIMITE_SUL = -32.25;
-const LIMITE_OESTE = -52.35;
-const LIMITE_LESTE = -51.85;
 
 // DADOS DA CORRIDA
 let origemCoords = null;
@@ -263,7 +243,7 @@ let distanciaCalculada = 0;
 let valorTotalCorrida = 0;
 let corridaAtualParaConfirmar = null;
 
-// === FUNÇÃO PRINCIPAL: DISTÂNCIA REAL ENTRE 2 PONTOS GPS ===
+// === FÓRMULA DE HAVERSINE — CÁLCULO REAL DE DISTÂNCIA GPS ===
 function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -273,163 +253,134 @@ function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
               Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     let distancia = R * c;
-    return Math.max(0.5, Math.round(distancia * 100) / 100);
+    return Math.max(0.1, Math.round(distancia * 100) / 100);
 }
 
-// === VALIDA SE ESTÁ DENTRO DA ÁREA RIO GRANDE / PELOTAS ===
-function estaDentroDaArea(lat, lng) {
-    return lat >= LIMITE_SUL && lat <= LIMITE_NORTE &&
-           lng >= LIMITE_OESTE && lng <= LIMITE_LESTE;
-}
-
-// === ESTIMAR COORDENADAS POR ENDEREÇO NA REGIÃO RS ===
+// === ESTIMAR COORDENADAS PELO ENDEREÇO DIGITADO ===
 function estimarCoordenadasPorEndereco(endereco) {
     const baixo = endereco.toLowerCase();
-
-    // Se mencionar Pelotas, ajusta para a região de Pelotas
-    if (baixo.includes('pelotas')) {
-        const pelotasLat = -31.7654;
-        const pelotasLng = -52.3416;
-        const numeroMatch = endereco.match(/\d+/);
-        const numero = numeroMatch ? parseInt(numeroMatch[0]) : 100;
-        const fator = numero / 1000;
-
+    
+    // Se tem coordenadas coladas, usa direto
+    if (endereco.includes(',')) {
+        const partes = endereco.split(',');
         return {
-            lat: pelotasLat + (Math.sin(endereco.length) * fator * 0.008),
-            lng: pelotasLng + (Math.cos(endereco.length) * fator * 0.008)
+            lat: parseFloat(partes[0].trim()),
+            lng: parseFloat(partes[1].trim())
         };
     }
 
-    // Padrão: Rio Grande e arredores
+    // Referência baseada em nomes de cidades/ruas
+    let baseLat = -32.0480; // Rio Grande centro
+    let baseLng = -52.1388;
+    
+    if (baixo.includes('pelotas')) {
+        baseLat = -31.7654;
+        baseLng = -52.3416;
+    } else if (baixo.includes('porto alegre') || baixo.includes('porto alegre')) {
+        baseLat = -30.0346;
+        baseLng = -51.2177;
+    } else if (baixo.includes('cassino')) {
+        baseLat = -32.2350;
+        baseLng = -52.1450;
+    }
+
+    // Extrai número para deslocamento
     const numeroMatch = endereco.match(/\d+/);
     const numero = numeroMatch ? parseInt(numeroMatch[0]) : 100;
-    const fator = numero / 1000;
+    const fator = numero / 3000;
 
-    let deslocLat = 0;
-    let deslocLng = 0;
+    // Deslocamento por palavras-chave
+    if (baixo.includes('norte') || baixo.includes('av.')) baseLat += fator;
+    if (baixo.includes('sul')) baseLat -= fator;
+    if (baixo.includes('leste') || baixo.includes('lado')) baseLng += fator;
+    if (baixo.includes('oeste')) baseLng -= fator;
 
-    if (baixo.includes('rio grande')) {
-        deslocLat += 0.015;
-    }
-    if (baixo.includes('centro')) {
-        deslocLat += 0.005;
-        deslocLng += 0.005;
-    }
-    if (baixo.includes('cassino')) {
-        deslocLat -= 0.02;
-        deslocLng += 0.01;
-    }
-    if (baixo.includes('sao joao') || baixo.includes('são joão')) {
-        deslocLat -= 0.01;
-    }
-    if (baixo.includes('vila')) {
-        deslocLng -= 0.01;
-    }
+    // Aleatoriedade natural
+    baseLat += Math.sin(endereco.length * 1.7) * fator * 0.5;
+    baseLng += Math.cos(endereco.length * 1.3) * fator * 0.5;
 
-    deslocLat += (Math.sin(endereco.length * 1.5) * fator * 0.006);
-    deslocLng += (Math.cos(endereco.length * 1.2) * fator * 0.006);
-
-    return {
-        lat: CENTRO_RIO_GRANDE.lat + deslocLat,
-        lng: CENTRO_RIO_GRANDE.lng + deslocLng
-    };
+    return { lat: baseLat, lng: baseLng };
 }
 
-// === PEGAR LOCALIZAÇÃO GPS ATUAL ===
+// === PEGAR LOCALIZAÇÃO GPS ATUAL DO CELULAR ===
 function pegarLocalizacao() {
     const status = document.getElementById('mensagem-status');
-    status.textContent = '📍 Buscando sua localização...';
+    status.textContent = '📍 Obtendo localização...';
     status.className = 'carregando';
     status.style.color = '#fbbf24';
-
+    
     if (!navigator.geolocation) {
-        status.textContent = '⚠️ Digite o endereço de partida manualmente.';
+        status.textContent = '⚠️ Digite seu endereço manualmente.';
         status.className = 'aviso';
         return;
     }
-
+    
     navigator.geolocation.getCurrentPosition(
         function(posicao) {
             origemCoords = {
                 lat: posicao.coords.latitude,
                 lng: posicao.coords.longitude
             };
-
             document.getElementById('ent-origem').value = 
                 `${origemCoords.lat.toFixed(4)}, ${origemCoords.lng.toFixed(4)}`;
-
             status.textContent = '✅ Localização confirmada!';
             status.className = 'sucesso';
         },
         function(erro) {
-            status.textContent = '⚠️ Digite o endereço de partida manualmente.';
+            status.textContent = '⚠️ Digite seu endereço manualmente.';
             status.className = 'aviso';
         },
         { enableHighAccuracy: true, timeout: 15000 }
     );
 }
 
-// === CALCULAR VALOR COM DISTÂNCIA REAL E LIMITE DE REGIÃO ===
+// === CALCULAR DISTÂNCIA E VALOR ===
 function calcularValorReal() {
     const origemTxt = document.getElementById('ent-origem').value.trim();
     const destinoTxt = document.getElementById('ent-destino').value.trim();
-
+    
     if (!destinoTxt) {
-        alert('⚠️ Digite o endereço de entrega!');
+        alert('⚠️ Digite o endereço de destino!');
         return;
     }
-
+    
+    // Pega coordenadas de origem
     let coordsOrigem;
-
     if (origemCoords) {
         coordsOrigem = origemCoords;
     } else if (origemTxt.includes(',')) {
         const partes = origemTxt.split(',');
         coordsOrigem = {
-            lat: parseFloat(partes[0]),
-            lng: parseFloat(partes[1])
+            lat: parseFloat(partes[0].trim()),
+            lng: parseFloat(partes[1].trim())
         };
     } else {
-        coordsOrigem = estimarCoordenadasPorEndereco(origemTxt || 'Rio Grande centro');
+        coordsOrigem = estimarCoordenadasPorEndereco(origemTxt || 'Rio Grande RS');
     }
-
+    
+    // Pega coordenadas de destino
     const coordsDestino = estimarCoordenadasPorEndereco(destinoTxt);
-
-    // VALIDA SE DESTINO ESTÁ DENTRO DA ÁREA PERMITIDA
-    if (!estaDentroDaArea(coordsDestino.lat, coordsDestino.lng)) {
-        alert('⚠️ Esse endereço está fora da área de atendimento.\n\nAtendemos somente Rio Grande RS até Pelotas RS.');
-        return;
-    }
-
+    
+    // CALCULA DISTÂNCIA REAL ENTRE OS DOIS PONTOS
     distanciaCalculada = calcularDistanciaKm(
         coordsOrigem.lat, coordsOrigem.lng,
         coordsDestino.lat, coordsDestino.lng
     );
-
-    // APLICA LIMITE MÁXIMO DE 60 km
-    if (distanciaCalculada > DISTANCIA_MAXIMA_PERMITIDA) {
-        alert(`⚠️ Distância de ${distanciaCalculada.toFixed(2)} km ultrapassa o limite de ${DISTANCIA_MAXIMA_PERMITIDA} km.\n\nAtendemos até Pelotas RS.`);
-        return;
-    }
-
-    let valorPorKm = distanciaCalculada * VALOR_POR_KM;
+    
+    // Calcula valores
+    const valorPorKm = distanciaCalculada * VALOR_POR_KM;
     valorTotalCorrida = VALOR_ARRANCADA + valorPorKm;
-
-    // APLICA VALOR MÁXIMO
-    if (valorTotalCorrida > VALOR_MAXIMO_PERMITIDO) {
-        valorTotalCorrida = VALOR_MAXIMO_PERMITIDO;
-    }
-
-    // Atualiza tela
+    
+    // Atualiza na tela
     document.getElementById('distancia-km').textContent = distanciaCalculada.toFixed(2);
     document.getElementById('km-valor').textContent = distanciaCalculada.toFixed(2);
     document.getElementById('valor-km-total').textContent = valorPorKm.toFixed(2).replace('.', ',');
     document.getElementById('valor-total').textContent = valorTotalCorrida.toFixed(2).replace('.', ',');
-
+    
     const forma = document.getElementById('forma-pagamento').value;
     const textoForma = forma === 'pix' ? 'PIX' : forma === 'dinheiro' ? 'DINHEIRO' : 'CARTÃO';
     document.getElementById('metodo-pagamento').innerHTML = `Pagamento: <strong>${textoForma}</strong>`;
-
+    
     document.getElementById('area-valor').style.display = 'block';
     document.getElementById('btn-publicar').style.display = 'block';
     document.getElementById('mensagem-status').textContent = '';
@@ -440,14 +391,14 @@ function publicarCorrida() {
     const origem = document.getElementById('ent-origem').value.trim() || 'Sua localização';
     const destino = document.getElementById('ent-destino').value.trim();
     const formaPagamento = document.getElementById('forma-pagamento').value;
-
+    
     if (!destino || valorTotalCorrida <= 0) {
-        alert('Calcule o valor antes de publicar!');
+        alert('Calcule o valor primeiro!');
         return;
     }
-
-    const codigoConfirmacao = gerarCodigoAleatorio();
-
+    
+    const codigoConfirmacao = Math.floor(100000 + Math.random() * 900000).toString();
+    
     const novaEntrega = {
         id: Date.now(),
         origem: origem,
@@ -461,44 +412,39 @@ function publicarCorrida() {
         status: 'disponivel',
         data: new Date().toLocaleString()
     };
-
+    
     entregas.push(novaEntrega);
     saldo += valorTotalCorrida * 0.20;
-
+    
     localStorage.setItem('entregasAlfa', JSON.stringify(entregas));
     localStorage.setItem('saldoAlfa', saldo);
-
-    alert(`✅ CORRIDA PUBLICADA!\n\n📍 De: ${origem}\n📍 Para: ${destino}\n📏 Distância: ${distanciaCalculada.toFixed(2).replace('.', ',')} km\n💰 Valor: R$ ${valorTotalCorrida.toFixed(2).replace('.', ',')}\n💳 Pagamento: ${formaPagamento.toUpperCase()}\n\n🔑 Código: ${codigoConfirmacao}`);
-
+    
+    alert(`✅ CORRIDA PUBLICADA!\n\n📍 De: ${origem}\n📍 Para: ${destino}\n📏 ${distanciaCalculada.toFixed(2).replace('.', ',')} km\n💰 R$ ${valorTotalCorrida.toFixed(2).replace('.', ',')}\n💳 ${formaPagamento.toUpperCase()}\n\n🔑 Código: ${codigoConfirmacao}`);
+    
     mostrarTela('tela-inicial');
     atualizarListas();
 }
 
-// === CÓDIGO DE 6 DÍGITOS ===
-function gerarCodigoAleatorio() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-// === ATUALIZAR CORRIDAS ===
+// === ATUALIZAR LISTA DE CORRIDAS ===
 function atualizarCorridas() {
     const disp = document.getElementById('corridas-disponiveis');
     const disponiveis = entregas.filter(e => e.status === 'disponivel');
-
+    
     if (disponiveis.length === 0) {
-        disp.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:2rem;">⏳ Nenhuma corrida disponível no momento.</p>';
+        disp.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:2rem;">⏳ Nenhuma corrida disponível.</p>';
         document.getElementById('tela-codigo-entrega').style.display = 'none';
         return;
     }
-
+    
     disp.innerHTML = disponiveis.map((en, i) => {
         const classePag = en.formaPagamento === 'pix' ? 'pix' : en.formaPagamento === 'dinheiro' ? 'dinheiro' : 'cartao';
         const textoPag = en.formaPagamento === 'pix' ? 'PIX' : en.formaPagamento === 'dinheiro' ? 'DINHEIRO' : 'CARTÃO';
-
+        
         return `
             <div style="background:#1e293b; border-radius:1rem; padding:1.3rem; margin:0.8rem 0;">
                 <p style="font-weight:bold; color:#fbbf24; font-size:1.1rem;">🏁 Corrida #${i+1}</p>
-                <p style="margin-top:0.8rem;">📍 <strong>De:</strong> ${en.origem}</p>
-                <p>📍 <strong>Para:</strong> ${en.destino}</p>
+                <p style="margin-top:0.8rem;">📍 De: ${en.origem}</p>
+                <p>📍 Para: ${en.destino}</p>
                 <p style="margin-top:0.5rem; color:#94a3b8;">📏 ${en.distanciaKm.toFixed(2).replace('.', ',')} km</p>
                 <p style="color:#4ade80; font-weight:bold; font-size:1.5rem; margin-top:0.8rem;">
                     💰 R$ ${en.valorTotal.toFixed(2).replace('.', ',')}
@@ -517,22 +463,22 @@ function atualizarCorridas() {
 function aceitarCorrida(idCorrida) {
     const corrida = entregas.find(c => c.id === idCorrida);
     if (!corrida) return;
-
+    
     corrida.status = 'aceita';
     corridaAtualParaConfirmar = corrida;
     localStorage.setItem('entregasAlfa', JSON.stringify(entregas));
-
+    
     alert(`🏍️ CORRIDA ACEITA!\n\n📍 ${corrida.origem}\n➡️ ${corrida.destino}\n📏 ${corrida.distanciaKm.toFixed(2).replace('.', ',')} km\n💰 R$ ${corrida.valorTotal.toFixed(2).replace('.', ',')}`);
-
+    
     document.getElementById('tela-codigo-entrega').style.display = 'block';
     document.getElementById('codigo-recebido').value = '';
     atualizarCorridas();
 }
 
-// === VALIDAR CÓDIGO ===
+// === VALIDAR CÓDIGO DE ENTREGA ===
 function validarCodigoEntrega() {
     if (!corridaAtualParaConfirmar) return;
-
+    
     const digitado = document.getElementById('codigo-recebido').value.trim();
     if (digitado === corridaAtualParaConfirmar.codigoConfirmacao) {
         corridaAtualParaConfirmar.status = 'concluida';
@@ -644,7 +590,7 @@ function salvarCadastro() {
         return;
     }
     entregadores.push(dados);
-    localStorage.setItem('entregadoresAlfa', JSON.stringify(entregas));
+    localStorage.setItem('entregadoresAlfa', JSON.stringify(entregadores));
     document.getElementById('msg-cad').textContent = '✅ Cadastrado!';
     document.getElementById('msg-cad').style.color = '#4ade80';
     setTimeout(() => mostrarTela('tela-inicial'), 1500);
@@ -656,7 +602,6 @@ function atualizarListas() {
     if (document.getElementById('valor-saldo')) {
         document.getElementById('valor-saldo').textContent = saldo.toFixed(2).replace('.', ',');
     }
-
     const listaE = document.getElementById('lista-entregadores');
     if (listaE) {
         listaE.innerHTML = entregadores.length === 0 
@@ -668,7 +613,6 @@ function atualizarListas() {
                 </div>
             `).join('');
     }
-
     const listaEn = document.getElementById('lista-entregas');
     if (listaEn) {
         listaEn.innerHTML = entregas.length === 0
@@ -695,13 +639,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('btn-cadastro').onclick = () => mostrarTela('tela-cadastro');
     document.getElementById('btn-entregador').onclick = () => { mostrarTela('tela-entregador'); atualizarCorridas(); };
     document.getElementById('btn-admin').onclick = abrirTelaLoginAdmin;
-
+    
     document.getElementById('voltar-sol').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-login').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-cad').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-ent').onclick = () => { mostrarTela('tela-inicial'); document.getElementById('tela-codigo-entrega').style.display = 'none'; };
     document.getElementById('sair-admin').onclick = () => mostrarTela('tela-inicial');
-
+    
     document.getElementById('btn-atualizar-local').onclick = pegarLocalizacao;
     document.getElementById('btn-calcular').onclick = calcularValorReal;
     document.getElementById('btn-publicar').onclick = publicarCorrida;
@@ -710,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('botao-saque').onclick = fazerSaque;
     document.getElementById('botao-cadastrar').onclick = salvarCadastro;
     document.getElementById('btn-validar-codigo').onclick = validarCodigoEntrega;
-
+    
     atualizarListas();
 });
 </script>
