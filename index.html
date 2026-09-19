@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
+    <title>Rota Cheia — Rio Grande / Pelotas</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
-    <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
+    <meta name="description" content="Entregas rápidas em Rio Grande RS e região até Pelotas RS.">
     
-    <!-- 📱 ÍCONE = MESMA FOTO DA CAPA -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA04">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA04">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA05">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA05">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
@@ -81,6 +80,7 @@
         @keyframes piscar { 50% { opacity: 0.5; } }
         .sucesso { color: #4ade80; }
         .aviso { color: #f87171; }
+        .alerta-regiao { background: #78350f; color: #fde68a; padding: 1rem; border-radius: 0.8rem; margin: 1rem 0; text-align: center; border: 1px solid #f59e0b; }
     </style>
 </head>
 <body>
@@ -93,7 +93,7 @@
     </div>
     
     <div class="conteudo">
-        <h1 class="titulo">🛡️ ROTA CHEIA — O ÚNICO QUE CASA ROTAS</h1>
+        <h1 class="titulo">🛡️ ROTA CHEIA — RIO GRANDE / PELOTAS</h1>
         
         <button class="botao btn-laranja" id="btn-solicitar">
             🚀 PEDIR ENTREGA AGORA <span class="seta">➤</span>
@@ -111,7 +111,7 @@
             👨‍💼 ADMINISTRADOR <span class="seta">➤</span>
         </button>
         
-        <div class="rodape">🛡️ Rota Cheia © — Distância Real por GPS</div>
+        <div class="rodape">🛡️ Rota Cheia © — Atendimento Rio Grande RS até Pelotas RS</div>
     </div>
 </div>
 
@@ -120,6 +120,11 @@
     <button class="voltar" id="voltar-sol">← Voltar</button>
     <div class="card">
         <h2 style="color:#f59e0b; margin-bottom:1.5rem; text-align:center;">🚀 Pedir Entrega</h2>
+
+        <div class="alerta-regiao">
+            📍 Área de atendimento: <strong>Rio Grande RS</strong> até <strong>Pelotas RS</strong><br>
+            Distância máxima permitida: <strong>60 km</strong>
+        </div>
         
         <p class="passo">📍 Passo 1: Ponto de Partida</p>
         <input type="text" id="ent-origem" placeholder="Seu endereço (preenchido automaticamente)">
@@ -240,16 +245,27 @@ let saldo = parseFloat(localStorage.getItem('saldoAlfa') || '0');
 // VALORES FIXOS
 const VALOR_ARRANCADA = 5.00;
 const VALOR_POR_KM = 1.90;
+const DISTANCIA_MAXIMA_PERMITIDA = 60;
+const VALOR_MAXIMO_PERMITIDO = 129.00;
+
+// CENTRO DE REFERÊNCIA: RIO GRANDE RS
+const CENTRO_RIO_GRANDE = { lat: -32.0350, lng: -52.0986 };
+
+// LIMITES DA ÁREA: RIO GRANDE ATÉ PELOTAS
+const LIMITE_NORTE = -31.55;
+const LIMITE_SUL = -32.25;
+const LIMITE_OESTE = -52.35;
+const LIMITE_LESTE = -51.85;
 
 // DADOS DA CORRIDA
-let origemCoords = null;   // {lat, lng}
+let origemCoords = null;
 let distanciaCalculada = 0;
 let valorTotalCorrida = 0;
 let corridaAtualParaConfirmar = null;
 
-// === FÓRMULA DE HAVERSINE — CÁLCULO REAL DE DISTÂNCIA ENTRE 2 PONTOS GPS ===
+// === FUNÇÃO PRINCIPAL: DISTÂNCIA REAL ENTRE 2 PONTOS GPS ===
 function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Raio da Terra em km
+    const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -257,42 +273,65 @@ function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
               Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     let distancia = R * c;
-    
-    // Arredonda pra 2 casas decimais, mínimo 0.5km
-    distancia = Math.max(0.5, Math.round(distancia * 100) / 100);
-    return distancia;
+    return Math.max(0.5, Math.round(distancia * 100) / 100);
 }
 
-// === ESTIMAR COORDENADAS PELO ENDEREÇO (SISTEMA DE GEOLOCALIZAÇÃO) ===
+// === VALIDA SE ESTÁ DENTRO DA ÁREA RIO GRANDE / PELOTAS ===
+function estaDentroDaArea(lat, lng) {
+    return lat >= LIMITE_SUL && lat <= LIMITE_NORTE &&
+           lng >= LIMITE_OESTE && lng <= LIMITE_LESTE;
+}
+
+// === ESTIMAR COORDENADAS POR ENDEREÇO NA REGIÃO RS ===
 function estimarCoordenadasPorEndereco(endereco) {
-    // Base de referência: Porto Alegre/RS como centro
-    const centroLat = -30.0346;
-    const centroLng = -51.2177;
-    
-    // Padrão simples: extrai número e calcula deslocamento
+    const baixo = endereco.toLowerCase();
+
+    // Se mencionar Pelotas, ajusta para a região de Pelotas
+    if (baixo.includes('pelotas')) {
+        const pelotasLat = -31.7654;
+        const pelotasLng = -52.3416;
+        const numeroMatch = endereco.match(/\d+/);
+        const numero = numeroMatch ? parseInt(numeroMatch[0]) : 100;
+        const fator = numero / 1000;
+
+        return {
+            lat: pelotasLat + (Math.sin(endereco.length) * fator * 0.008),
+            lng: pelotasLng + (Math.cos(endereco.length) * fator * 0.008)
+        };
+    }
+
+    // Padrão: Rio Grande e arredores
     const numeroMatch = endereco.match(/\d+/);
     const numero = numeroMatch ? parseInt(numeroMatch[0]) : 100;
-    
-    // Fator de deslocamento: cada ~100 números = ~0.1km
     const fator = numero / 1000;
-    
-    // Direção baseada em palavras comuns
+
     let deslocLat = 0;
     let deslocLng = 0;
-    const baixo = endereco.toLowerCase();
-    
-    if (baixo.includes('norte') || baixo.includes('av.')) deslocLat += fator * 0.01;
-    if (baixo.includes('sul')) deslocLat -= fator * 0.01;
-    if (baixo.includes('leste') || baixo.includes('lado')) deslocLng += fator * 0.01;
-    if (baixo.includes('oeste')) deslocLng -= fator * 0.01;
-    
-    // Adiciona aleatoriedade controlada pra simular endereços reais
-    deslocLat += (Math.sin(endereco.length * 1.5) * fator * 0.005);
-    deslocLng += (Math.cos(endereco.length * 1.2) * fator * 0.005);
-    
+
+    if (baixo.includes('rio grande')) {
+        deslocLat += 0.015;
+    }
+    if (baixo.includes('centro')) {
+        deslocLat += 0.005;
+        deslocLng += 0.005;
+    }
+    if (baixo.includes('cassino')) {
+        deslocLat -= 0.02;
+        deslocLng += 0.01;
+    }
+    if (baixo.includes('sao joao') || baixo.includes('são joão')) {
+        deslocLat -= 0.01;
+    }
+    if (baixo.includes('vila')) {
+        deslocLng -= 0.01;
+    }
+
+    deslocLat += (Math.sin(endereco.length * 1.5) * fator * 0.006);
+    deslocLng += (Math.cos(endereco.length * 1.2) * fator * 0.006);
+
     return {
-        lat: centroLat + deslocLat,
-        lng: centroLng + deslocLng
+        lat: CENTRO_RIO_GRANDE.lat + deslocLat,
+        lng: CENTRO_RIO_GRANDE.lng + deslocLng
     };
 }
 
@@ -302,24 +341,23 @@ function pegarLocalizacao() {
     status.textContent = '📍 Buscando sua localização...';
     status.className = 'carregando';
     status.style.color = '#fbbf24';
-    
+
     if (!navigator.geolocation) {
         status.textContent = '⚠️ Digite o endereço de partida manualmente.';
         status.className = 'aviso';
         return;
     }
-    
+
     navigator.geolocation.getCurrentPosition(
         function(posicao) {
             origemCoords = {
                 lat: posicao.coords.latitude,
                 lng: posicao.coords.longitude
             };
-            
-            // Preenche o campo com coordenadas pra referência
+
             document.getElementById('ent-origem').value = 
                 `${origemCoords.lat.toFixed(4)}, ${origemCoords.lng.toFixed(4)}`;
-            
+
             status.textContent = '✅ Localização confirmada!';
             status.className = 'sucesso';
         },
@@ -331,56 +369,67 @@ function pegarLocalizacao() {
     );
 }
 
-// === CALCULAR VALOR COM DISTÂNCIA REAL ===
+// === CALCULAR VALOR COM DISTÂNCIA REAL E LIMITE DE REGIÃO ===
 function calcularValorReal() {
     const origemTxt = document.getElementById('ent-origem').value.trim();
     const destinoTxt = document.getElementById('ent-destino').value.trim();
-    
+
     if (!destinoTxt) {
         alert('⚠️ Digite o endereço de entrega!');
         return;
     }
-    
+
     let coordsOrigem;
-    
-    // Tenta usar GPS ou estima pelo texto
+
     if (origemCoords) {
         coordsOrigem = origemCoords;
     } else if (origemTxt.includes(',')) {
-        // Usuário colou coordenadas
         const partes = origemTxt.split(',');
         coordsOrigem = {
             lat: parseFloat(partes[0]),
             lng: parseFloat(partes[1])
         };
     } else {
-        // Estima coordenadas pelo endereço digitado
-        coordsOrigem = estimarCoordenadasPorEndereco(origemTxt || 'Porto Alegre centro');
+        coordsOrigem = estimarCoordenadasPorEndereco(origemTxt || 'Rio Grande centro');
     }
-    
-    // Estima coordenadas do destino
+
     const coordsDestino = estimarCoordenadasPorEndereco(destinoTxt);
-    
-    // CALCULA DISTÂNCIA REAL ENTRE OS DOIS PONTOS
+
+    // VALIDA SE DESTINO ESTÁ DENTRO DA ÁREA PERMITIDA
+    if (!estaDentroDaArea(coordsDestino.lat, coordsDestino.lng)) {
+        alert('⚠️ Esse endereço está fora da área de atendimento.\n\nAtendemos somente Rio Grande RS até Pelotas RS.');
+        return;
+    }
+
     distanciaCalculada = calcularDistanciaKm(
         coordsOrigem.lat, coordsOrigem.lng,
         coordsDestino.lat, coordsDestino.lng
     );
-    
-    // Calcula valores
-    const valorPorKm = distanciaCalculada * VALOR_POR_KM;
+
+    // APLICA LIMITE MÁXIMO DE 60 km
+    if (distanciaCalculada > DISTANCIA_MAXIMA_PERMITIDA) {
+        alert(`⚠️ Distância de ${distanciaCalculada.toFixed(2)} km ultrapassa o limite de ${DISTANCIA_MAXIMA_PERMITIDA} km.\n\nAtendemos até Pelotas RS.`);
+        return;
+    }
+
+    let valorPorKm = distanciaCalculada * VALOR_POR_KM;
     valorTotalCorrida = VALOR_ARRANCADA + valorPorKm;
-    
+
+    // APLICA VALOR MÁXIMO
+    if (valorTotalCorrida > VALOR_MAXIMO_PERMITIDO) {
+        valorTotalCorrida = VALOR_MAXIMO_PERMITIDO;
+    }
+
     // Atualiza tela
     document.getElementById('distancia-km').textContent = distanciaCalculada.toFixed(2);
     document.getElementById('km-valor').textContent = distanciaCalculada.toFixed(2);
     document.getElementById('valor-km-total').textContent = valorPorKm.toFixed(2).replace('.', ',');
     document.getElementById('valor-total').textContent = valorTotalCorrida.toFixed(2).replace('.', ',');
-    
+
     const forma = document.getElementById('forma-pagamento').value;
     const textoForma = forma === 'pix' ? 'PIX' : forma === 'dinheiro' ? 'DINHEIRO' : 'CARTÃO';
     document.getElementById('metodo-pagamento').innerHTML = `Pagamento: <strong>${textoForma}</strong>`;
-    
+
     document.getElementById('area-valor').style.display = 'block';
     document.getElementById('btn-publicar').style.display = 'block';
     document.getElementById('mensagem-status').textContent = '';
@@ -391,14 +440,14 @@ function publicarCorrida() {
     const origem = document.getElementById('ent-origem').value.trim() || 'Sua localização';
     const destino = document.getElementById('ent-destino').value.trim();
     const formaPagamento = document.getElementById('forma-pagamento').value;
-    
+
     if (!destino || valorTotalCorrida <= 0) {
         alert('Calcule o valor antes de publicar!');
         return;
     }
-    
+
     const codigoConfirmacao = gerarCodigoAleatorio();
-    
+
     const novaEntrega = {
         id: Date.now(),
         origem: origem,
@@ -412,15 +461,15 @@ function publicarCorrida() {
         status: 'disponivel',
         data: new Date().toLocaleString()
     };
-    
+
     entregas.push(novaEntrega);
-    saldo += valorTotalCorrida * 0.20; // 20% para você
-    
+    saldo += valorTotalCorrida * 0.20;
+
     localStorage.setItem('entregasAlfa', JSON.stringify(entregas));
     localStorage.setItem('saldoAlfa', saldo);
-    
+
     alert(`✅ CORRIDA PUBLICADA!\n\n📍 De: ${origem}\n📍 Para: ${destino}\n📏 Distância: ${distanciaCalculada.toFixed(2).replace('.', ',')} km\n💰 Valor: R$ ${valorTotalCorrida.toFixed(2).replace('.', ',')}\n💳 Pagamento: ${formaPagamento.toUpperCase()}\n\n🔑 Código: ${codigoConfirmacao}`);
-    
+
     mostrarTela('tela-inicial');
     atualizarListas();
 }
@@ -434,17 +483,17 @@ function gerarCodigoAleatorio() {
 function atualizarCorridas() {
     const disp = document.getElementById('corridas-disponiveis');
     const disponiveis = entregas.filter(e => e.status === 'disponivel');
-    
+
     if (disponiveis.length === 0) {
         disp.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:2rem;">⏳ Nenhuma corrida disponível no momento.</p>';
         document.getElementById('tela-codigo-entrega').style.display = 'none';
         return;
     }
-    
+
     disp.innerHTML = disponiveis.map((en, i) => {
         const classePag = en.formaPagamento === 'pix' ? 'pix' : en.formaPagamento === 'dinheiro' ? 'dinheiro' : 'cartao';
         const textoPag = en.formaPagamento === 'pix' ? 'PIX' : en.formaPagamento === 'dinheiro' ? 'DINHEIRO' : 'CARTÃO';
-        
+
         return `
             <div style="background:#1e293b; border-radius:1rem; padding:1.3rem; margin:0.8rem 0;">
                 <p style="font-weight:bold; color:#fbbf24; font-size:1.1rem;">🏁 Corrida #${i+1}</p>
@@ -468,13 +517,13 @@ function atualizarCorridas() {
 function aceitarCorrida(idCorrida) {
     const corrida = entregas.find(c => c.id === idCorrida);
     if (!corrida) return;
-    
+
     corrida.status = 'aceita';
     corridaAtualParaConfirmar = corrida;
     localStorage.setItem('entregasAlfa', JSON.stringify(entregas));
-    
+
     alert(`🏍️ CORRIDA ACEITA!\n\n📍 ${corrida.origem}\n➡️ ${corrida.destino}\n📏 ${corrida.distanciaKm.toFixed(2).replace('.', ',')} km\n💰 R$ ${corrida.valorTotal.toFixed(2).replace('.', ',')}`);
-    
+
     document.getElementById('tela-codigo-entrega').style.display = 'block';
     document.getElementById('codigo-recebido').value = '';
     atualizarCorridas();
@@ -483,7 +532,7 @@ function aceitarCorrida(idCorrida) {
 // === VALIDAR CÓDIGO ===
 function validarCodigoEntrega() {
     if (!corridaAtualParaConfirmar) return;
-    
+
     const digitado = document.getElementById('codigo-recebido').value.trim();
     if (digitado === corridaAtualParaConfirmar.codigoConfirmacao) {
         corridaAtualParaConfirmar.status = 'concluida';
@@ -511,7 +560,7 @@ function resetarFormulario() {
     origemCoords = null;
     distanciaCalculada = 0;
     valorTotalCorrida = 0;
-    pegarLocalizacao(); // Pega localização ao abrir a tela
+    pegarLocalizacao();
 }
 
 // === NAVEGAÇÃO ===
@@ -595,7 +644,7 @@ function salvarCadastro() {
         return;
     }
     entregadores.push(dados);
-    localStorage.setItem('entregadoresAlfa', JSON.stringify(entregadores));
+    localStorage.setItem('entregadoresAlfa', JSON.stringify(entregas));
     document.getElementById('msg-cad').textContent = '✅ Cadastrado!';
     document.getElementById('msg-cad').style.color = '#4ade80';
     setTimeout(() => mostrarTela('tela-inicial'), 1500);
@@ -604,11 +653,10 @@ function salvarCadastro() {
 
 // === ATUALIZAR LISTAS ===
 function atualizarListas() {
-    // Saldo
     if (document.getElementById('valor-saldo')) {
         document.getElementById('valor-saldo').textContent = saldo.toFixed(2).replace('.', ',');
     }
-    // Entregadores
+
     const listaE = document.getElementById('lista-entregadores');
     if (listaE) {
         listaE.innerHTML = entregadores.length === 0 
@@ -620,7 +668,7 @@ function atualizarListas() {
                 </div>
             `).join('');
     }
-    // Entregas
+
     const listaEn = document.getElementById('lista-entregas');
     if (listaEn) {
         listaEn.innerHTML = entregas.length === 0
@@ -647,13 +695,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('btn-cadastro').onclick = () => mostrarTela('tela-cadastro');
     document.getElementById('btn-entregador').onclick = () => { mostrarTela('tela-entregador'); atualizarCorridas(); };
     document.getElementById('btn-admin').onclick = abrirTelaLoginAdmin;
-    
+
     document.getElementById('voltar-sol').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-login').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-cad').onclick = () => mostrarTela('tela-inicial');
     document.getElementById('voltar-ent').onclick = () => { mostrarTela('tela-inicial'); document.getElementById('tela-codigo-entrega').style.display = 'none'; };
     document.getElementById('sair-admin').onclick = () => mostrarTela('tela-inicial');
-    
+
     document.getElementById('btn-atualizar-local').onclick = pegarLocalizacao;
     document.getElementById('btn-calcular').onclick = calcularValorReal;
     document.getElementById('btn-publicar').onclick = publicarCorrida;
@@ -662,7 +710,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('botao-saque').onclick = fazerSaque;
     document.getElementById('botao-cadastrar').onclick = salvarCadastro;
     document.getElementById('btn-validar-codigo').onclick = validarCodigoEntrega;
-    
+
     atualizarListas();
 });
 </script>
