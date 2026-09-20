@@ -6,85 +6,294 @@
     <title>Rota Cheia — Nenhuma entrega volta vazia</title>
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
-    
-    <!-- 📱 ÍCONE E TELA INICIAL -->
+
     <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFAFINAL">
     <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFAFINAL">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
-    
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
-        
-        .tela { display: none; min-height: 100vh; padding: 20px; }
-        .ativa { display: block; }
-        
-        .container { max-width: 420px; margin: 0 auto; }
-        
-        .topo { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
-        .btn-voltar { background: none; border: none; color: #facc15; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        h1 { text-align: center; color: #facc15; font-size: 1.5rem; flex: 1; }
-        h2 { color: #86efac; margin-bottom: 20px; text-align: center; font-size: 1.2rem; }
-        
-        .btn-principal { width: 100%; padding: 18px; margin: 10px 0; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: transform 0.1s; }
-        .btn-principal:active { transform: scale(0.98); }
-        .btn-admin { background: linear-gradient(135deg, #facc15, #eab308); color: #000; }
-        .btn-loja { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; }
-        .btn-entregador { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
-        .btn-cadastro { background: linear-gradient(135deg, #a855f7, #9333ea); color: #fff; }
-        
-        .input-box { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 15px; }
-        .input-box label { display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 0.9rem; }
-        .input-box input, .input-box select, .input-box textarea { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #334155; color: #fff; font-size: 1rem; outline: none; }
-        
-        .btn-local { width: 100%; padding: 14px; background: #f59e0b; border: none; border-radius: 10px; color: #000; font-weight: bold; font-size: 1rem; cursor: pointer; margin: 10px 0; }
-        .btn-calcular { width: 100%; padding: 16px; background: #22c55e; border: none; border-radius: 10px; color: #fff; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin: 10px 0; }
-        .btn-publicar { width: 100%; padding: 16px; background: #16a34a; border: none; border-radius: 10px; color: #fff; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; }
-        
-        .resultado { background: #14532d; border: 2px solid #22c55e; border-radius: 14px; padding: 25px; margin: 20px 0; text-align: center; display: none; }
-        .distancia { font-size: 1.1rem; color: #86efac; margin-bottom: 10px; }
-        .valor-detalhe { font-size: 0.95rem; color: #dcfce7; margin: 6px 0; }
-        .total { font-size: 2rem; font-weight: bold; color: #fff; margin: 15px 0; }
-        .pagamento-info { color: #bbf7d0; font-size: 0.95rem; }
-        
-        .item-entregador, .item-entrega { background: #1e293b; border-radius: 10px; padding: 14px; margin-bottom: 10px; border-left: 3px solid #22c55e; }
-        .item-entregador p, .item-entrega p { margin: 4px 0; font-size: 0.9rem; }
-        
-        .senha-box { background: #1e293b; border-radius: 14px; padding: 30px; text-align: center; margin-top: 40px; }
-        .biometria-btn { margin-top: 15px; padding: 12px 24px; background: #4f46e5; border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 1rem; }
-        
-        .saldo-box { background: #14532d; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .saldo-valor { font-size: 1.8rem; font-weight: bold; color: #86efac; }
-        
-        .oculto { display: none !important; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .tela {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .btn-voltar {
+            background: none;
+            border: none;
+            color: #facc15;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-voltar:active {
+            transform: scale(0.95);
+        }
+
+        h1 {
+            text-align: center;
+            color: #facc15;
+            font-size: 1.5rem;
+            flex: 1;
+        }
+
+        h2 {
+            color: #86efac;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .btn-principal {
+            width: 100%;
+            padding: 18px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-principal:active {
+            transform: scale(0.98);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #000;
+        }
+
+        .btn-loja {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+        }
+
+        .btn-entregador {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+        }
+
+        .btn-cadastro {
+            background: linear-gradient(135deg, #a855f7, #9333ea);
+            color: #fff;
+        }
+
+        .input-box {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        .input-box input,
+        .input-box select,
+        .input-box textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #334155;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn-local {
+            width: 100%;
+            padding: 14px;
+            background: #f59e0b;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .btn-calcular {
+            width: 100%;
+            padding: 16px;
+            background: #22c55e;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .btn-publicar {
+            width: 100%;
+            padding: 16px;
+            background: #16a34a;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .resultado {
+            background: #14532d;
+            border: 2px solid #22c55e;
+            border-radius: 14px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .distancia {
+            font-size: 1.1rem;
+            color: #86efac;
+            margin-bottom: 10px;
+        }
+
+        .valor-detalhe {
+            font-size: 0.95rem;
+            color: #dcfce7;
+            margin: 6px 0;
+        }
+
+        .total {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 15px 0;
+        }
+
+        .pagamento-info {
+            color: #bbf7d0;
+            font-size: 0.95rem;
+        }
+
+        .item-entregador,
+        .item-entrega {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-left: 3px solid #22c55e;
+        }
+
+        .item-entregador p,
+        .item-entrega p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+        }
+
+        .senha-box {
+            background: #1e293b;
+            border-radius: 14px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .biometria-btn {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #4f46e5;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .saldo-box {
+            background: #14532d;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .saldo-valor {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #86efac;
+        }
+
+        .oculto {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
-<!-- ====================================== TELA INICIAL ====================================== -->
+<!-- TELA INICIAL -->
 <div id="tela-inicial" class="tela ativa">
     <div class="container">
         <h1 style="margin-top: 40px; margin-bottom: 40px;">🚀 Rota Cheia</h1>
         <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Nenhuma entrega volta vazia</p>
-        
+
         <button class="btn-principal btn-admin" onclick="mostrarTela('tela-login-admin')">
             🔐 Administrador
         </button>
+
         <button class="btn-principal btn-loja" onclick="mostrarTela('tela-loja')">
             🏪 Solicitar Entrega
         </button>
+
         <button class="btn-principal btn-entregador" onclick="mostrarTela('tela-entregador')">
             🏍️ Sou Entregador
         </button>
+
         <button class="btn-principal btn-cadastro" onclick="mostrarTela('tela-cadastro')">
             📝 Cadastrar Entregador
         </button>
     </div>
 </div>
 
-<!-- ====================================== LOGIN ADMIN ====================================== -->
+<!-- LOGIN ADMIN -->
 <div id="tela-login-admin" class="tela">
     <div class="container">
         <div class="topo">
@@ -92,24 +301,24 @@
             <h1>🔐 Admin</h1>
             <div style="width: 60px;"></div>
         </div>
-        
+
         <div class="senha-box">
             <h2>Acesso Restrito</h2>
             <p style="color: #94a3b8; margin-bottom: 20px;">Somente você tem acesso</p>
-            
+
             <div class="input-box">
                 <label>Digite sua senha</label>
                 <input type="password" id="senhaAdmin" placeholder="Sua senha...">
             </div>
-            
+
             <button class="btn-calcular" style="margin-top: 10px;" onclick="verificarSenha()">
                 ✅ Entrar com Senha
             </button>
-            
+
             <button class="biometria-btn" onclick="entrarBiometria()">
                 👆 Entrar com Biometria
             </button>
-            
+
             <p style="font-size: 0.8rem; color: #64748b; margin-top: 15px;">
                 Na primeira vez, cadastre sua senha. Depois use a digital quando quiser.
             </p>
@@ -117,7 +326,7 @@
     </div>
 </div>
 
-<!-- ====================================== PAINEL ADMIN ====================================== -->
+<!-- PAINEL ADMIN -->
 <div id="tela-admin" class="tela">
     <div class="container">
         <div class="topo">
@@ -125,7 +334,7 @@
             <h1>⚙️ Painel Admin</h1>
             <div style="width: 60px;"></div>
         </div>
-        
+
         <div class="saldo-box">
             <p>Saldo Disponível</p>
             <p class="saldo-valor" id="saldoValor">R$ 0,00</p>
@@ -133,20 +342,20 @@
                 💰 Sacar para minha conta
             </button>
         </div>
-        
+
         <h2>Entregadores Cadastrados</h2>
         <div id="lista-entregadores"></div>
-        
+
         <h2 style="margin-top: 30px;">Entregas Ativas</h2>
         <div id="lista-entregas-admin"></div>
-        
+
         <button class="btn-principal" style="background: #ef4444; margin-top: 20px;" onclick="limparEntregas()">
             🗑️ Limpar entregas
         </button>
     </div>
 </div>
 
-<!-- ====================================== TELA LOJA ====================================== -->
+<!-- TELA LOJA / SOLICITAR ENTREGA -->
 <div id="tela-loja" class="tela">
     <div class="container">
         <div class="topo">
@@ -163,7 +372,7 @@
         <button class="btn-local" onclick="pegarLocalizacao()">
             📍 Usar minha localização atual
         </button>
-        
+
         <div class="input-box">
             <label>📍 Ponto de Partida</label>
             <input type="text" id="origem" placeholder="Digite ou clique no botão acima">
@@ -202,7 +411,7 @@
     </div>
 </div>
 
-<!-- ====================================== TELA ENTREGADOR ====================================== -->
+<!-- TELA ENTREGADOR -->
 <div id="tela-entregador" class="tela">
     <div class="container">
         <div class="topo">
@@ -210,7 +419,7 @@
             <h1>🏍️ Área do Entregador</h1>
             <div style="width: 60px;"></div>
         </div>
-        
+
         <h2>Corridas Disponíveis</h2>
         <div id="lista-corridas"></div>
         <p id="sem-corridas" style="text-align: center; color: #64748b; margin-top: 30px;">
@@ -219,7 +428,7 @@
     </div>
 </div>
 
-<!-- ====================================== TELA CADASTRO ====================================== -->
+<!-- TELA CADASTRO DE ENTREGADOR -->
 <div id="tela-cadastro" class="tela">
     <div class="container">
         <div class="topo">
@@ -227,28 +436,32 @@
             <h1>📝 Cadastro</h1>
             <div style="width: 60px;"></div>
         </div>
-        
+
         <div class="input-box">
             <label>Nome Completo</label>
             <input type="text" id="cad-nome" placeholder="Seu nome">
         </div>
+
         <div class="input-box">
             <label>Telefone / WhatsApp</label>
             <input type="tel" id="cad-telefone" placeholder="(53) 9XXXX-XXXX">
         </div>
+
         <div class="input-box">
             <label>Veículo</label>
             <input type="text" id="cad-veiculo" placeholder="Marca e modelo da moto">
         </div>
+
         <div class="input-box">
             <label>Região que atende</label>
             <input type="text" id="cad-regiao" placeholder="Bairro ou cidade">
         </div>
+
         <div class="input-box">
             <label>Chave PIX para recebimento</label>
             <input type="text" id="cad-pix" placeholder="Sua chave PIX">
         </div>
-        
+
         <button class="btn-calcular" onclick="salvarCadastro()">
             ✅ Salvar Cadastro
         </button>
@@ -256,27 +469,25 @@
 </div>
 
 <script>
-// ==================== DADOS ARMAZENADOS ====================
 let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
 let entregas = JSON.parse(localStorage.getItem('entregas') || '[]');
 let saldo = parseFloat(localStorage.getItem('saldo') || '0');
 let senhaCadastrada = localStorage.getItem('senhaAdmin') || '';
+
 let latOrigem = null;
 let lngOrigem = null;
 
-// ==================== NAVEGAÇÃO ====================
 function mostrarTela(id) {
     document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
     document.getElementById(id).classList.add('ativa');
-    
+
     if (id === 'tela-admin') atualizarAdmin();
     if (id === 'tela-entregador') atualizarCorridas();
 }
 
-// ==================== LOGIN ADMIN ====================
 function verificarSenha() {
     const digitada = document.getElementById('senhaAdmin').value;
-    
+
     if (!senhaCadastrada) {
         if (digitada.length < 4) {
             alert('⚠️ Crie uma senha com pelo menos 4 caracteres');
@@ -288,7 +499,7 @@ function verificarSenha() {
         mostrarTela('tela-admin');
         return;
     }
-    
+
     if (digitada === senhaCadastrada) {
         mostrarTela('tela-admin');
     } else {
@@ -301,7 +512,7 @@ function entrarBiometria() {
         alert('⚠️ Cadastre uma senha primeiro! Digite e confirme.');
         return;
     }
-    
+
     if (window.PublicKeyCredential) {
         alert('✅ Biometria disponível — use sua digital ou reconhecimento facial');
         mostrarTela('tela-admin');
@@ -310,13 +521,12 @@ function entrarBiometria() {
     }
 }
 
-// ==================== GPS E CÁLCULO ====================
 function pegarLocalizacao() {
     if (!navigator.geolocation) {
         alert('❌ GPS não suportado');
         return;
     }
-    
+
     navigator.geolocation.getCurrentPosition(
         function(posicao) {
             latOrigem = posicao.coords.latitude;
@@ -335,50 +545,63 @@ function calcularDistancia(lat1, lng1, lat2, lng2) {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    const a = Math.sin(dLat / 2) ** 2 +
+              Math.cos(lat1 * Math.PI / 180) *
+              Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng / 2) ** 2;
+
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
 function enderecoParaCoordenadas(endereco) {
     const e = endereco.toLowerCase();
-    if (e.includes('rio branco')) return {lat:-32.0385, lng:-52.1015};
-    if (e.includes('av brasil')) return {lat:-32.0320, lng:-52.0980};
-    if (e.includes('moron')) return {lat:-32.0410, lng:-52.1050};
-    if (e.includes('pelotas')) return {lat:-31.7654, lng:-52.3376};
-    return {lat:-32.0348, lng:-52.1031};
+
+    if (e.includes('rio branco')) return { lat: -32.0385, lng: -52.1015 };
+    if (e.includes('av brasil')) return { lat: -32.0320, lng: -52.0980 };
+    if (e.includes('moron')) return { lat: -32.0410, lng: -52.1050 };
+    if (e.includes('pelotas')) return { lat: -31.7654, lng: -52.3376 };
+
+    return { lat: -32.0348, lng: -52.1031 };
 }
 
 function calcularValor() {
     const origemTxt = document.getElementById('origem').value;
     const destinoTxt = document.getElementById('destino').value;
-    
+
     if (!origemTxt || !destinoTxt) {
         alert('⚠️ Preencha origem e destino!');
         return;
     }
-    
+
     let oLat, oLng;
-    if (latOrigem) { oLat = latOrigem; oLng = lngOrigem; }
-    else { const c = enderecoParaCoordenadas(origemTxt); oLat=c.lat; oLng=c.lng; }
-    
+
+    if (latOrigem && lngOrigem) {
+        oLat = latOrigem;
+        oLng = lngOrigem;
+    } else {
+        const c = enderecoParaCoordenadas(origemTxt);
+        oLat = c.lat;
+        oLng = c.lng;
+    }
+
     const d = enderecoParaCoordenadas(destinoTxt);
     const dist = calcularDistancia(oLat, oLng, d.lat, d.lng);
-    const distKm = Math.round(dist*10)/10;
-    
+    const distKm = Math.round(dist * 10) / 10;
+
     const arr = 5.00;
     const porKm = 1.90;
     const valorPerc = dist * porKm;
     const total = arr + valorPerc;
-    
+
     document.getElementById('distanciaInfo').innerHTML = `📏 Distância: ${distKm} km`;
     document.getElementById('valorKm').innerHTML = `🛣️ R$ 1,90 × ${distKm} km = R$ ${valorPerc.toFixed(2)}`;
     document.getElementById('valorTotal').innerHTML = `R$ ${total.toFixed(2)}`;
     document.getElementById('formaPagamento').innerHTML = 'Pagamento: ' + document.getElementById('pagamento').value;
-    
+
     document.getElementById('resultado').style.display = 'block';
     document.getElementById('btnPublicar').style.display = 'block';
-    
-    // Salvar valores para publicação
+
     window.ultimaCorrida = {
         origem: origemTxt,
         destino: destinoTxt,
@@ -390,6 +613,7 @@ function calcularValor() {
 
 function publicarCorrida() {
     const c = window.ultimaCorrida;
+
     entregas.push({
         id: Date.now(),
         origem: c.origem,
@@ -399,38 +623,40 @@ function publicarCorrida() {
         pagamento: c.pagamento,
         status: 'disponivel'
     });
+
     localStorage.setItem('entregas', JSON.stringify(entregas));
-    
+
     saldo += parseFloat(c.valorTotal) * 0.20;
     localStorage.setItem('saldo', saldo);
-    
+
     alert('✅ Corrida publicada! Valor R$ ' + c.valorTotal);
+
     document.getElementById('resultado').style.display = 'none';
     document.getElementById('btnPublicar').style.display = 'none';
     document.getElementById('origem').value = '';
     document.getElementById('destino').value = '';
+
     latOrigem = null;
     lngOrigem = null;
 }
 
-// ==================== ADMIN ====================
 function atualizarAdmin() {
     document.getElementById('saldoValor').innerText = 'R$ ' + saldo.toFixed(2);
-    
+
     const lista = document.getElementById('lista-entregadores');
     if (entregadores.length === 0) {
         lista.innerHTML = '<p style="color:#64748b;">Nenhum entregador cadastrado.</p>';
     } else {
-        lista.innerHTML = entregadores.map((e,i) => `
+        lista.innerHTML = entregadores.map((e, i) => `
             <div class="item-entregador">
-                <p style="font-weight:bold;">${i+1}. ${e.nome}</p>
+                <p style="font-weight:bold;">${i + 1}. ${e.nome}</p>
                 <p style="font-size:0.85rem; color:#94a3b8;">📱 ${e.telefone}</p>
                 <p style="font-size:0.85rem; color:#94a3b8;">🚗 ${e.veiculo} | 📍 ${e.regiao}</p>
                 <p style="font-size:0.85rem; color:#86efac;">💳 ${e.pix}</p>
             </div>
         `).join('');
     }
-    
+
     const listaE = document.getElementById('lista-entregas-admin');
     if (entregas.length === 0) {
         listaE.innerHTML = '<p style="color:#64748b;">Nenhuma entrega ativa.</p>';
@@ -448,10 +674,16 @@ function atualizarAdmin() {
 }
 
 function sacarSaldo() {
-    if (saldo <= 0) { alert('Sem saldo para sacar!'); return; }
+    if (saldo <= 0) {
+        alert('Sem saldo para sacar!');
+        return;
+    }
+
     const conta = prompt('Digite a chave PIX da sua conta:');
     if (!conta) return;
+
     alert(`✅ Saque solicitado!\nValor: R$ ${saldo.toFixed(2)}\nPara: ${conta}`);
+
     saldo = 0;
     localStorage.setItem('saldo', 0);
     atualizarAdmin();
@@ -465,19 +697,20 @@ function limparEntregas() {
     }
 }
 
-// ==================== ENTREGADOR ====================
 function atualizarCorridas() {
     const lista = document.getElementById('lista-corridas');
     const sem = document.getElementById('sem-corridas');
-    
-    if (entregas.filter(e => e.status === 'disponivel').length === 0) {
+
+    const disponiveis = entregas.filter(e => e.status === 'disponivel');
+
+    if (disponiveis.length === 0) {
         lista.innerHTML = '';
         sem.style.display = 'block';
         return;
     }
-    
+
     sem.style.display = 'none';
-    lista.innerHTML = entregas.filter(e => e.status === 'disponivel').map(e => `
+    lista.innerHTML = disponiveis.map(e => `
         <div class="item-entrega">
             <p><strong>📍 De:</strong> ${e.origem}</p>
             <p><strong>📦 Para:</strong> ${e.destino}</p>
@@ -493,6 +726,7 @@ function atualizarCorridas() {
 
 function aceitarCorrida(id) {
     const idx = entregas.findIndex(e => e.id === id);
+
     if (idx >= 0) {
         entregas[idx].status = 'aceita';
         localStorage.setItem('entregas', JSON.stringify(entregas));
@@ -501,7 +735,6 @@ function aceitarCorrida(id) {
     }
 }
 
-// ==================== CADASTRO ====================
 function salvarCadastro() {
     const dados = {
         nome: document.getElementById('cad-nome').value,
@@ -510,16 +743,16 @@ function salvarCadastro() {
         regiao: document.getElementById('cad-regiao').value,
         pix: document.getElementById('cad-pix').value
     };
-    
+
     if (!dados.nome || !dados.telefone) {
         alert('⚠️ Preencha nome e telefone!');
         return;
     }
-    
+
     entregadores.push(dados);
     localStorage.setItem('entregadores', JSON.stringify(entregadores));
     alert('✅ Cadastro salvo! Bem-vindo à Rota Cheia!');
-    
+
     document.getElementById('cad-nome').value = '';
     document.getElementById('cad-telefone').value = '';
     document.getElementById('cad-veiculo').value = '';
