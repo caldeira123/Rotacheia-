@@ -8,44 +8,44 @@
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
     <!-- 📱 ÍCONE = MESMA CAPA -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_50">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_50">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
+        html, body { height: 100%; }
+        body { color: #fff; }
 
         .tela { display: none; min-height: 100vh; flex-direction: column; }
         .ativa { display: flex; }
 
-        /* 🖼️ TELA INICIAL — EXATAMENTE COMO A PRIMEIRA */
+        /* 🖼️ TELA INICIAL — UMA FOTO SÓ, LIMPA, SEM DUPLICAR */
         .inicio {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('capa-rota-cheia.jpg') center/cover no-repeat;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)) , url('capa-rota-cheia.jpg') center/cover no-repeat;
             min-height: 100vh;
-            padding: 3rem 1.5rem 2.5rem;
-            text-align: center;
+            padding: 2rem 1.5rem 3rem;
             justify-content: flex-end;
+            text-align: center;
         }
-        .inicio-conteudo { width: 100%; max-width: 420px; margin: 0 auto; }
-        .inicio h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .caixa { width: 100%; max-width: 420px; margin: 0 auto; }
+        .inicio h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.3rem; }
         .inicio h1 span { color: #ef4444; }
         .inicio p { font-size: 1rem; color: #e2e8f0; margin-bottom: 2.5rem; }
 
         .btn {
             width: 100%; padding: 1rem; border: none; border-radius: 12px;
             font-size: 1rem; font-weight: 600; cursor: pointer; margin: 0.4rem 0;
-            transition: transform 0.2s;
         }
         .btn:active { transform: scale(0.97); }
-        .btn-vermelho { background: #ef4444; color: #fff; }
-        .btn-escuro { background: rgba(30,41,59,0.85); color: #fff; border: 1px solid #475569; }
+        .btn-vermelho { background: #ff5252; color: #fff; }
+        .btn-escuro { background: rgba(30,41,59,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
         .btn-verde { background: #10b981; color: #fff; }
         .btn-voltar { background: transparent; color: #94a3b8; border: 1px solid #334155; margin-bottom: 1rem; }
 
-        .container { padding: 1.5rem; flex: 1; }
+        .pagina { padding: 1.5rem; min-height: 100vh; background: #0f172a; }
         h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
         .grupo { margin-bottom: 1rem; }
         label { display: block; margin-bottom: 0.4rem; color: #cbd5e1; font-size: 0.9rem; }
@@ -53,173 +53,155 @@
             width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
             background: #1e293b; color: #fff; font-size: 1rem;
         }
-        .card {
-            background: #1e293b; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
-        }
-        .valor-destaque {
-            font-size: 1.7rem; font-weight: 800; color: #10b981; margin: 0.8rem 0;
-        }
+        .card { background: #1e293b; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+        .valor-destaque { font-size: 1.7rem; font-weight: 800; color: #10b981; margin: 0.8rem 0; }
         .linha { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; }
         .aviso { background: #1e3a5f; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; }
         .erro { background: #7f1d1d; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; }
-
         .oculto { display: none !important; }
     </style>
 </head>
 <body>
 
 <!-- ====================================== -->
-<!-- TELA INICIAL — FOTO + OPÇÕES DIRETAS -->
+<!-- TELA INICIAL — COMO A PRIMEIRA VEZ -->
 <!-- ====================================== -->
-<div class="tela inicio ativa" id="telaInicio">
-    <div class="inicio-conteudo">
+<div class="tela inicio ativa" id="inicio">
+    <div class="caixa">
         <h1><span>✓</span> Rota Cheia</h1>
         <p>Nenhuma entrega volta vazia 💛</p>
-        
-        <button class="btn btn-vermelho" onclick="irPara('telaAdmin')">🔒 Área do Administrador</button>
-        <button class="btn btn-escuro" onclick="irPara('telaLoja')">🏪 Comércio — Solicitar Corrida</button>
-        <button class="btn btn-escuro" onclick="irPara('telaEntregador')">🏍️ Sou Entregador</button>
+
+        <button class="btn btn-vermelho" onclick="ir('admin')">🔒 Área do Administrador</button>
+        <button class="btn btn-escuro" onclick="ir('loja')">🏪 Comércio — Solicitar Corrida</button>
+        <button class="btn btn-escuro" onclick="ir('entregador')">🏍️ Sou Entregador</button>
     </div>
 </div>
 
 <!-- ====================================== -->
 <!-- ÁREA ADMIN — SENHA + BIOMETRIA -->
 <!-- ====================================== -->
-<div class="tela" id="telaAdmin">
-    <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
-        <h2>Área do Administrador</h2>
-        
-        <div id="formSenha">
-            <div class="grupo">
-                <label>🔐 Digite sua senha</label>
-                <input type="password" id="senhaAdmin" placeholder="Sua senha...">
-            </div>
-            <button class="btn btn-vermelho" onclick="verificarSenha()">Entrar</button>
-            <button class="btn btn-escuro" onclick="tentativaBiometria()">🔑 Entrar com Biometria</button>
-            <p id="avisoAdmin" class="oculto" style="margin-top:1rem; color:#fbbf2f;"></p>
-        </div>
+<div class="tela pagina" id="admin">
+    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
+    <h2>Área do Administrador</h2>
 
-        <div id="painelAdmin" class="oculto">
-            <h3>Painel de Controle</h3>
-            <div class="card">
-                <p>Saldo da Plataforma:</p>
-                <p class="valor-destaque" id="saldoPlataforma">R$ 0,00</p>
-            </div>
-            <button class="btn btn-verde" onclick="irPara('telaSaques')">💸 Sacar para minha conta</button>
-            <button class="btn btn-escuro" onclick="irPara('telaInicio')">Sair</button>
+    <div id="form-admin">
+        <div class="grupo">
+            <label>🔐 Digite sua senha</label>
+            <input type="password" id="senha-admin" placeholder="Crie ou digite sua senha...">
         </div>
+        <button class="btn btn-vermelho" onclick="verificarSenha()">Entrar</button>
+        <button class="btn btn-escuro" onclick="biometria()">🔑 Entrar com Biometria</button>
+        <p id="aviso-senha" class="oculto" style="margin-top:1rem; color:#fbbf2f;">Senha cadastrada ✅</p>
     </div>
-</div>
 
-<!-- ====================================== -->
-<!-- COMÉRCIO — PEDIR CORRIDA + CÁLCULO GPS -->
-<!-- ====================================== -->
-<div class="tela" id="telaLoja">
-    <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
-        <h2>Solicitar Corrida de Entrega</h2>
-
-        <div class="aviso" id="statusGPS">📍 Obtendo sua localização...</div>
-
-        <div class="grupo">
-            <label>Ponto de Partida (automático)</label>
-            <input type="text" id="pontoPartida" placeholder="Detectando GPS..." readonly>
-        </div>
-
-        <div class="grupo">
-            <label>Ponto de Destino</label>
-            <input type="text" id="pontoChegada" placeholder="Digite o endereço de destino..." oninput="calcularValor()">
-        </div>
-
+    <div id="painel-admin" class="oculto">
+        <h3>Painel de Controle</h3>
         <div class="card">
-            <p class="linha"><span>Distância:</span><span id="distancia">— km</span></p>
-            <p class="linha"><span>Arrancada:</span><span>R$ 5,00</span></p>
-            <p class="linha"><span>Por km rodado:</span><span>R$ 1,90/km</span></p>
-            <hr style="border:none; border-top:1px solid #334155; margin:0.6rem 0;">
-            <p class="linha" style="font-weight:bold; font-size:1.05rem;">
-                <span>VALOR TOTAL:</span>
-                <span id="valorTotal" class="valor-destaque" style="font-size:1.2rem;">R$ 0,00</span>
-            </p>
-            <p class="linha" style="color:#86efac;">
-                <span>Entregador recebe (80%):</span>
-                <span id="parteEntregador">R$ 0,00</span>
-            </p>
-            <p class="linha" style="color:#fbbf2f;">
-                <span>Sua parte (20%):</span>
-                <span id="parteAdmin">R$ 0,00</span>
-            </p>
+            <p>Saldo da Plataforma:</p>
+            <p class="valor-destaque" id="saldo-total">R$ 0,00</p>
         </div>
-
-        <div class="grupo">
-            <label>Forma de Pagamento</label>
-            <select id="pagamento">
-                <option value="pix">💳 PIX</option>
-                <option value="dinheiro">💵 Dinheiro</option>
-                <option value="cartao">💳 Cartão</option>
-            </select>
-        </div>
-
-        <button class="btn btn-vermelho" onclick="publicar()">Publicar Corrida</button>
+        <button class="btn btn-verde" onclick="ir('saque')">💸 Sacar para minha conta</button>
+        <button class="btn btn-escuro" onclick="ir('inicio')">Sair</button>
     </div>
 </div>
 
 <!-- ====================================== -->
-<!-- ENTREGADOR — VER CORRIDAS DISPONÍVEIS -->
+<!-- LOJA — GPS + CÁLCULO AUTOMÁTICO -->
 <!-- ====================================== -->
-<div class="tela" id="telaEntregador">
-    <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
-        <h2>Corridas Disponíveis</h2>
-        <div id="listaCorridas">
-            <p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>
-        </div>
+<div class="tela pagina" id="loja">
+    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
+    <h2>Solicitar Corrida de Entrega</h2>
+
+    <div class="aviso" id="status-gps">📍 Obtendo sua localização...</div>
+
+    <div class="grupo">
+        <label>Ponto de Partida (automático)</label>
+        <input type="text" id="partida" placeholder="Detectando GPS..." readonly>
+    </div>
+
+    <div class="grupo">
+        <label>Ponto de Destino</label>
+        <input type="text" id="destino" placeholder="Digite o endereço de destino..." oninput="calcular()">
+    </div>
+
+    <div class="card">
+        <p class="linha"><span>Distância:</span><span id="distancia">— km</span></p>
+        <p class="linha"><span>Arrancada:</span><span>R$ 5,00</span></p>
+        <p class="linha"><span>Por km rodado:</span><span>R$ 1,90/km</span></p>
+        <hr style="border:none; border-top:1px solid #334155; margin:0.6rem 0;">
+        <p class="linha" style="font-weight:bold; font-size:1.05rem;">
+            <span>VALOR TOTAL:</span>
+            <span id="total" class="valor-destaque" style="font-size:1.2rem;">R$ 0,00</span>
+        </p>
+        <p class="linha" style="color:#86efac;">
+            <span>Entregador recebe (80%):</span>
+            <span id="motoboy">R$ 0,00</span>
+        </p>
+        <p class="linha" style="color:#fbbf2f;">
+            <span>Sua parte (20%):</span>
+            <span id="dono">R$ 0,00</span>
+        </p>
+    </div>
+
+    <div class="grupo">
+        <label>Forma de Pagamento</label>
+        <select id="pagamento">
+            <option value="pix">💳 PIX</option>
+            <option value="dinheiro">💵 Dinheiro</option>
+            <option value="cartao">💳 Cartão</option>
+        </select>
+    </div>
+
+    <button class="btn btn-vermelho" onclick="publicar()">Publicar Corrida</button>
+</div>
+
+<!-- ====================================== -->
+<!-- ENTREGADOR — LISTA DE CORRIDAS -->
+<!-- ====================================== -->
+<div class="tela pagina" id="entregador">
+    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
+    <h2>Corridas Disponíveis</h2>
+    <div id="lista">
+        <p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>
     </div>
 </div>
 
 <!-- ====================================== -->
-<!-- SAQUES -->
+<!-- SAQUE -->
 <!-- ====================================== -->
-<div class="tela" id="telaSaques">
-    <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('painelAdmin')">← Voltar</button>
-        <h2>Sacar Saldo</h2>
-        <div class="card">
-            <p>Saldo disponível:</p>
-            <p class="valor-destaque" id="saldoDisponivel">R$ 0,00</p>
-        </div>
-        <div class="grupo">
-            <label>Chave PIX</label>
-            <input type="text" id="chavePix" placeholder="Sua chave PIX">
-        </div>
-        <button class="btn btn-verde" onclick="sacar()">Solicitar Saque</button>
+<div class="tela pagina" id="saque">
+    <button class="btn btn-voltar" onclick="ir('painel-admin')">← Voltar</button>
+    <h2>Sacar Saldo</h2>
+    <div class="card">
+        <p>Saldo disponível:</p>
+        <p class="valor-destaque" id="saldo-disponivel">R$ 0,00</p>
     </div>
+    <div class="grupo">
+        <label>Chave PIX</label>
+        <input type="text" id="chave-pix" placeholder="Sua chave PIX">
+    </div>
+    <button class="btn btn-verde" onclick="sacar()">Solicitar Saque</button>
 </div>
 
 <script>
-let corridaAtual = null;
-let minhaLocalizacao = null;
-let senhaSalva = localStorage.getItem('senhaAdmin') || '';
+let corrida = null;
+let gps = null;
+let senha = localStorage.getItem('senhaAdmin') || '';
 let corridas = [];
 let saldo = parseFloat(localStorage.getItem('saldoPlataforma')) || 0;
 
-function irPara(id) {
+function ir(id) {
     document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
     document.getElementById(id).classList.add('ativa');
-    
-    if (id === 'telaLoja') pegarLocalizacao();
-    if (id === 'telaEntregador') listarCorridas();
-    if (id === 'telaSaques') {
-        document.getElementById('saldoDisponivel').textContent = formatar(saldo);
-    }
-    if (id === 'painelAdmin') {
-        document.getElementById('saldoPlataforma').textContent = formatar(saldo);
-    }
+
+    if (id === 'loja') pegarGPS();
+    if (id === 'entregador') listar();
+    if (id === 'saque') document.getElementById('saldo-disponivel').textContent = moeda(saldo);
+    if (id === 'painel-admin') document.getElementById('saldo-total').textContent = moeda(saldo);
 }
 
-// 📍 PEGAR LOCALIZAÇÃO POR GPS
-function pegarLocalizacao() {
-    const status = document.getElementById('statusGPS');
+function pegarGPS() {
+    const status = document.getElementById('status-gps');
     if (!navigator.geolocation) {
         status.className = 'erro';
         status.textContent = '❌ GPS não suportado.';
@@ -227,15 +209,11 @@ function pegarLocalizacao() {
     }
     navigator.geolocation.getCurrentPosition(
         (pos) => {
-            minhaLocalizacao = {
-                lat: pos.coords.latitude,
-                lng: pos.coords.longitude
-            };
+            gps = { lat: pos.coords.latitude, lng: pos.coords.longitude };
             status.className = 'aviso';
             status.textContent = '✅ Localização obtida!';
-            document.getElementById('pontoPartida').value = 
-                `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-            calcularValor();
+            document.getElementById('partida').value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
+            calcular();
         },
         () => {
             status.className = 'erro';
@@ -245,59 +223,51 @@ function pegarLocalizacao() {
     );
 }
 
-// 🧮 CÁLCULO AUTOMÁTICO
-function calcularValor() {
-    if (!minhaLocalizacao) return;
-    
-    const destino = document.getElementById('pontoChegada').value.trim();
-    if (!destino) {
+function calcular() {
+    if (!gps) return;
+    const dest = document.getElementById('destino').value.trim();
+    if (!dest) {
         document.getElementById('distancia').textContent = '— km';
-        document.getElementById('valorTotal').textContent = 'R$ 0,00';
-        document.getElementById('parteEntregador').textContent = 'R$ 0,00';
-        document.getElementById('parteAdmin').textContent = 'R$ 0,00';
-        corridaAtual = null;
+        document.getElementById('total').textContent = 'R$ 0,00';
+        document.getElementById('motoboy').textContent = 'R$ 0,00';
+        document.getElementById('dono').textContent = 'R$ 0,00';
+        corrida = null;
         return;
     }
 
-    // Distância estimada — em breve com API de mapas
-    const distanciaKm = Math.max(0.5, (destino.length * 0.12) + (Math.random() * 1.5));
-    
-    const arrancada = 5.00;
-    const porKm = 1.90;
-    const total = arrancada + (distanciaKm * porKm);
-    const entregador = total * 0.8;
-    const admin = total * 0.2;
+    const km = Math.max(0.5, (dest.length * 0.12) + (Math.random() * 1.5));
+    const arr = 5.00;
+    const total = arr + (km * 1.90);
+    const mb = total * 0.8;
+    const dono = total * 0.2;
 
-    document.getElementById('distancia').textContent = distanciaKm.toFixed(2) + ' km';
-    document.getElementById('valorTotal').textContent = formatar(total);
-    document.getElementById('parteEntregador').textContent = formatar(entregador);
-    document.getElementById('parteAdmin').textContent = formatar(admin);
+    document.getElementById('distancia').textContent = km.toFixed(2) + ' km';
+    document.getElementById('total').textContent = moeda(total);
+    document.getElementById('motoboy').textContent = moeda(mb);
+    document.getElementById('dono').textContent = moeda(dono);
 
-    corridaAtual = {
-        partida: { ...minhaLocalizacao, texto: document.getElementById('pontoPartida').value },
-        destino: destino,
-        distancia: distanciaKm.toFixed(2),
-        valorTotal: total,
-        parteEntregador: entregador,
-        parteAdmin: admin,
-        pagamento: document.getElementById('pagamento').value
+    corrida = {
+        partida: { ...gps, texto: document.getElementById('partida').value },
+        destino: dest,
+        distancia: km.toFixed(2),
+        valor: total,
+        parteMb: mb,
+        parteDono: dono,
+        pgto: document.getElementById('pagamento').value
     };
 }
 
 function publicar() {
-    if (!corridaAtual) {
-        alert('⚠️ Digite o endereço de destino!');
-        return;
-    }
-    corridas.push({ ...corridaAtual, id: Date.now() });
-    alert('✅ Corrida publicada! Esperando entregador...');
-    document.getElementById('pontoChegada').value = '';
-    calcularValor();
-    irPara('telaInicio');
+    if (!corrida) { alert('⚠️ Digite o destino!'); return; }
+    corridas.push({ ...corrida, id: Date.now() });
+    alert('✅ Corrida publicada!');
+    document.getElementById('destino').value = '';
+    calcular();
+    ir('inicio');
 }
 
-function listarCorridas() {
-    const lista = document.getElementById('listaCorridas');
+function listar() {
+    const lista = document.getElementById('lista');
     if (corridas.length === 0) {
         lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>';
         return;
@@ -308,9 +278,9 @@ function listarCorridas() {
             <p>📍 De: ${c.partida.texto}</p>
             <p>🎯 Para: ${c.destino}</p>
             <p>📏 Distância: ${c.distancia} km</p>
-            <p class="valor-destaque">${formatar(c.valorTotal)}</p>
-            <p style="color:#86efac;">Você recebe: ${formatar(c.parteEntregador)}</p>
-            <p>Pagamento: ${c.pagamento.toUpperCase()}</p>
+            <p class="valor-destaque">${moeda(c.valor)}</p>
+            <p style="color:#86efac;">Você recebe: ${moeda(c.parteMb)}</p>
+            <p>Pagamento: ${c.pgto.toUpperCase()}</p>
             <button class="btn btn-verde" onclick="aceitar(${c.id})">Aceitar Corrida</button>
         </div>
     `).join('');
@@ -319,70 +289,55 @@ function listarCorridas() {
 function aceitar(id) {
     const idx = corridas.findIndex(c => c.id === id);
     if (idx === -1) return;
-    saldo += corridas[idx].parteAdmin;
+    saldo += corridas[idx].parteDono;
     localStorage.setItem('saldoPlataforma', saldo.toFixed(2));
     corridas.splice(idx, 1);
     alert('🏍️ Corrida aceita!');
-    listarCorridas();
+    listar();
 }
 
-// 🔐 ADMIN
 function verificarSenha() {
-    const digitada = document.getElementById('senhaAdmin').value;
-    if (!senhaSalva) {
-        if (digitada.length < 4) {
-            alert('⚠️ Mínimo 4 caracteres!');
-            return;
-        }
-        senhaSalva = digitada;
-        localStorage.setItem('senhaAdmin', senhaSalva);
+    const d = document.getElementById('senha-admin').value;
+    if (!senha) {
+        if (d.length < 4) { alert('⚠️ Mínimo 4 caracteres!'); return; }
+        senha = d;
+        localStorage.setItem('senhaAdmin', senha);
         alert('✅ Senha cadastrada!');
         mostrarPainel();
         return;
     }
-    if (digitada === senhaSalva) {
-        mostrarPainel();
-    } else {
-        alert('❌ Senha errada!');
-    }
+    if (d === senha) mostrarPainel();
+    else alert('❌ Senha errada!');
 }
 
-function tentativaBiometria() {
-    if (!senhaSalva) {
-        alert('⚠️ Cadastre uma senha primeiro!');
-        return;
-    }
-    if (confirm('🔑 Confirmar com digital?')) {
-        mostrarPainel();
-    }
+function biometria() {
+    if (!senha) { alert('⚠️ Cadastre uma senha primeiro!'); return; }
+    if (confirm('🔑 Confirmar com digital?')) mostrarPainel();
 }
 
 function mostrarPainel() {
-    document.getElementById('formSenha').classList.add('oculto');
-    document.getElementById('painelAdmin').classList.remove('oculto');
-    document.getElementById('saldoPlataforma').textContent = formatar(saldo);
-    irPara('painelAdmin');
+    document.getElementById('form-admin').classList.add('oculto');
+    document.getElementById('painel-admin').classList.remove('oculto');
+    document.getElementById('saldo-total').textContent = moeda(saldo);
+    ir('painel-admin');
 }
 
 function sacar() {
-    const chave = document.getElementById('chavePix').value.trim();
+    const chave = document.getElementById('chave-pix').value.trim();
     if (!chave) { alert('Digite sua chave PIX!'); return; }
     if (saldo <= 0) { alert('Sem saldo!'); return; }
-    alert(`✅ Saque de ${formatar(saldo)} solicitado!\nChave: ${chave}`);
+    alert(`✅ Saque de ${moeda(saldo)} solicitado!\nChave: ${chave}`);
     saldo = 0;
     localStorage.setItem('saldoPlataforma', '0');
-    document.getElementById('saldoDisponivel').textContent = formatar(0);
+    document.getElementById('saldo-disponivel').textContent = moeda(0);
 }
 
-function formatar(valor) {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+function moeda(v) {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
 }
 
 window.onload = () => {
-    if (senhaSalva) {
-        document.getElementById('avisoAdmin').textContent = 'Senha cadastrada ✅';
-        document.getElementById('avisoAdmin').classList.remove('oculto');
-    }
+    if (senha) document.getElementById('aviso-senha').classList.remove('oculto');
 };
 </script>
 </body>
