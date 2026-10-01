@@ -8,8 +8,8 @@
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
     <!-- 📱 ÍCONE = MESMA CAPA -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_FINAL">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_FINAL">
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Rota Cheia">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,33 +21,32 @@
         .tela { display: none; min-height: 100vh; flex-direction: column; }
         .ativa { display: flex; }
 
-        /* TELA DE CAPA — IGUAL A SUA */
-        .capa {
-            background: linear-gradient(to bottom, rgba(15,23,42,0.3), rgba(15,23,42,0.95)), url('capa-rota-cheia.jpg') center/cover no-repeat;
+        /* 🖼️ TELA INICIAL — EXATAMENTE COMO A PRIMEIRA */
+        .inicio {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('capa-rota-cheia.jpg') center/cover no-repeat;
             min-height: 100vh;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 2rem 1.5rem 4rem;
+            padding: 3rem 1.5rem 2.5rem;
             text-align: center;
+            justify-content: flex-end;
         }
-        .capa-conteudo { width: 100%; max-width: 420px; }
-        .capa h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .capa h1 span { color: #ef4444; }
-        .capa p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 3rem; }
+        .inicio-conteudo { width: 100%; max-width: 420px; margin: 0 auto; }
+        .inicio h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .inicio h1 span { color: #ef4444; }
+        .inicio p { font-size: 1rem; color: #e2e8f0; margin-bottom: 2.5rem; }
 
         .btn {
             width: 100%; padding: 1rem; border: none; border-radius: 12px;
-            font-size: 1rem; font-weight: 600; cursor: pointer; margin: 0.5rem 0;
+            font-size: 1rem; font-weight: 600; cursor: pointer; margin: 0.4rem 0;
             transition: transform 0.2s;
         }
         .btn:active { transform: scale(0.97); }
         .btn-vermelho { background: #ef4444; color: #fff; }
-        .btn-escuro { background: #1e293b; color: #fff; }
+        .btn-escuro { background: rgba(30,41,59,0.85); color: #fff; border: 1px solid #475569; }
         .btn-verde { background: #10b981; color: #fff; }
-        .btn-voltar { background: transparent; color: #94a3b8; border: 1px solid #334155; }
+        .btn-voltar { background: transparent; color: #94a3b8; border: 1px solid #334155; margin-bottom: 1rem; }
 
         .container { padding: 1.5rem; flex: 1; }
-        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
         .grupo { margin-bottom: 1rem; }
         label { display: block; margin-bottom: 0.4rem; color: #cbd5e1; font-size: 0.9rem; }
         input, select {
@@ -58,7 +57,7 @@
             background: #1e293b; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
         }
         .valor-destaque {
-            font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 1rem 0;
+            font-size: 1.7rem; font-weight: 800; color: #10b981; margin: 0.8rem 0;
         }
         .linha { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; }
         .aviso { background: #1e3a5f; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; }
@@ -70,35 +69,25 @@
 <body>
 
 <!-- ====================================== -->
-<!-- TELA 0 — CAPA (igual a sua imagem) -->
+<!-- TELA INICIAL — FOTO + OPÇÕES DIRETAS -->
 <!-- ====================================== -->
-<div class="tela capa ativa" id="telaCapa">
-    <div class="capa-conteudo">
+<div class="tela inicio ativa" id="telaInicio">
+    <div class="inicio-conteudo">
         <h1><span>✓</span> Rota Cheia</h1>
         <p>Nenhuma entrega volta vazia 💛</p>
-        <button class="btn btn-vermelho" onclick="irPara('telaEscolha')">Entrar</button>
-    </div>
-</div>
-
-<!-- ====================================== -->
-<!-- TELA 1 — ESCOLHA -->
-<!-- ====================================== -->
-<div class="tela" id="telaEscolha">
-    <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaCapa')">← Voltar</button>
-        <h2>Quem é você?</h2>
+        
         <button class="btn btn-vermelho" onclick="irPara('telaAdmin')">🔒 Área do Administrador</button>
-        <button class="btn btn-escuro" onclick="iniciarLoja()">🏪 Solicitar Entrega</button>
+        <button class="btn btn-escuro" onclick="irPara('telaLoja')">🏪 Comércio — Solicitar Corrida</button>
         <button class="btn btn-escuro" onclick="irPara('telaEntregador')">🏍️ Sou Entregador</button>
     </div>
 </div>
 
 <!-- ====================================== -->
-<!-- TELA ADMIN — SENHA -->
+<!-- ÁREA ADMIN — SENHA + BIOMETRIA -->
 <!-- ====================================== -->
 <div class="tela" id="telaAdmin">
     <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaEscolha')">← Voltar</button>
+        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
         <h2>Área do Administrador</h2>
         
         <div id="formSenha">
@@ -118,60 +107,69 @@
                 <p class="valor-destaque" id="saldoPlataforma">R$ 0,00</p>
             </div>
             <button class="btn btn-verde" onclick="irPara('telaSaques')">💸 Sacar para minha conta</button>
-            <button class="btn btn-escuro" onclick="irPara('telaEscolha')">Sair</button>
+            <button class="btn btn-escuro" onclick="irPara('telaInicio')">Sair</button>
         </div>
     </div>
 </div>
 
 <!-- ====================================== -->
-<!-- TELA LOJA — PEDIDO COM CÁLCULO AUTOMÁTICO GPS -->
+<!-- COMÉRCIO — PEDIR CORRIDA + CÁLCULO GPS -->
 <!-- ====================================== -->
 <div class="tela" id="telaLoja">
     <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaEscolha')">← Voltar</button>
-        <h2>Solicitar Entrega</h2>
+        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
+        <h2>Solicitar Corrida de Entrega</h2>
 
         <div class="aviso" id="statusGPS">📍 Obtendo sua localização...</div>
 
         <div class="grupo">
-            <label>Ponto de Partida (preenchido automaticamente)</label>
+            <label>Ponto de Partida (automático)</label>
             <input type="text" id="pontoPartida" placeholder="Detectando GPS..." readonly>
         </div>
 
         <div class="grupo">
-            <label>Ponto de Destino ✏️</label>
-            <input type="text" id="pontoChegada" placeholder="Digite o endereço de destino..." oninput="calcularValorAutomatico()">
+            <label>Ponto de Destino</label>
+            <input type="text" id="pontoChegada" placeholder="Digite o endereço de destino..." oninput="calcularValor()">
         </div>
 
-        <div class="card" id="painelValores">
-            <p class="linha"><span>Distância calculada:</span><span id="distanciaKm">— km</span></p>
+        <div class="card">
+            <p class="linha"><span>Distância:</span><span id="distancia">— km</span></p>
             <p class="linha"><span>Arrancada:</span><span>R$ 5,00</span></p>
             <p class="linha"><span>Por km rodado:</span><span>R$ 1,90/km</span></p>
-            <hr style="border:none; border-top:1px solid #334155; margin:0.5rem 0;">
-            <p class="linha" style="font-weight:bold; font-size:1.1rem;"><span>VALOR TOTAL:</span><span id="valorTotal" class="valor-destaque" style="font-size:1.3rem;">R$ 0,00</span></p>
-            <p class="linha" style="color:#86efac;"><span>Entregador recebe:</span><span id="parteEntregador">R$ 0,00</span></p>
-            <p class="linha" style="color:#fbbf2f;"><span>Sua parte (20%):</span><span id="parteAdmin">R$ 0,00</span></p>
+            <hr style="border:none; border-top:1px solid #334155; margin:0.6rem 0;">
+            <p class="linha" style="font-weight:bold; font-size:1.05rem;">
+                <span>VALOR TOTAL:</span>
+                <span id="valorTotal" class="valor-destaque" style="font-size:1.2rem;">R$ 0,00</span>
+            </p>
+            <p class="linha" style="color:#86efac;">
+                <span>Entregador recebe (80%):</span>
+                <span id="parteEntregador">R$ 0,00</span>
+            </p>
+            <p class="linha" style="color:#fbbf2f;">
+                <span>Sua parte (20%):</span>
+                <span id="parteAdmin">R$ 0,00</span>
+            </p>
         </div>
 
         <div class="grupo">
             <label>Forma de Pagamento</label>
-            <select id="formaPagamento">
+            <select id="pagamento">
                 <option value="pix">💳 PIX</option>
                 <option value="dinheiro">💵 Dinheiro</option>
                 <option value="cartao">💳 Cartão</option>
             </select>
         </div>
 
-        <button class="btn btn-vermelho" onclick="publicarCorrida()" id="btnPublicar">Publicar Corrida</button>
+        <button class="btn btn-vermelho" onclick="publicar()">Publicar Corrida</button>
     </div>
 </div>
 
 <!-- ====================================== -->
-<!-- TELA ENTREGADOR -->
+<!-- ENTREGADOR — VER CORRIDAS DISPONÍVEIS -->
 <!-- ====================================== -->
 <div class="tela" id="telaEntregador">
     <div class="container">
-        <button class="btn btn-voltar" onclick="irPara('telaEscolha')">← Voltar</button>
+        <button class="btn btn-voltar" onclick="irPara('telaInicio')">← Voltar</button>
         <h2>Corridas Disponíveis</h2>
         <div id="listaCorridas">
             <p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>
@@ -180,7 +178,7 @@
 </div>
 
 <!-- ====================================== -->
-<!-- TELA SAQUES -->
+<!-- SAQUES -->
 <!-- ====================================== -->
 <div class="tela" id="telaSaques">
     <div class="container">
@@ -194,240 +192,194 @@
             <label>Chave PIX</label>
             <input type="text" id="chavePix" placeholder="Sua chave PIX">
         </div>
-        <button class="btn btn-verde" onclick="sacarValor()">Solicitar Saque</button>
+        <button class="btn btn-verde" onclick="sacar()">Solicitar Saque</button>
     </div>
 </div>
 
 <script>
-// ======================================
-// DADOS GLOBAIS
-// ======================================
 let corridaAtual = null;
-let localizacaoUsuario = null;
-let senhaCadastrada = localStorage.getItem('senhaAdmin') || '';
-let corridasPublicadas = [];
+let minhaLocalizacao = null;
+let senhaSalva = localStorage.getItem('senhaAdmin') || '';
+let corridas = [];
 let saldo = parseFloat(localStorage.getItem('saldoPlataforma')) || 0;
 
-// ======================================
-// FUNÇÃO DE TROCAR TELA
-// ======================================
 function irPara(id) {
     document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
     document.getElementById(id).classList.add('ativa');
-    if (id === 'telaLoja') iniciarLocalizacao();
-    if (id === 'telaEntregador') atualizarListaCorridas();
+    
+    if (id === 'telaLoja') pegarLocalizacao();
+    if (id === 'telaEntregador') listarCorridas();
     if (id === 'telaSaques') {
-        document.getElementById('saldoDisponivel').textContent = formatarMoeda(saldo);
+        document.getElementById('saldoDisponivel').textContent = formatar(saldo);
     }
     if (id === 'painelAdmin') {
-        document.getElementById('saldoPlataforma').textContent = formatarMoeda(saldo);
+        document.getElementById('saldoPlataforma').textContent = formatar(saldo);
     }
 }
 
-// ======================================
-// GPS — PEGAR LOCALIZAÇÃO AUTOMÁTICA
-// ======================================
-function iniciarLocalizacao() {
+// 📍 PEGAR LOCALIZAÇÃO POR GPS
+function pegarLocalizacao() {
     const status = document.getElementById('statusGPS');
     if (!navigator.geolocation) {
         status.className = 'erro';
-        status.textContent = '❌ GPS não suportado no aparelho.';
+        status.textContent = '❌ GPS não suportado.';
         return;
     }
     navigator.geolocation.getCurrentPosition(
         (pos) => {
-            localizacaoUsuario = {
+            minhaLocalizacao = {
                 lat: pos.coords.latitude,
                 lng: pos.coords.longitude
             };
             status.className = 'aviso';
-            status.textContent = '✅ Localização obtida com sucesso!';
+            status.textContent = '✅ Localização obtida!';
             document.getElementById('pontoPartida').value = 
-                `Lat ${pos.coords.latitude.toFixed(5)}, Lng ${pos.coords.longitude.toFixed(5)}`;
-            calcularValorAutomatico();
+                `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
+            calcularValor();
         },
-        (erro) => {
+        () => {
             status.className = 'erro';
-            status.textContent = '⚠️ Ative o GPS e recarregue a página.';
+            status.textContent = '⚠️ Ative o GPS e recarregue.';
         },
         { enableHighAccuracy: true }
     );
 }
 
-// ======================================
-// CÁLCULO DE DISTÂNCIA EXATA — FÓRMULA HAVERSINE
-// ======================================
-function calcularDistancia(lat1, lng1, lat2, lng2) {
-    const R = 6371; // Raio da Terra em km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLng/2) * Math.sin(dLng/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c; // Distância em km
-}
-
-// ======================================
-// SIMULAÇÃO DE CÁLCULO COM ENDEREÇO
-// (em produção integrar com API de geocodificação)
-// ======================================
-function calcularValorAutomatico() {
-    if (!localizacaoUsuario) return;
+// 🧮 CÁLCULO AUTOMÁTICO
+function calcularValor() {
+    if (!minhaLocalizacao) return;
     
-    const destinoTexto = document.getElementById('pontoChegada').value.trim();
-    if (!destinoTexto) {
-        document.getElementById('distanciaKm').textContent = '— km';
+    const destino = document.getElementById('pontoChegada').value.trim();
+    if (!destino) {
+        document.getElementById('distancia').textContent = '— km';
         document.getElementById('valorTotal').textContent = 'R$ 0,00';
         document.getElementById('parteEntregador').textContent = 'R$ 0,00';
         document.getElementById('parteAdmin').textContent = 'R$ 0,00';
+        corridaAtual = null;
         return;
     }
 
-    // SIMULAÇÃO: estimativa baseada em comprimento do endereço + pequena variação aleatória
-    // Em versão real: usar API para converter endereço → coordenadas
-    const distanciaEstimada = Math.max(0.5, (destinoTexto.length * 0.15) + Math.random() * 2);
+    // Distância estimada — em breve com API de mapas
+    const distanciaKm = Math.max(0.5, (destino.length * 0.12) + (Math.random() * 1.5));
     
-    const valorArrancada = 5.00;
-    const valorPorKm = 1.90;
-    const valorTotal = valorArrancada + (distanciaEstimada * valorPorKm);
-    const parteEntregador = valorTotal * 0.8;
-    const parteAdmin = valorTotal * 0.2;
+    const arrancada = 5.00;
+    const porKm = 1.90;
+    const total = arrancada + (distanciaKm * porKm);
+    const entregador = total * 0.8;
+    const admin = total * 0.2;
 
-    document.getElementById('distanciaKm').textContent = distanciaEstimada.toFixed(2) + ' km';
-    document.getElementById('valorTotal').textContent = formatarMoeda(valorTotal);
-    document.getElementById('parteEntregador').textContent = formatarMoeda(parteEntregador);
-    document.getElementById('parteAdmin').textContent = formatarMoeda(parteAdmin);
+    document.getElementById('distancia').textContent = distanciaKm.toFixed(2) + ' km';
+    document.getElementById('valorTotal').textContent = formatar(total);
+    document.getElementById('parteEntregador').textContent = formatar(entregador);
+    document.getElementById('parteAdmin').textContent = formatar(admin);
 
     corridaAtual = {
-        partida: { ...localizacaoUsuario, texto: document.getElementById('pontoPartida').value },
-        destino: destinoTexto,
-        distanciaKm: distanciaEstimada.toFixed(2),
-        valorTotal,
-        parteEntregador,
-        parteAdmin,
-        pagamento: document.getElementById('formaPagamento').value
+        partida: { ...minhaLocalizacao, texto: document.getElementById('pontoPartida').value },
+        destino: destino,
+        distancia: distanciaKm.toFixed(2),
+        valorTotal: total,
+        parteEntregador: entregador,
+        parteAdmin: admin,
+        pagamento: document.getElementById('pagamento').value
     };
 }
 
-// ======================================
-// PUBLICAR CORRIDA
-// ======================================
-function publicarCorrida() {
-    if (!corridaAtual || !corridaAtual.destino) {
-        alert('⚠️ Preencha o endereço de destino!');
+function publicar() {
+    if (!corridaAtual) {
+        alert('⚠️ Digite o endereço de destino!');
         return;
     }
-    corridasPublicadas.push({
-        ...corridaAtual,
-        id: Date.now(),
-        data: new Date().toLocaleString()
-    });
+    corridas.push({ ...corridaAtual, id: Date.now() });
     alert('✅ Corrida publicada! Esperando entregador...');
-    // Limpar campos
     document.getElementById('pontoChegada').value = '';
-    calcularValorAutomatico();
-    irPara('telaEscolha');
+    calcularValor();
+    irPara('telaInicio');
 }
 
-// ======================================
-// LISTAR CORRIDAS — ENTREGADOR
-// ======================================
-function atualizarListaCorridas() {
+function listarCorridas() {
     const lista = document.getElementById('listaCorridas');
-    if (corridasPublicadas.length === 0) {
+    if (corridas.length === 0) {
         lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>';
         return;
     }
-    lista.innerHTML = corridasPublicadas.map((c, i) => `
+    lista.innerHTML = corridas.map((c, i) => `
         <div class="card">
             <p><strong>Corrida #${i+1}</strong></p>
-            <p>📍 Partida: ${c.partida.texto}</p>
-            <p>🎯 Destino: ${c.destino}</p>
-            <p>📏 Distância: ${c.distanciaKm} km</p>
-            <p class="valor-destaque">${formatarMoeda(c.valorTotal)}</p>
-            <p style="color:#86efac;">Você recebe: ${formatarMoeda(c.parteEntregador)}</p>
+            <p>📍 De: ${c.partida.texto}</p>
+            <p>🎯 Para: ${c.destino}</p>
+            <p>📏 Distância: ${c.distancia} km</p>
+            <p class="valor-destaque">${formatar(c.valorTotal)}</p>
+            <p style="color:#86efac;">Você recebe: ${formatar(c.parteEntregador)}</p>
             <p>Pagamento: ${c.pagamento.toUpperCase()}</p>
-            <button class="btn btn-verde" onclick="aceitarCorrida(${c.id})">Aceitar Corrida</button>
+            <button class="btn btn-verde" onclick="aceitar(${c.id})">Aceitar Corrida</button>
         </div>
     `).join('');
 }
 
-function aceitarCorrida(id) {
-    const idx = corridasPublicadas.findIndex(c => c.id === id);
+function aceitar(id) {
+    const idx = corridas.findIndex(c => c.id === id);
     if (idx === -1) return;
-    const corrida = corridasPublicadas[idx];
-    // Adiciona a parte do admin ao saldo
-    saldo += corrida.parteAdmin;
+    saldo += corridas[idx].parteAdmin;
     localStorage.setItem('saldoPlataforma', saldo.toFixed(2));
-    corridasPublicadas.splice(idx, 1);
-    alert('🏍️ Corrida aceita! O entregador vai até o local.');
-    atualizarListaCorridas();
+    corridas.splice(idx, 1);
+    alert('🏍️ Corrida aceita!');
+    listarCorridas();
 }
 
-// ======================================
-// ÁREA ADMIN — SENHA
-// ======================================
+// 🔐 ADMIN
 function verificarSenha() {
     const digitada = document.getElementById('senhaAdmin').value;
-    if (!senhaCadastrada) {
-        // Primeiro acesso — cadastra
+    if (!senhaSalva) {
         if (digitada.length < 4) {
-            alert('⚠️ Mínimo de 4 caracteres!');
+            alert('⚠️ Mínimo 4 caracteres!');
             return;
         }
-        senhaCadastrada = digitada;
-        localStorage.setItem('senhaAdmin', senhaCadastrada);
-        alert('✅ Senha cadastrada com sucesso!');
-        mostrarPainelAdmin();
+        senhaSalva = digitada;
+        localStorage.setItem('senhaAdmin', senhaSalva);
+        alert('✅ Senha cadastrada!');
+        mostrarPainel();
         return;
     }
-    if (digitada === senhaCadastrada) {
-        mostrarPainelAdmin();
+    if (digitada === senhaSalva) {
+        mostrarPainel();
     } else {
-        alert('❌ Senha incorreta!');
+        alert('❌ Senha errada!');
     }
 }
 
 function tentativaBiometria() {
-    // Simulação de biometria — em produção usar WebAuthn
-    if (!senhaCadastrada) {
+    if (!senhaSalva) {
         alert('⚠️ Cadastre uma senha primeiro!');
         return;
     }
-    if (confirm('🔑 Confirmar com biometria?\n\n(Na versão final, toque no sensor de digital)')) {
-        mostrarPainelAdmin();
+    if (confirm('🔑 Confirmar com digital?')) {
+        mostrarPainel();
     }
 }
 
-function mostrarPainelAdmin() {
+function mostrarPainel() {
     document.getElementById('formSenha').classList.add('oculto');
     document.getElementById('painelAdmin').classList.remove('oculto');
-    document.getElementById('saldoPlataforma').textContent = formatarMoeda(saldo);
+    document.getElementById('saldoPlataforma').textContent = formatar(saldo);
     irPara('painelAdmin');
 }
 
-function iniciarLoja() {
-    irPara('telaLoja');
-}
-
-function sacarValor() {
+function sacar() {
     const chave = document.getElementById('chavePix').value.trim();
     if (!chave) { alert('Digite sua chave PIX!'); return; }
-    if (saldo <= 0) { alert('Sem saldo disponível!'); return; }
-    alert(`✅ Saque de ${formatarMoeda(saldo)} solicitado!\nChave PIX: ${chave}`);
+    if (saldo <= 0) { alert('Sem saldo!'); return; }
+    alert(`✅ Saque de ${formatar(saldo)} solicitado!\nChave: ${chave}`);
     saldo = 0;
     localStorage.setItem('saldoPlataforma', '0');
-    document.getElementById('saldoDisponivel').textContent = formatarMoeda(0);
+    document.getElementById('saldoDisponivel').textContent = formatar(0);
 }
 
-function formatarMoeda(valor) {
+function formatar(valor) {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
 }
 
-// Inicialização
 window.onload = () => {
-    if (senhaCadastrada) {
+    if (senhaSalva) {
         document.getElementById('avisoAdmin').textContent = 'Senha cadastrada ✅';
         document.getElementById('avisoAdmin').classList.remove('oculto');
     }
