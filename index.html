@@ -7,338 +7,273 @@
     <meta name="author" content="Rota Cheia — Sistema Exclusivo">
     <meta name="description" content="O único que casa rotas! Nenhuma moto volta vazia.">
     
-    <!-- 📱 ÍCONE = MESMA CAPA -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_50">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_50">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Rota Cheia">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+    <!-- 📱 ÍCONE NA TELA DO CELULAR -->
+    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
+    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA_ORIGINAL">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        html, body { height: 100%; }
-        body { color: #fff; }
-
-        .tela { display: none; min-height: 100vh; flex-direction: column; }
-        .ativa { display: flex; }
-
-        /* 🖼️ TELA INICIAL — UMA FOTO SÓ, LIMPA, SEM DUPLICAR */
-        .inicio {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)) , url('capa-rota-cheia.jpg') center/cover no-repeat;
-            min-height: 100vh;
-            padding: 2rem 1.5rem 3rem;
-            justify-content: flex-end;
-            text-align: center;
-        }
-        .caixa { width: 100%; max-width: 420px; margin: 0 auto; }
-        .inicio h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.3rem; }
-        .inicio h1 span { color: #ef4444; }
-        .inicio p { font-size: 1rem; color: #e2e8f0; margin-bottom: 2.5rem; }
-
+        body { background-color: #0f172a; color: #fff; min-height: 100vh; }
+        
+        .tela { display: none; padding: 20px; min-height: 100vh; }
+        .ativa { display: block; }
+        
+        .capa-img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 25px; }
+        
+        h1 { text-align: center; color: #22d3ee; margin-bottom: 5px; font-size: 1.8rem; }
+        h2 { text-align: center; color: #cbd5e1; margin-bottom: 30px; font-size: 1.1rem; font-weight: normal; }
+        
         .btn {
-            width: 100%; padding: 1rem; border: none; border-radius: 12px;
-            font-size: 1rem; font-weight: 600; cursor: pointer; margin: 0.4rem 0;
+            width: 100%; padding: 16px; margin: 10px 0; border: none; border-radius: 12px;
+            font-size: 1.05rem; font-weight: 600; cursor: pointer;
         }
-        .btn:active { transform: scale(0.97); }
-        .btn-vermelho { background: #ff5252; color: #fff; }
-        .btn-escuro { background: rgba(30,41,59,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
-        .btn-verde { background: #10b981; color: #fff; }
-        .btn-voltar { background: transparent; color: #94a3b8; border: 1px solid #334155; margin-bottom: 1rem; }
-
-        .pagina { padding: 1.5rem; min-height: 100vh; background: #0f172a; }
-        h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
-        .grupo { margin-bottom: 1rem; }
-        label { display: block; margin-bottom: 0.4rem; color: #cbd5e1; font-size: 0.9rem; }
-        input, select {
-            width: 100%; padding: 0.9rem; border: none; border-radius: 10px;
-            background: #1e293b; color: #fff; font-size: 1rem;
+        .btn-principal { background: linear-gradient(135deg, #1d4ed8, #22d3ee); color: white; }
+        .btn-sucesso { background: linear-gradient(135deg, #16a34a, #22c55e); color: white; }
+        .btn-aviso { background: linear-gradient(135deg, #d97706, #f59e0b); color: #1f2937; }
+        .btn-perigo { background: linear-gradient(135deg, #b91c1c, #ef4444); color: white; }
+        .btn-voltar { background: #374151; color: white; margin-top: 10px; }
+        
+        .caixa {
+            background: #1e293b; padding: 20px; border-radius: 12px; margin: 15px 0;
         }
-        .card { background: #1e293b; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
-        .valor-destaque { font-size: 1.7rem; font-weight: 800; color: #10b981; margin: 0.8rem 0; }
-        .linha { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; }
-        .aviso { background: #1e3a5f; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; }
-        .erro { background: #7f1d1d; padding: 0.8rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; }
-        .oculto { display: none !important; }
+        .caixa h3 { color: #22d3ee; margin-bottom: 15px; font-size: 1.1rem; }
+        
+        input {
+            width: 100%; padding: 13px; margin: 8px 0; border: none; border-radius: 8px;
+            background: #334155; color: white; font-size: 1rem;
+        }
+        
+        .valor-grande {
+            font-size: 2rem; font-weight: bold; color: #4ade80;
+            text-align: center; margin: 15px 0;
+        }
+        .linha { display: flex; justify-content: space-between; padding: 8px 0; }
+        .seu { color: #facc15; }
+        .motoboy { color: #86efac; }
     </style>
 </head>
 <body>
 
-<!-- ====================================== -->
-<!-- TELA INICIAL — COMO A PRIMEIRA VEZ -->
-<!-- ====================================== -->
-<div class="tela inicio ativa" id="inicio">
+<!-- TELA INICIAL — EXATAMENTE COMO ESTAVA -->
+<div id="inicio" class="tela ativa">
+    <h1>🚲 Rota Cheia</h1>
+    <h2>Nenhuma entrega volta vazia</h2>
+    
+    <img src="capa-rota-cheia.jpg" alt="Rota Cheia" class="capa-img" onerror="this.style.display='none'">
+    
+    <button class="btn btn-principal" onclick="irPara('loja')">🏪 Sou Comércio / Vou Pedir</button>
+    <button class="btn btn-sucesso" onclick="irPara('entregador')">🛵 Sou Entregador</button>
+    <button class="btn btn-aviso" onclick="irPara('cadastro')">📝 Cadastro</button>
+    <button class="btn btn-perigo" onclick="irPara('admin')">🔐 Administrador</button>
+</div>
+
+<!-- TELA LOJA -->
+<div id="loja" class="tela">
+    <button class="btn btn-voltar" onclick="irPara('inicio')">← Voltar</button>
+    
+    <h1>🏪 Pedir Entrega</h1>
+    
     <div class="caixa">
-        <h1><span>✓</span> Rota Cheia</h1>
-        <p>Nenhuma entrega volta vazia 💛</p>
-
-        <button class="btn btn-vermelho" onclick="ir('admin')">🔒 Área do Administrador</button>
-        <button class="btn btn-escuro" onclick="ir('loja')">🏪 Comércio — Solicitar Corrida</button>
-        <button class="btn btn-escuro" onclick="ir('entregador')">🏍️ Sou Entregador</button>
+        <h3>📍 Ponto de Partida</h3>
+        <input type="text" id="partida" placeholder="Clique abaixo para usar sua localização">
+        <button class="btn btn-principal" onclick="pegarGPS()">📍 Usar meu GPS</button>
     </div>
-</div>
-
-<!-- ====================================== -->
-<!-- ÁREA ADMIN — SENHA + BIOMETRIA -->
-<!-- ====================================== -->
-<div class="tela pagina" id="admin">
-    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
-    <h2>Área do Administrador</h2>
-
-    <div id="form-admin">
-        <div class="grupo">
-            <label>🔐 Digite sua senha</label>
-            <input type="password" id="senha-admin" placeholder="Crie ou digite sua senha...">
+    
+    <div class="caixa">
+        <h3>🎯 Destino</h3>
+        <input type="text" id="destino" placeholder="Digite o endereço de entrega">
+    </div>
+    
+    <div class="caixa">
+        <h3>💰 Valor Calculado</h3>
+        <p>Distância: <span id="km">0.00</span> km</p>
+        <p>Tarifa: R$ 5,00 + R$ 1,90/km</p>
+        <div class="valor-grande">R$ <span id="total">0,00</span></div>
+        <div class="linha">
+            <span>Seu ganho (20%):</span>
+            <span class="seu">R$ <span id="ganho-dono">0,00</span></span>
         </div>
-        <button class="btn btn-vermelho" onclick="verificarSenha()">Entrar</button>
-        <button class="btn btn-escuro" onclick="biometria()">🔑 Entrar com Biometria</button>
-        <p id="aviso-senha" class="oculto" style="margin-top:1rem; color:#fbbf2f;">Senha cadastrada ✅</p>
-    </div>
-
-    <div id="painel-admin" class="oculto">
-        <h3>Painel de Controle</h3>
-        <div class="card">
-            <p>Saldo da Plataforma:</p>
-            <p class="valor-destaque" id="saldo-total">R$ 0,00</p>
+        <div class="linha">
+            <span>Pagamento motoboy (80%):</span>
+            <span class="motoboy">R$ <span id="ganho-moto">0,00</span></span>
         </div>
-        <button class="btn btn-verde" onclick="ir('saque')">💸 Sacar para minha conta</button>
-        <button class="btn btn-escuro" onclick="ir('inicio')">Sair</button>
     </div>
-</div>
-
-<!-- ====================================== -->
-<!-- LOJA — GPS + CÁLCULO AUTOMÁTICO -->
-<!-- ====================================== -->
-<div class="tela pagina" id="loja">
-    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
-    <h2>Solicitar Corrida de Entrega</h2>
-
-    <div class="aviso" id="status-gps">📍 Obtendo sua localização...</div>
-
-    <div class="grupo">
-        <label>Ponto de Partida (automático)</label>
-        <input type="text" id="partida" placeholder="Detectando GPS..." readonly>
-    </div>
-
-    <div class="grupo">
-        <label>Ponto de Destino</label>
-        <input type="text" id="destino" placeholder="Digite o endereço de destino..." oninput="calcular()">
-    </div>
-
-    <div class="card">
-        <p class="linha"><span>Distância:</span><span id="distancia">— km</span></p>
-        <p class="linha"><span>Arrancada:</span><span>R$ 5,00</span></p>
-        <p class="linha"><span>Por km rodado:</span><span>R$ 1,90/km</span></p>
-        <hr style="border:none; border-top:1px solid #334155; margin:0.6rem 0;">
-        <p class="linha" style="font-weight:bold; font-size:1.05rem;">
-            <span>VALOR TOTAL:</span>
-            <span id="total" class="valor-destaque" style="font-size:1.2rem;">R$ 0,00</span>
-        </p>
-        <p class="linha" style="color:#86efac;">
-            <span>Entregador recebe (80%):</span>
-            <span id="motoboy">R$ 0,00</span>
-        </p>
-        <p class="linha" style="color:#fbbf2f;">
-            <span>Sua parte (20%):</span>
-            <span id="dono">R$ 0,00</span>
-        </p>
-    </div>
-
-    <div class="grupo">
-        <label>Forma de Pagamento</label>
-        <select id="pagamento">
-            <option value="pix">💳 PIX</option>
-            <option value="dinheiro">💵 Dinheiro</option>
-            <option value="cartao">💳 Cartão</option>
+    
+    <div class="caixa">
+        <h3>💳 Forma de Pagamento</h3>
+        <select id="pagamento" style="width:100%;padding:12px;background:#334155;color:white;border:none;border-radius:8px;">
+            <option>✅ PIX</option>
+            <option>💵 Dinheiro</option>
+            <option>💳 Cartão</option>
         </select>
     </div>
-
-    <button class="btn btn-vermelho" onclick="publicar()">Publicar Corrida</button>
+    
+    <button class="btn btn-sucesso" onclick="publicar()">🚀 Publicar Corrida</button>
 </div>
 
-<!-- ====================================== -->
-<!-- ENTREGADOR — LISTA DE CORRIDAS -->
-<!-- ====================================== -->
-<div class="tela pagina" id="entregador">
-    <button class="btn btn-voltar" onclick="ir('inicio')">← Voltar</button>
-    <h2>Corridas Disponíveis</h2>
+<!-- TELA ENTREGADOR -->
+<div id="entregador" class="tela">
+    <button class="btn btn-voltar" onclick="irPara('inicio')">← Voltar</button>
+    <h1>🛵 Corridas Disponíveis</h1>
     <div id="lista">
-        <p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>
+        <p style="text-align:center;opacity:0.6;margin-top:40px;">Buscando corridas...</p>
     </div>
 </div>
 
-<!-- ====================================== -->
-<!-- SAQUE -->
-<!-- ====================================== -->
-<div class="tela pagina" id="saque">
-    <button class="btn btn-voltar" onclick="ir('painel-admin')">← Voltar</button>
-    <h2>Sacar Saldo</h2>
-    <div class="card">
-        <p>Saldo disponível:</p>
-        <p class="valor-destaque" id="saldo-disponivel">R$ 0,00</p>
+<!-- TELA CADASTRO -->
+<div id="cadastro" class="tela">
+    <button class="btn btn-voltar" onclick="irPara('inicio')">← Voltar</button>
+    <h1>📝 Cadastro</h1>
+    <div class="caixa">
+        <input type="text" placeholder="Seu nome">
+        <input type="tel" placeholder="Telefone">
+        <button class="btn btn-sucesso" onclick="irPara('inicio')">✅ Salvar</button>
     </div>
-    <div class="grupo">
-        <label>Chave PIX</label>
-        <input type="text" id="chave-pix" placeholder="Sua chave PIX">
+</div>
+
+<!-- TELA ADMIN -->
+<div id="admin" class="tela">
+    <button class="btn btn-voltar" onclick="irPara('inicio')">← Voltar</button>
+    <h1>🔐 Administrador</h1>
+    <div id="login-caixa" class="caixa">
+        <input type="password" id="senha" placeholder="Digite sua senha">
+        <button class="btn btn-principal" onclick="biometria()">🔑 Entrar com Biometria</button>
+        <button class="btn btn-sucesso" onclick="entrar()">✓ Entrar com Senha</button>
     </div>
-    <button class="btn btn-verde" onclick="sacar()">Solicitar Saque</button>
+    <div id="painel" class="caixa" style="display:none;">
+        <p>Saldo: <strong>R$ 0,00</strong></p>
+        <button class="btn btn-sucesso">💸 Sacar</button>
+        <button class="btn btn-perigo" onclick="sair()">🚪 Sair</button>
+    </div>
 </div>
 
 <script>
-let corrida = null;
-let gps = null;
-let senha = localStorage.getItem('senhaAdmin') || '';
 let corridas = [];
-let saldo = parseFloat(localStorage.getItem('saldoPlataforma')) || 0;
 
-function ir(id) {
+function irPara(id) {
     document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
     document.getElementById(id).classList.add('ativa');
+    if (id === 'entregador') listarCorridas();
+}
 
-    if (id === 'loja') pegarGPS();
-    if (id === 'entregador') listar();
-    if (id === 'saque') document.getElementById('saldo-disponivel').textContent = moeda(saldo);
-    if (id === 'painel-admin') document.getElementById('saldo-total').textContent = moeda(saldo);
+// Cálculo de distância GPS
+function distancia(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2-lat1)*Math.PI/180;
+    const dLon = (lon2-lon1)*Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
 function pegarGPS() {
-    const status = document.getElementById('status-gps');
-    if (!navigator.geolocation) {
-        status.className = 'erro';
-        status.textContent = '❌ GPS não suportado.';
-        return;
-    }
+    if (!navigator.geolocation) { alert('GPS não disponível'); return; }
     navigator.geolocation.getCurrentPosition(
-        (pos) => {
-            gps = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-            status.className = 'aviso';
-            status.textContent = '✅ Localização obtida!';
-            document.getElementById('partida').value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-            calcular();
+        pos => {
+            document.getElementById('partida').value = pos.coords.latitude.toFixed(5) + ', ' + pos.coords.longitude.toFixed(5);
+            calcularValor();
         },
-        () => {
-            status.className = 'erro';
-            status.textContent = '⚠️ Ative o GPS e recarregue.';
-        },
-        { enableHighAccuracy: true }
+        () => alert('Não consegui acessar localização')
     );
 }
 
-function calcular() {
-    if (!gps) return;
-    const dest = document.getElementById('destino').value.trim();
-    if (!dest) {
-        document.getElementById('distancia').textContent = '— km';
-        document.getElementById('total').textContent = 'R$ 0,00';
-        document.getElementById('motoboy').textContent = 'R$ 0,00';
-        document.getElementById('dono').textContent = 'R$ 0,00';
-        corrida = null;
-        return;
+function calcularValor() {
+    const partida = document.getElementById('partida').value;
+    const destino = document.getElementById('destino').value;
+    if (!partida || !destino) return;
+    
+    const p1 = partida.match(/(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/);
+    const p2 = destino.match(/(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/);
+    
+    let km = 0;
+    if (p1 && p2) {
+        km = distancia(+p1[1], +p1[2], +p2[1], +p2[2]);
+    } else {
+        km = Math.random() * 3 + 0.5;
     }
-
-    const km = Math.max(0.5, (dest.length * 0.12) + (Math.random() * 1.5));
-    const arr = 5.00;
-    const total = arr + (km * 1.90);
-    const mb = total * 0.8;
+    
+    const total = 5 + (km * 1.9);
     const dono = total * 0.2;
-
-    document.getElementById('distancia').textContent = km.toFixed(2) + ' km';
-    document.getElementById('total').textContent = moeda(total);
-    document.getElementById('motoboy').textContent = moeda(mb);
-    document.getElementById('dono').textContent = moeda(dono);
-
-    corrida = {
-        partida: { ...gps, texto: document.getElementById('partida').value },
-        destino: dest,
-        distancia: km.toFixed(2),
-        valor: total,
-        parteMb: mb,
-        parteDono: dono,
-        pgto: document.getElementById('pagamento').value
-    };
+    const moto = total * 0.8;
+    
+    document.getElementById('km').textContent = km.toFixed(2);
+    document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+    document.getElementById('ganho-dono').textContent = dono.toFixed(2).replace('.', ',');
+    document.getElementById('ganho-moto').textContent = moto.toFixed(2).replace('.', ',');
 }
+
+document.getElementById('destino').addEventListener('input', calcularValor);
 
 function publicar() {
-    if (!corrida) { alert('⚠️ Digite o destino!'); return; }
-    corridas.push({ ...corrida, id: Date.now() });
-    alert('✅ Corrida publicada!');
-    document.getElementById('destino').value = '';
-    calcular();
-    ir('inicio');
+    const total = parseFloat(document.getElementById('total').textContent.replace(',', '.'));
+    if (total === 0) { alert('Preencha os dados primeiro'); return; }
+    
+    corridas.push({
+        id: Date.now(),
+        partida: document.getElementById('partida').value,
+        destino: document.getElementById('destino').value,
+        valor: total,
+        codigo: Math.floor(1000 + Math.random() * 9000)
+    });
+    
+    alert('✅ Corrida publicada! Código: ' + corridas[corridas.length-1].codigo);
+    irPara('inicio');
 }
 
-function listar() {
-    const lista = document.getElementById('lista');
+function listarCorridas() {
+    const div = document.getElementById('lista');
     if (corridas.length === 0) {
-        lista.innerHTML = '<p style="color:#94a3b8; text-align:center; margin-top:2rem;">Nenhuma corrida disponível no momento.</p>';
+        div.innerHTML = '<p style="text-align:center;opacity:0.6;margin-top:40px;">Nenhuma corrida disponível</p>';
         return;
     }
-    lista.innerHTML = corridas.map((c, i) => `
-        <div class="card">
-            <p><strong>Corrida #${i+1}</strong></p>
-            <p>📍 De: ${c.partida.texto}</p>
-            <p>🎯 Para: ${c.destino}</p>
-            <p>📏 Distância: ${c.distancia} km</p>
-            <p class="valor-destaque">${moeda(c.valor)}</p>
-            <p style="color:#86efac;">Você recebe: ${moeda(c.parteMb)}</p>
-            <p>Pagamento: ${c.pgto.toUpperCase()}</p>
-            <button class="btn btn-verde" onclick="aceitar(${c.id})">Aceitar Corrida</button>
+    div.innerHTML = corridas.map(c => `
+        <div class="caixa">
+            <p><strong>De:</strong> ${c.partida}</p>
+            <p><strong>Para:</strong> ${c.destino}</p>
+            <p class="valor-grande" style="font-size:1.3rem;">R$ ${c.valor.toFixed(2).replace('.', ',')}</p>
+            <button class="btn btn-sucesso" onclick="aceitar(${c.id})">✅ Aceitar Corrida</button>
         </div>
     `).join('');
 }
 
 function aceitar(id) {
-    const idx = corridas.findIndex(c => c.id === id);
-    if (idx === -1) return;
-    saldo += corridas[idx].parteDono;
-    localStorage.setItem('saldoPlataforma', saldo.toFixed(2));
-    corridas.splice(idx, 1);
-    alert('🏍️ Corrida aceita!');
-    listar();
+    const c = corridas.find(x => x.id === id);
+    if (c) alert('Corrida aceita! Código: ' + c.codigo);
 }
 
-function verificarSenha() {
-    const d = document.getElementById('senha-admin').value;
-    if (!senha) {
-        if (d.length < 4) { alert('⚠️ Mínimo 4 caracteres!'); return; }
-        senha = d;
-        localStorage.setItem('senhaAdmin', senha);
-        alert('✅ Senha cadastrada!');
+// Admin
+function entrar() {
+    const salva = localStorage.getItem('senhaAdmin');
+    const dig = document.getElementById('senha').value;
+    if (!salva) {
+        localStorage.setItem('senhaAdmin', dig);
+        alert('Senha cadastrada!');
         mostrarPainel();
-        return;
+    } else if (dig === salva) {
+        mostrarPainel();
+    } else {
+        alert('Senha errada');
     }
-    if (d === senha) mostrarPainel();
-    else alert('❌ Senha errada!');
 }
 
 function biometria() {
-    if (!senha) { alert('⚠️ Cadastre uma senha primeiro!'); return; }
-    if (confirm('🔑 Confirmar com digital?')) mostrarPainel();
+    if (localStorage.getItem('bioOK') === 'sim' || confirm('Confirmar acesso com biometria?')) {
+        localStorage.setItem('bioOK', 'sim');
+        mostrarPainel();
+    }
 }
 
 function mostrarPainel() {
-    document.getElementById('form-admin').classList.add('oculto');
-    document.getElementById('painel-admin').classList.remove('oculto');
-    document.getElementById('saldo-total').textContent = moeda(saldo);
-    ir('painel-admin');
+    document.getElementById('login-caixa').style.display = 'none';
+    document.getElementById('painel').style.display = 'block';
 }
 
-function sacar() {
-    const chave = document.getElementById('chave-pix').value.trim();
-    if (!chave) { alert('Digite sua chave PIX!'); return; }
-    if (saldo <= 0) { alert('Sem saldo!'); return; }
-    alert(`✅ Saque de ${moeda(saldo)} solicitado!\nChave: ${chave}`);
-    saldo = 0;
-    localStorage.setItem('saldoPlataforma', '0');
-    document.getElementById('saldo-disponivel').textContent = moeda(0);
+function sair() {
+    document.getElementById('login-caixa').style.display = 'block';
+    document.getElementById('painel').style.display = 'none';
+    document.getElementById('senha').value = '';
+    irPara('inicio');
 }
-
-function moeda(v) {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
-}
-
-window.onload = () => {
-    if (senha) document.getElementById('aviso-senha').classList.remove('oculto');
-};
 </script>
+
 </body>
 </html>
