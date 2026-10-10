@@ -3,91 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rota Cheia — Nenhuma entrega volta vazia</title>
-    <meta name="author" content="Rota Cheia — Sistema Exclusivo">
-    
-    <!-- 🖼️ VAI USAR EXATAMENTE A SUA IMAGEM -->
-    <link rel="icon" type="image/jpeg" href="capa-rota-cheia.jpg?v=ALFA01">
-    <link rel="apple-touch-icon" sizes="180x180" href="capa-rota-cheia.jpg?v=ALFA01">
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        :root { --primaria: #16a34a; --escura: #0f172a; --clara: #f8fafc; --destaque: #f59e0b; --erro: #ef4444; }
-        body { background-color: var(--escura); color: var(--clara); min-height: 100vh; }
+    <title>Rota Cheia</title>
 
-        /* 🖼️ TELA DE CAPA — USA EXATAMENTE A IMAGEM QUE VOCÊ COLOCOU */
-        .tela-capa {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(to bottom, rgba(15,23,42,0.5), rgba(15,23,42,0.9)), 
-                        url('capa-rota-cheia.jpg') center/cover no-repeat;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1000; transition: opacity 0.4s ease;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
         }
-        .logo { width: 120px; height: 120px; border-radius: 20px; margin-bottom: 20px; }
-        .tela-capa h1 { font-size: 1.8rem; margin-bottom: 4px; }
-        .tela-capa p { color: #94a3b8; margin-bottom: 40px; }
-        
-        .btn { width: 260px; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; margin: 6px 0; transition: 0.2s; }
-        .btn:hover { transform: scale(1.02); }
-        .btn.verde { background: var(--primaria); color: white; }
-        .btn.azul { background: #2563eb; color: white; }
-        .btn.amarelo { background: var(--destaque); color: #000; }
-        .btn.vermelho { background: var(--erro); color: white; }
-        
-        .frase { color: var(--destaque); font-style: italic; margin-top: 20px; font-size: 0.9rem; }
-        
-        .tela { display: none; padding: 20px; }
-        .tela.ativa { display: block; }
-        .voltar { background: none; border: none; color: #94a3b8; font-size: 1rem; cursor: pointer; margin-bottom: 20px; }
-        h2 { margin-bottom: 20px; font-size: 1.3rem; }
-        .grupo { margin-bottom: 14px; }
-        label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: #cbd5e1; }
-        input, button { width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 1rem; }
-        input { background: #1e293b; color: white; border: 1px solid #334155; }
-        .card { background: #1e293b; padding: 16px; border-radius: 10px; margin-bottom: 12px; border-left: 3px solid var(--primaria); }
-        .oculto { display: none !important; }
-        .valor { font-size: 1.2rem; font-weight: bold; color: var(--destaque); }
-        .aviso { background: rgba(245,158,11,0.1); border: 1px solid var(--destaque); padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 0.9rem; }
+
+        :root {
+            --primaria: #16a34a;
+            --azul: #2563eb;
+            --amarelo: #f59e0b;
+            --vermelho: #ef4444;
+            --escura: #0f172a;
+            --clara: #f8fafc;
+        }
+
+        body {
+            background-color: var(--escura);
+            color: var(--clara);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* TELA DE CAPA ÚNICA, TAMANHO CELULAR */
+        .tela-capa {
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, rgba(15,23,42,0.4), rgba(15,23,42,0.7)),
+                        url('capa-rota-cheia.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .tela-capa h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            margin-bottom: 8px;
+        }
+
+        .tela-capa p {
+            color: #e2e8f0;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 8px 0;
+            transition: 0.2s;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .btn.verde {
+            background-color: var(--primaria);
+        }
+
+        .btn.azul {
+            background-color: var(--azul);
+        }
+
+        .btn.amarelo {
+            background-color: var(--amarelo);
+            color: #000;
+        }
+
+        .btn.vermelho {
+            background-color: var(--vermelho);
+        }
+
+        .frase {
+            color: white;
+            font-style: italic;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* DEMAIS TELAS */
+        .tela {
+            display: none;
+            width: 100%;
+            max-width: 390px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: var(--escura);
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        .voltar {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .grupo {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        input, select {
+            background: #1e293b;
+            color: white;
+            border: 1px solid #334155;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--primaria);
+        }
+
+        .oculto {
+            display: none !important;
+        }
+
+        .valor {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--amarelo);
+        }
+
+        .aviso {
+            background: rgba(245,158,11,0.1);
+            border: 1px solid var(--amarelo);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-<!-- 🖼️ TELA DE ABERTURA — A SUA IMAGEM -->
+<!-- TELA DE CAPA ÚNICA -->
 <div class="tela-capa" id="capa">
-    <img src="capa-rota-cheia.jpg" alt="Rota Cheia" class="logo" onerror="this.style.display='none'">
     <h1>Rota Cheia</h1>
     <p>Nenhuma entrega volta vazia</p>
-    
+
     <button class="btn verde" onclick="entrar()">🏪 Loja / Solicitar Entrega</button>
     <button class="btn azul" onclick="mostrar('telaEntregador')">🏍️ Sou Entregador</button>
     <button class="btn amarelo" onclick="mostrar('telaCadastro')">📝 Cadastrar Entregador</button>
     <button class="btn vermelho" onclick="mostrar('telaLogin')">🔐 Administrador</button>
-    
+
     <p class="frase">"A plataforma que mais paga por quilômetros rodados"</p>
 </div>
 
-<!-- 🏪 TELA DA LOJA → GPS + CÁLCULO AUTOMÁTICO -->
+<!-- 🏪 TELA DA LOJA -->
 <div class="tela" id="telaLoja">
     <button class="voltar" onclick="voltar()">← Voltar</button>
     <h2>Solicitar Entrega</h2>
-    
+
     <div class="aviso">
         📍 Distância calculada automaticamente. Arrancada: R$5,00 + R$1,90/km
     </div>
-    
+
     <div class="grupo">
         <label>Ponto de Partida:</label>
         <input type="text" id="origem" placeholder="Seu endereço...">
         <button style="background:#334155; color:white; margin-top:6px;" onclick="usarGPS()">📍 Usar minha localização</button>
     </div>
-    
+
     <div class="grupo">
         <label>Endereço de Entrega:</label>
         <input type="text" id="destino" placeholder="Para onde vai...">
     </div>
-    
+
     <button style="background:var(--primaria); color:white; margin:10px 0;" onclick="calcular()">💰 Calcular Valor</button>
-    
+
     <div id="resultado" class="oculto">
         <div class="card">
             <p>Distância: <span id="km">--</span> km</p>
@@ -97,16 +232,16 @@
             <p style="font-size:0.85rem; color:#94a3b8;">Seu lucro (20%): R$ <span id="lucro">0,00</span></p>
             <p style="font-size:0.85rem; color:#60a5fa;">Entregador recebe (80%): R$ <span id="pagamento">0,00</span></p>
         </div>
-        
+
         <div class="grupo">
             <label>Forma de Pagamento:</label>
-            <select id="pagamentoTipo" style="background:#1e293b; color:white;">
+            <select id="pagamentoTipo">
                 <option value="dinheiro">💵 Dinheiro</option>
                 <option value="pix">💳 Pix</option>
                 <option value="cartao">💳 Cartão</option>
             </select>
         </div>
-        
+
         <button style="background:var(--primaria); color:white;" onclick="publicar()">✅ Publicar Corrida</button>
     </div>
 </div>
@@ -115,34 +250,34 @@
 <div class="tela" id="telaEntregador">
     <button class="voltar" onclick="voltar()">← Voltar</button>
     <h2>Área do Entregador</h2>
-    
+
     <div id="semCorrida" class="card">
         <p style="text-align:center;">🔍 Aguardando corridas...</p>
     </div>
-    
+
     <div id="novaCorrida" class="oculto">
         <div class="card">
-            <h3>📦 Nova Corrida Disponível!</h3>
+            <h3>📦 Nova Corrida!</h3>
             <p>De: <span id="cOrigem">--</span></p>
             <p>Para: <span id="cDestino">--</span></p>
             <p>Distância: <span id="cKm">--</span> km</p>
             <p>Você recebe: <span class="valor">R$ <span id="cValor">0,00</span></span></p>
             <p>Pagamento: <span id="cPagamento">--</span></p>
             <div style="display:flex; gap:10px; margin-top:12px;">
-                <button style="background:var(--erro); color:white; flex:1;" onclick="recusar()">❌ Recusar</button>
+                <button style="background:var(--vermelho); color:white; flex:1;" onclick="recusar()">❌ Recusar</button>
                 <button style="background:var(--primaria); color:white; flex:1;" onclick="aceitar()">✅ Aceitar</button>
             </div>
         </div>
     </div>
-    
+
     <div id="entregaAtiva" class="oculto">
         <div class="card">
-            <h3>🚚 Corrida em Andamento</h3>
-            <p>Destino: <span id="eDestino">--</span></p>
+            <h3>🚚 Em andamento</h3>
+            <p>Para: <span id="eDestino">--</span></p>
             <p style="margin:10px 0;">📍 Siga a rota no mapa</p>
             <label>Código de confirmação:</label>
             <input type="text" id="codigo" placeholder="000000" maxlength="6" style="text-align:center; font-size:1.2rem; letter-spacing:4px;">
-            <button style="background:var(--primaria); color:white; margin-top:10px;" onclick="finalizar()">✅ Finalizar Entrega</button>
+            <button style="background:var(--primaria); color:white; margin-top:10px;" onclick="finalizar()">✅ Finalizar</button>
         </div>
     </div>
 </div>
@@ -151,24 +286,24 @@
 <div class="tela" id="telaCadastro">
     <button class="voltar" onclick="voltar()">← Voltar</button>
     <h2>Cadastrar Entregador</h2>
-    
-    <div class="grupo"><label>Nome Completo:</label><input type="text" id="eNome"></div>
-    <div class="grupo"><label>Telefone / WhatsApp:</label><input type="tel" id="eTel"></div>
+
+    <div class="grupo"><label>Nome:</label><input type="text" id="eNome"></div>
+    <div class="grupo"><label>Telefone:</label><input type="tel" id="eTel"></div>
     <div class="grupo"><label>Veículo:</label><input type="text" id="eVeiculo" placeholder="Moto / Carro"></div>
-    <div class="grupo"><label>Região de Atendimento:</label><input type="text" id="eRegiao"></div>
-    <div class="grupo"><label>Chave Pix para Recebimento:</label><input type="text" id="ePix"></div>
-    
-    <button style="background:var(--primaria); color:white;" onclick="salvarCadastro()">📝 Salvar Cadastro</button>
+    <div class="grupo"><label>Região:</label><input type="text" id="eRegiao"></div>
+    <div class="grupo"><label>Chave Pix:</label><input type="text" id="ePix"></div>
+
+    <button style="background:var(--primaria); color:white;" onclick="salvarCadastro()">📝 Salvar</button>
 </div>
 
 <!-- 🔐 LOGIN ADMINISTRADOR -->
 <div class="tela" id="telaLogin">
     <button class="voltar" onclick="voltar()">← Voltar</button>
-    <h2>Acesso Restrito — Administrador</h2>
-    
+    <h2>Acesso Restrito</h2>
+
     <div class="card">
-        <label>Digite sua senha:</label>
-        <input type="password" id="senhaAdmin" placeholder="••••••••">
+        <label>Senha:</label>
+        <input type="password" id="senhaAdmin" placeholder="Digite sua senha">
         <button style="background:var(--primaria); color:white; margin-top:10px;" onclick="entrarAdmin()">🔑 Entrar</button>
         <button style="background:#334155; color:white; margin-top:8px;" onclick="biometria()">🔑 Entrar com Biometria</button>
     </div>
@@ -178,243 +313,159 @@
 <div class="tela" id="telaAdmin">
     <button class="voltar" onclick="voltarAdmin()">← Sair</button>
     <h2>Painel do Proprietário</h2>
-    
+
     <div class="card" style="background:linear-gradient(135deg, #166534, #15803d); text-align:center;">
-        <p>Seu Saldo Disponível</p>
+        <p>Seu Saldo</p>
         <p class="valor" style="font-size:1.8rem;">R$ <span id="saldo">0,00</span></p>
         <button style="background:rgba(255,255,255,0.2); color:white; margin-top:8px;" onclick="saque()">💰 Registrar Saque</button>
     </div>
-    
+
     <div class="card">
-        <p>Corridas Realizadas: <strong id="qtd">0</strong></p>
-        <p>Seu Lucro Total: <strong style="color:#86efac;">R$ <span id="totalLucro">0,00</span></strong></p>
+        <p>Corridas hoje: <strong id="qtd">0</strong></p>
+        <p>Lucro total: <strong style="color:#86efac;">R$ <span id="totalLucro">0,00</span></strong></p>
     </div>
-    
-    <h3 style="margin:20px 0 10px;">Entregadores Cadastrados</h3>
+
+    <h3 style="margin:20px 0 10px;">Entregadores</h3>
     <div id="listaEntregadores"></div>
 </div>
 
 <script>
-// ⚙️ CONFIGURAÇÕES — EXATAMENTE COMO VOCÊ PEDIU
-const VALOR_KM = 1.90;
-const ARRANCADA = 5.00;
-const TAXA_PROPRIETARIO = 0.20; // 20% seu
-const TAXA_ENTREGADOR = 0.80;   // 80% entregador
+    const VALOR_KM = 1.90;
+    const ARRANCADA = 5.00;
+    const TAXA = 0.20;
 
-let corrida = null;
-let senhaAdmin = localStorage.getItem('senhaAdmin') || "Admin@123";
-let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
-let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
-let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
+    let corrida = null;
+    let senha = localStorage.getItem('senhaAdmin') || "Admin@123";
+    let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+    let corridas = JSON.parse(localStorage.getItem('corridas') || '[]');
+    let entregadores = JSON.parse(localStorage.getItem('entregadores') || '[]');
 
-// 🖼️ ENTRAR NO SISTEMA
-function entrar() {
-    document.getElementById('capa').style.opacity = '0';
-    setTimeout(() => {
+    function entrar() {
         document.getElementById('capa').style.display = 'none';
         mostrar('telaLoja');
-    }, 300);
-}
-
-function voltar() {
-    document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
-    document.getElementById('capa').style.display = 'flex';
-    document.getElementById('capa').style.opacity = '1';
-}
-
-function mostrar(id) {
-    document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
-    document.getElementById(id).classList.add('ativa');
-}
-
-// 📍 GPS — PEGA LOCALIZAÇÃO AUTOMÁTICA
-function usarGPS() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            pos => {
-                document.getElementById('origem').value = `📍 ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
-                alert('✅ Localização obtida com sucesso!');
-            },
-            erro => alert('⚠️ Não foi possível acessar sua localização. Digite o endereço manualmente.')
-        );
-    } else {
-        alert('⚠️ Seu navegador não suporta geolocalização. Digite o endereço.');
     }
-}
 
-// 💰 CÁLCULO AUTOMÁTICO DO VALOR
-function calcular() {
-    const origem = document.getElementById('origem').value.trim();
-    const destino = document.getElementById('destino').value.trim();
-    
-    if (!origem || !destino) { 
-        alert('⚠️ Preencha o endereço de partida e de entrega!'); 
-        return; 
+    function voltar() {
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+        document.getElementById('capa').style.display = 'flex';
     }
-    
-    // Distância simulada — depois substituímos por API real
-    const km = (Math.random() * 6 + 1).toFixed(2);
-    const valorTotal = ARRANCADA + (parseFloat(km) * VALOR_KM);
-    const valorSeu = valorTotal * TAXA_PROPRIETARIO;
-    const valorMotoboy = valorTotal * TAXA_ENTREGADOR;
-    
-    document.getElementById('km').textContent = km;
-    document.getElementById('km2').textContent = km;
-    document.getElementById('total').textContent = valorTotal.toFixed(2).replace('.', ',');
-    document.getElementById('lucro').textContent = valorSeu.toFixed(2).replace('.', ',');
-    document.getElementById('pagamento').textContent = valorMotoboy.toFixed(2).replace('.', ',');
-    
-    corrida = {
-        origem,
-        destino,
-        km: parseFloat(km),
-        valorTotal,
-        valorSeu,
-        valorMotoboy,
-        pagamentoTipo: document.getElementById('pagamentoTipo').value,
-        codigoConfirmacao: Math.floor(100000 + Math.random() * 900000)
-    };
-    
-    document.getElementById('resultado').classList.remove('oculto');
-}
 
-function publicar() {
-    alert(`✅ Corrida publicada com sucesso!\n\nCódigo de confirmação: ${corrida.codigoConfirmacao}\n(Entregador vai pedir este código na entrega)`);
-    document.getElementById('resultado').classList.add('oculto');
-    document.getElementById('origem').value = '';
-    document.getElementById('destino').value = '';
-    mostrar('telaLoja');
-}
-
-// 🏍️ ENTREGADOR — ACEITAR / RECUSAR / FINALIZAR
-function aceitar() {
-    alert('✅ Corrida aceita! Siga até o endereço de entrega.');
-}
-
-function recusar() {
-    alert('❌ Corrida recusada. Fique atento para novas corridas!');
-}
-
-function finalizar() {
-    const codigoDigitado = document.getElementById('codigo').value;
-    
-    if (!codigoDigitado) {
-        alert('⚠️ Digite o código de confirmação!');
-        return;
+    function mostrar(id) {
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+        document.getElementById(id).classList.add('ativa');
     }
-    
-    if (parseInt(codigoDigitado) === corrida.codigoConfirmacao) {
-        // Adiciona seu lucro ao saldo
-        saldo += corrida.valorSeu;
-        localStorage.setItem('saldo', saldo);
-        
-        // Salva no histórico
-        corridas.push({
-            ...corrida,
-            data: new Date().toLocaleString('pt-BR'),
-            concluida: true
-        });
-        localStorage.setItem('corridas', JSON.stringify(corridas));
-        
-        alert(`✅ Entrega confirmada!\n\n💰 Você recebeu: R$ ${corrida.valorMotoboy.toFixed(2).replace('.', ',')}\nObrigado por usar o Rota Cheia!`);
-        document.getElementById('codigo').value = '';
-    } else {
-        alert('❌ Código incorreto! Confirme com o cliente e tente novamente.');
-    }
-}
 
-// 📝 CADASTRO DE ENTREGADOR
-function salvarCadastro() {
-    const nome = document.getElementById('eNome').value.trim();
-    const telefone = document.getElementById('eTel').value.trim();
-    const veiculo = document.getElementById('eVeiculo').value.trim();
-    const regiao = document.getElementById('eRegiao').value.trim();
-    const pix = document.getElementById('ePix').value.trim();
-    
-    if (!nome || !telefone || !veiculo || !regiao || !pix) {
-        alert('⚠️ Preencha todos os campos!');
-        return;
-    }
-    
-    entregadores.push({
-        nome,
-        telefone,
-        veiculo,
-        regiao,
-        pix,
-        dataCadastro: new Date().toLocaleString('pt-BR')
-    });
-    localStorage.setItem('entregadores', JSON.stringify(entregadores));
-    
-    alert('✅ Entregador cadastrado com sucesso!');
-    
-    // Limpa formulário
-    document.getElementById('eNome').value = '';
-    document.getElementById('eTel').value = '';
-    document.getElementById('eVeiculo').value = '';
-    document.getElementById('eRegiao').value = '';
-    document.getElementById('ePix').value = '';
-    
-    voltar();
-}
-
-// 🔐 ADMINISTRADOR — SENHA + BIOMETRIA + SALDO
-function entrarAdmin() {
-    if (document.getElementById('senhaAdmin').value === senhaAdmin) {
-        mostrar('telaAdmin');
-        atualizarPainelAdmin();
-    } else {
-        alert('❌ Senha incorreta! Tente novamente.');
-    }
-}
-
-function biometria() {
-    if (confirm("🔑 Confirmar acesso com biometria?")) {
-        mostrar('telaAdmin');
-        atualizarPainelAdmin();
-    }
-}
-
-function voltarAdmin() {
-    mostrar('telaLogin');
-    document.getElementById('senhaAdmin').value = '';
-}
-
-function atualizarPainelAdmin() {
-    document.getElementById('saldo').textContent = saldo.toFixed(2).replace('.', ',');
-    document.getElementById('qtd').textContent = corridas.length;
-    const totalLucro = corridas.reduce((s,c) => s + c.valorSeu, 0);
-    document.getElementById('totalLucro').textContent = totalLucro.toFixed(2).replace('.', ',');
-    
-    const lista = document.getElementById('listaEntregadores');
-    if (entregadores.length === 0) {
-        lista.innerHTML = '<p style="color:#64748b;">Nenhum entregador cadastrado ainda.</p>';
-    } else {
-        lista.innerHTML = entregadores.map(e => `
-            <div class="card" style="padding:10px;">
-                <p><strong>${e.nome}</strong></p>
-                <p style="font-size:0.85rem; color:#94a3b8;">📱 ${e.telefone} | 🚗 ${e.veiculo}</p>
-                <p style="font-size:0.85rem; color:#86efac;">💳 Pix: ${e.pix}</p>
-            </div>
-        `).join('');
-    }
-}
-
-function saque() {
-    const valor = prompt(`💰 Saldo disponível: R$ ${saldo.toFixed(2).replace('.', ',')}\n\nDigite o valor para registrar saque:`);
-    if (valor) {
-        const valorNum = parseFloat(valor.replace(',', '.'));
-        if (!isNaN(valorNum) && valorNum > 0 && valorNum <= saldo) {
-            saldo = parseFloat((saldo - valorNum).toFixed(2));
-            localStorage.setItem('saldo', saldo);
-            atualizarPainelAdmin();
-            alert(`✅ Saque de R$ ${valorNum.toFixed(2).replace('.', ',')} registrado com sucesso!`);
-        } else {
-            alert('❌ Valor inválido!');
+    function usarGPS() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    document.getElementById('origem').value = `📍 ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+                    alert('✅ Localização obtida!');
+                },
+                () => alert('⚠️ Digite o endereço manualmente')
+            );
         }
     }
-}
-</script>
 
-</body>
-</html>
+    function calcular() {
+        const origem = document.getElementById('origem').value;
+        const destino = document.getElementById('destino').value;
+        if (!origem || !destino) { alert('⚠️ Preencha os dois endereços!'); return; }
+
+        const km = (Math.random() * 6 + 1).toFixed(2);
+        const total = ARRANCADA + (km * VALOR_KM);
+        const lucro = total * TAXA;
+        const pag = total * (1 - TAXA);
+
+        document.getElementById('km').textContent = km;
+        document.getElementById('km2').textContent = km;
+        document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+        document.getElementById('lucro').textContent = lucro.toFixed(2).replace('.', ',');
+        document.getElementById('pagamento').textContent = pag.toFixed(2).replace('.', ',');
+
+        corrida = {
+            origem,
+            destino,
+            km: parseFloat(km),
+            total,
+            lucro,
+            pagamento: pag,
+            tipo: document.getElementById('pagamentoTipo').value,
+            codigo: Math.floor(100000 + Math.random() * 900000)
+        };
+
+        document.getElementById('resultado').classList.remove('oculto');
+    }
+
+    function publicar() {
+        alert(`✅ Corrida publicada!\nCódigo de confirmação: ${corrida.codigo}`);
+        document.getElementById('resultado').classList.add('oculto');
+        document.getElementById('origem').value = '';
+        document.getElementById('destino').value = '';
+        mostrar('telaLoja');
+    }
+
+    function aceitar() {
+        alert('✅ Corrida aceita!');
+    }
+
+    function recusar() {
+        alert('❌ Corrida recusada.');
+    }
+
+    function finalizar() {
+        const cod = document.getElementById('codigo').value;
+        if (cod == corrida.codigo) {
+            saldo += corrida.lucro;
+            localStorage.setItem('saldo', saldo);
+            corridas.push({ ...corrida, data: new Date().toLocaleString('pt-BR') });
+            localStorage.setItem('corridas', JSON.stringify(corridas));
+            alert(`✅ Entrega finalizada!\nLucro: R$ ${corrida.lucro.toFixed(2).replace('.', ',')}`);
+        } else {
+            alert('❌ Código incorreto!');
+        }
+    }
+
+    function salvarCadastro() {
+        entregadores.push({
+            nome: document.getElementById('eNome').value,
+            telefone: document.getElementById('eTel').value,
+            veiculo: document.getElementById('eVeiculo').value,
+            regiao: document.getElementById('eRegiao').value,
+            pix: document.getElementById('ePix').value
+        });
+        localStorage.setItem('entregadores', JSON.stringify(entregadores));
+        alert('✅ Cadastrado!');
+        voltar();
+    }
+
+    function entrarAdmin() {
+        if (document.getElementById('senhaAdmin').value === senha) {
+            mostrar('telaAdmin');
+            atualizarAdmin();
+        } else {
+            alert('❌ Senha incorreta!');
+        }
+    }
+
+    function biometria() {
+        if (confirm("🔑 Confirmar acesso com biometria?")) {
+            mostrar('telaAdmin');
+            atualizarAdmin();
+        }
+    }
+
+    function voltarAdmin() {
+        mostrar('telaLogin');
+        document.getElementById('senhaAdmin').value = '';
+    }
+
+    function atualizarAdmin() {
+        document.getElementById('saldo').textContent = saldo.toFixed(2).replace('.', ',');
+        document.getElementById('qtd').textContent = corridas.length;
+        const totalLucro = corridas.reduce((s,c) => s + c.lucro, 0);
+        document.getElementById('totalLucro').textContent = totalLucro.toFixed(2).replace('.', ',');
+
+        const lista = document.getElementById('listaEntregadores');
+        lista.innerHTML = entregadores.length === 0
+            ? '<p style="color:#64748b;">办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办办
